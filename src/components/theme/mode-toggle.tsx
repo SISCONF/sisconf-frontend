@@ -27,6 +27,7 @@ export function ModeToggle() {
       variant="outline"
       size="icon"
       aria-label={`Switch to ${theme === "light" ? "dark" : "light"} theme`}
+      className="border-brand-button"
     >
       {theme === "light" ? (
         <MoonIcon className="h-[1.2rem] w-[1.2rem]" />
