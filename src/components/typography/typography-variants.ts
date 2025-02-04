@@ -23,9 +23,16 @@ export const typographyVariants = cva("text-foreground teleading-4", {
       extrabold: "font-extrabold",
       black: "font-black",
     },
+    colorText: {
+      white: "text-[#ffffff]",
+      black: "text-[#000000]",
+      primary: "text-[#43A046]",
+      secondary: "text-[#263238]",
+    },
   },
   defaultVariants: {
-    variant: "h1",
+    variant: "h4",
     fontWeight: "regular",
+    colorText: "black",
   },
 });
