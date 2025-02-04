@@ -1,9 +1,11 @@
-import Image from "next/image";
+import { ModeToggle } from "@/components/theme/mode-toggle";
 
 export default function Home() {
   return (
-    <div className="relative flex flex-col min-h-screen bg-background">
-      <main className="w-full h-full"></main>
+    <div className="flex justify-center items-center w-full h-screen">
+      <main className="">
+        <ModeToggle />
+      </main>
     </div>
   );
 }
