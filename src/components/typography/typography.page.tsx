@@ -1,10 +1,9 @@
 import { renderPageObjects } from "@/test-utils";
 import { screen } from "@testing-library/react";
 
-import { Typography, TypographyGroupProps } from ".";
+import { Typography, TypographyProps } from ".";
 
-export const initialProps: TypographyGroupProps = {
-  title: "Hello World",
+export const initialProps: TypographyProps = {
   children: "Hello World",
   variant: "h1",
   fontWeight: "bold",

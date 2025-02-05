@@ -36,6 +36,7 @@ export function Typography({
 
   return (
     <Tag
+      data-testid="typography-container"
       className={cn(
         typographyVariants({ variant, fontWeight, colorText }),
         className
