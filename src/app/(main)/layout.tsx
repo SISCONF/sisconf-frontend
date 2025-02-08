@@ -1,6 +1,7 @@
 import type { Metadata } from "next/types";
+import NextTopLoader from "nextjs-toploader";
 
-export const revalidate = 120;
+export const dynamic = "force-dynamic";
 
 export const metadata: Metadata = {
   title: "Create Next App",
@@ -12,5 +13,10 @@ export default function RootLayout({
 }: Readonly<{
   children: React.ReactNode;
 }>) {
-  return <>{children}</>;
+  return (
+    <>
+      <NextTopLoader color="#fff" showSpinner={false} />
+      {children}
+    </>
+  );
 }
