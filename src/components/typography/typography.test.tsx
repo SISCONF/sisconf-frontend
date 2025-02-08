@@ -4,11 +4,7 @@ const pageObjects = TypographyPageObjects();
 
 describe("Typography component", () => {
   beforeEach(() => {
-    pageObjects.render({
-      children: "Hello World",
-      variant: "h1",
-      fontWeight: "regular",
-    });
+    pageObjects.render();
   });
 
   it("should render component Typography", () => {
@@ -20,12 +16,14 @@ describe("Typography component", () => {
   });
 
   it("should apply correct classes for variant and fontWeight", () => {
-    expect(pageObjects.getTypography()).toHaveClass("text-[64px] font-normal");
+    expect(pageObjects.getTypography()).toHaveClass(
+      "text-[4rem] font-normal text-[#43A046]"
+    );
   });
 
   it("should apply default variant and fontWeight if not provided", () => {
     const typographyElement = pageObjects.getTypography();
-    expect(typographyElement).not.toHaveClass("text-[28px]");
+    expect(typographyElement).not.toHaveClass("text-[1.75rem]");
     expect(typographyElement).not.toHaveClass("font-bold");
   });
 });

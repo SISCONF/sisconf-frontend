@@ -26,7 +26,7 @@ export function Typography({
   className,
   variant = "h4",
   fontWeight,
-  colorText,
+  textColor,
   as,
   ...props
 }: TypographyProps) {
@@ -38,7 +38,7 @@ export function Typography({
     <Tag
       data-testid="typography-container"
       className={cn(
-        typographyVariants({ variant, fontWeight, colorText }),
+        typographyVariants({ variant, fontWeight, textColor }),
         className
       )}
       {...props}

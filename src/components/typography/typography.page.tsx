@@ -6,7 +6,8 @@ import { Typography, TypographyProps } from ".";
 export const initialProps: TypographyProps = {
   children: "Hello World",
   variant: "h1",
-  fontWeight: "bold",
+  fontWeight: "regular",
+  textColor: "primary",
 };
 
 const TYPOGRAPHY_CONTAINER_TEST_ID = "typography-container";

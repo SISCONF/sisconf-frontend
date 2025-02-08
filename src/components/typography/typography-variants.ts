@@ -3,14 +3,14 @@ import { cva } from "class-variance-authority";
 export const typographyVariants = cva("text-foreground teleading-4", {
   variants: {
     variant: {
-      h1: "text-[64px]",
-      h2: "text-[44px]",
-      h3: "text-[36px]",
-      h4: "text-[28px]",
-      h5: "text-[24px]",
-      h6: "text-[20px]",
-      body1: "text-[18px]",
-      body2: "text-[16px]",
+      h1: "text-[4rem]",
+      h2: "text-[2.75rem]",
+      h3: "text-[2.25rem]",
+      h4: "text-[1.75rem]",
+      h5: "text-[1.5rem]",
+      h6: "text-[1.25rem]",
+      body1: "text-[1.12rem]",
+      body2: "text-[1rem]",
     },
     fontWeight: {
       thin: "font-thin",
@@ -23,7 +23,7 @@ export const typographyVariants = cva("text-foreground teleading-4", {
       extrabold: "font-extrabold",
       black: "font-black",
     },
-    colorText: {
+    textColor: {
       white: "text-[#ffffff]",
       black: "text-[#000000]",
       primary: "text-[#43A046]",
@@ -33,6 +33,6 @@ export const typographyVariants = cva("text-foreground teleading-4", {
   defaultVariants: {
     variant: "h4",
     fontWeight: "regular",
-    colorText: "black",
+    textColor: "black",
   },
 });
