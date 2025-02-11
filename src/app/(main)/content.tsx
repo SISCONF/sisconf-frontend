@@ -4,35 +4,35 @@ import { ComponentTabs } from "@/components/tabs";
 import { ModeToggle } from "@/components/theme/mode-toggle";
 import { useState } from "react";
 
+export const TABS_LIST = [
+  {
+    id: 0,
+    name: "frutas",
+    label: "Frutas",
+    component: <div>Ola</div>,
+  },
+  {
+    id: 1,
+    name: "verduras",
+    label: "Verduras",
+    component: <div>Tudo</div>,
+  },
+  {
+    id: 2,
+    name: "legumes",
+    label: "Legumes",
+    component: <div>Bem?</div>,
+  },
+
+  {
+    id: 3,
+    name: "outros",
+    label: "Outros",
+    component: <div>Bem?</div>,
+  },
+];
+
 export function Content() {
-  const TABS_LIST = [
-    {
-      id: 0,
-      name: "frutas",
-      label: "Frutas",
-      component: <div>Ola</div>,
-    },
-    {
-      id: 1,
-      name: "verduras",
-      label: "Verduras",
-      component: <div>Tudo</div>,
-    },
-    {
-      id: 2,
-      name: "legumes",
-      label: "Legumes",
-      component: <div>Bem?</div>,
-    },
-
-    {
-      id: 3,
-      name: "outros",
-      label: "Outros",
-      component: <div>Bem?</div>,
-    },
-  ];
-
   const [activeTab, setActiveTab] = useState(TABS_LIST[0]);
 
   const handleTabChange = (id: number) => {
