@@ -56,6 +56,11 @@ const config: Config = {
         },
         brand: {
           DEFAULT: "var(--brand)",
+          1: "var(--brand-1)",
+          2: "var(--brand-2)",
+          3: "var(--brand-3)",
+          4: "var(--brand-4)",
+          5: "var(--brand-5)",
           button: "var(--brand-border-button)",
         },
         border: "hsl(var(--border))",

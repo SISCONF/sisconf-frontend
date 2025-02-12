@@ -1,6 +1,6 @@
 import { cva } from "class-variance-authority";
 
-export const typographyVariants = cva("text-foreground teleading-4", {
+export const typographyVariants = cva("dark:text-foreground teleading-4", {
   variants: {
     variant: {
       h1: "text-[4rem]",

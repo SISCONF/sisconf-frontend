@@ -28,13 +28,19 @@
     --destructive: 0 84.2% 60.2%;
     --destructive-foreground: 0 0% 98%;
 
+    --brand-1: #43a046;
+    --brand-2: #388e3b;
+    --brand-3: #237d31;
+    --brand-4: #1b5e1f;
+    --brand-5: #103e13;
+
     --border: 240 5.9% 90%;
     --input: 240 5.9% 90%;
     --ring: 240 10% 3.9%;
     --radius: 0.5rem;
   }
   .dark {
-    --background: 240 10% 3.9%;
+    --background: 200 19% 18%;
     --foreground: 0 0% 98%;
 
     --card: 240 10% 3.9%;
