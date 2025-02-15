@@ -24,15 +24,15 @@ export default function Products() {
           Explore nosso <span className="text-[#43A046]">catálogo</span>
         </Typography>
       </header>
-      <main className="h-screen border py-[1.56rem] px-[1.875rem] flex gap-[2.5rem]">
+      <main className="border py-[1.56rem] px-[1.875rem] flex justify-between gap-[2.5rem]">
         <Image
-          className="h-full rounded-[1.25rem] object-cover max-w-[280px] 2xl:max-w-[500px]"
+          className="rounded-[1.25rem] object-cover max-w-[15rem]"
           src={StrawberriesBanenr}
           alt="a bunch of strawberries together"
         />
         <ProductsSession />
         <Image
-          className="h-full rounded-[1.25rem] object-cover max-w-[280px] 2xl:max-w-[500px]"
+          className="rounded-[1.25rem] object-cover max-w-[15rem]"
           src={CarrotsBanner}
           alt="a bunch of carrots together"
         />
