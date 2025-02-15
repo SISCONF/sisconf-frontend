@@ -24,7 +24,7 @@ export default function Products() {
           Explore nosso <span className="text-[#43A046]">catálogo</span>
         </Typography>
       </header>
-      <main className="border-b-gray-950 border py-[1.56rem] px-[1.875rem] flex justify-between items-center">
+      <main className="border-b-gray-950 border py-[1.56rem] px-[1.875rem] flex gap-[2.5rem] items-center">
         <Image
           src={StrawberriesBanenr}
           alt="a bunch of strawberries together"

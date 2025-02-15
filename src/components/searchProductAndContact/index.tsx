@@ -8,18 +8,13 @@ import EmailContactIcon from "/public/assets/contact-us.svg";
 
 export default function SearchProductAndContact() {
   return (
-    <div className="flex items-center">
+    <div className="flex items-center justify-between">
       <div className="max-w-[24.875rem] w-full relative flex items-center px-[0.6875rem] py-[0.43rem] rounded-[0.5rem] border-[0.135rem] border-[#43A046]">
         <button className="pr-[0.6875rem]">
-          <Image
-            width={35}
-            height={35}
-            src={SearchIcon}
-            alt="A green magnifying glass"
-          />
+          <Image src={SearchIcon} alt="A green magnifying glass" />
         </button>
         <input
-          className="focus:outline-none text-[1.3rem] w-full"
+          className="focus:outline-none w-full"
           type="text"
           name="name"
           id="food-name"
@@ -28,11 +23,13 @@ export default function SearchProductAndContact() {
       </div>
       <p>
         <strong className="text-[#43A046]">Não</strong> encontrou o que queria?
-        <Link href="/contact" className="flex items-center gap-[0.3125rem]">
-          <strong className="text-[#43A046]"> Fale conosco</strong>
+        <Link href="/contact">
+          <strong className="text-[#43A046] pr-[0.3125rem]">
+            {" "}
+            Fale conosco
+          </strong>
           <Image
-            width={35}
-            height={35}
+            className="inline"
             src={EmailContactIcon}
             alt="a green email inbox with a person alongside it"
           />
