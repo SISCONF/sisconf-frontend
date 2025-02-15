@@ -26,13 +26,13 @@ export default function Products() {
       </header>
       <main className="border py-[1.56rem] px-[1.875rem] flex justify-between gap-[2.5rem]">
         <Image
-          className="rounded-[1.25rem] object-cover max-w-[15rem]"
+          className="rounded-[1.25rem] object-cover max-w-[20%]"
           src={StrawberriesBanenr}
           alt="a bunch of strawberries together"
         />
         <ProductsSession />
         <Image
-          className="rounded-[1.25rem] object-cover max-w-[15rem]"
+          className="rounded-[1.25rem] object-cover max-w-[20%]"
           src={CarrotsBanner}
           alt="a bunch of carrots together"
         />
