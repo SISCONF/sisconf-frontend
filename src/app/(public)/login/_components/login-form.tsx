@@ -16,6 +16,7 @@ import { SubmitHandler, useForm } from "react-hook-form";
 import { useState } from "react";
 import { authLogin } from "@/actions/auth-login";
 import { useAuth } from "@/hooks/useAuth";
+import { InputForm } from "@/components/input-form";
 
 interface LoginFormSchema {
   email: string;
@@ -50,47 +51,50 @@ export function LoginForm() {
     <Card className="flex flex-col items-center justify-center w-[35.62rem] h-[33.12rem] bg-background border-none shadow-lg">
       <CardHeader className="text-center gap-1">
         <CardTitle>
-          <Typography variant="h4" fontWeight={"bold"}>
+          <Typography variant="h3" fontWeight={"bold"}>
             Bem-vindo de volta!
           </Typography>
         </CardTitle>
         <CardDescription>
-          <Typography variant={"body2"} className="text-[#757575]">
+          <Typography
+            variant={"body2"}
+            className="text-[#757575] text-[0.75rem]"
+          >
             Insira suas credenciais para acessar sua conta
           </Typography>
         </CardDescription>
       </CardHeader>
       <CardContent className="w-[23.75rem] h-fit">
-        <form onSubmit={handleSubmit(onSubmit)} method="post">
-          <div className="flex flex-col items-center gap-2">
-            <div className="grid gap-2 w-full">
-              <Label htmlFor="email">Email</Label>
-              <Input
-                id="email"
-                {...register("email")}
-                required
-                className="h-[68px]"
-              />
-            </div>
-
-            <div className="grid gap-2 w-full">
-              <Label htmlFor="password">Senha</Label>
-              <Input
-                id="password"
-                {...register("password")}
-                required
-                className="h-[68px]"
-              />
-            </div>
+        <form
+          onSubmit={handleSubmit(onSubmit)}
+          method="post"
+          className="flex flex-col justify-center items-center gap-8"
+        >
+          <div className="flex flex-col items-center justify-center gap-6 w-[23.75rem]">
+            <InputForm
+              label="Email"
+              id="email"
+              name="email"
+              register={register}
+              required
+            />
+            <InputForm
+              label="Senha"
+              id="password"
+              name="password"
+              register={register}
+              required
+            />
           </div>
+
           {error && <div className="max-w-sm text-red-500">{error}</div>}
 
           <Button
             type="submit"
-            className="w-full h-11 text-[1rem] font-semibold text-primary bg-brand-3 hover:bg-brand-4"
+            className="w-[23.75rem] h-11 text-[1rem] font-semibold rounded p-4 dark:text-primary bg-brand-3 hover:bg-brand-4"
             disabled={isSubmitting || isLoading}
           >
-            Entrar
+            {isSubmitting ? "Entrando..." : "Entrar"}
           </Button>
         </form>
       </CardContent>

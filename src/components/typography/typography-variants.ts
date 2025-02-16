@@ -5,7 +5,7 @@ export const typographyVariants = cva("dark:text-foreground teleading-4", {
     variant: {
       h1: "text-[4rem]",
       h2: "text-[2.75rem]",
-      h3: "text-[2.25rem]",
+      h3: "text-[2rem]",
       h4: "text-[1.75rem]",
       h5: "text-[1.5rem]",
       h6: "text-[1.25rem]",
