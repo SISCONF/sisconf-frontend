@@ -1,6 +1,8 @@
 import type { Metadata } from "next";
 import "./globals.css";
 import { Registry } from "./registry";
+import { ThemeProvider } from "@/components/theme";
+import NextTopLoader from "nextjs-toploader";
 
 export const metadata: Metadata = {
   title: "Create Next App",
@@ -17,7 +19,19 @@ export default function RootLayout({
       <head>
         <meta httpEquiv="Access-Control-Allow-Origin" content="*" />
       </head>
-      <Registry>{children}</Registry>
+      <Registry>
+        <body>
+          <ThemeProvider
+            attribute="class"
+            defaultTheme="system"
+            enableSystem
+            disableTransitionOnChange
+          >
+            <NextTopLoader color="#fff" showSpinner={false} />
+            {children}
+          </ThemeProvider>
+        </body>
+      </Registry>
     </html>
   );
 }

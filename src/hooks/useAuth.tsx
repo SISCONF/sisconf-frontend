@@ -1,0 +1,57 @@
+"use client";
+
+import { createContext, useContext, useState } from "react";
+import { deleteCookie } from "cookies-next";
+import { User } from "@/types/user";
+import { useRouter } from "next/navigation";
+
+interface AuthContextType {
+  user: User | null;
+  isAuthenticated: boolean;
+  isLoading: boolean;
+  setUser: (user: User | null) => void;
+  setIsAuthenticated: (value: boolean) => void;
+  logout: () => void;
+}
+
+const AuthContext = createContext<AuthContextType | undefined>(undefined);
+
+export const AuthProvider = ({ children }: { children: React.ReactNode }) => {
+  const [isAuthenticated, setIsAuthenticated] = useState(false);
+  const [user, setUser] = useState<User | null>(null);
+  const [isLoading, setIsLoading] = useState(true);
+
+  const router = useRouter();
+
+  const handleLogout = async () => {
+    deleteCookie("access");
+    deleteCookie("refresh");
+    deleteCookie("user");
+    setIsAuthenticated(false);
+    setUser(null);
+    router.push("/");
+  };
+
+  return (
+    <AuthContext.Provider
+      value={{
+        user,
+        isAuthenticated,
+        isLoading,
+        logout: handleLogout,
+        setIsAuthenticated,
+        setUser,
+      }}
+    >
+      {children}
+    </AuthContext.Provider>
+  );
+};
+
+export const useAuth = () => {
+  const context = useContext(AuthContext);
+  if (context === undefined) {
+    throw new Error("useAuth must be used within an AuthProvider");
+  }
+  return context;
+};

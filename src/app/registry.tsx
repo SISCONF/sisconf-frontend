@@ -1,9 +1,9 @@
 "use client";
 
 import { ReactNode, useState } from "react";
-import { ThemeProvider } from "@/components/theme";
+
 import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
-import NextTopLoader from "nextjs-toploader";
+import { AuthProvider } from "@/hooks/useAuth";
 
 interface RegistryProps {
   children: ReactNode;
@@ -14,17 +14,7 @@ export const Registry = ({ children }: RegistryProps) => {
 
   return (
     <QueryClientProvider client={queryClient}>
-      <body>
-        <ThemeProvider
-          attribute="class"
-          defaultTheme="system"
-          enableSystem
-          disableTransitionOnChange
-        >
-          <NextTopLoader color="#fff" showSpinner={false} />
-          {children}
-        </ThemeProvider>
-      </body>
+      <AuthProvider>{children}</AuthProvider>
     </QueryClientProvider>
   );
 };
