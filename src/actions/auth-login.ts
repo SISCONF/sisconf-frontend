@@ -11,9 +11,8 @@ export async function authLogin(email: string, password: string) {
       body: { email, password },
     });
     if (response) {
-      cookies().set("refresh_token", response.refresh, {});
-      cookies().set("access_token", response.access);
-      cookies().set("user", JSON.stringify(response.user));
+      cookies().set("refresh_token", response.refreshToken, {});
+      cookies().set("access_token", response.authenticationToken);
     }
     console.log(response);
     return response;

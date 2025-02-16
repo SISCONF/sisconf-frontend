@@ -24,9 +24,8 @@ export const AuthProvider = ({ children }: { children: React.ReactNode }) => {
   const router = useRouter();
 
   const handleLogout = async () => {
-    deleteCookie("access");
-    deleteCookie("refresh");
-    deleteCookie("user");
+    deleteCookie("access_token");
+    deleteCookie("refresh_token");
     setIsAuthenticated(false);
     setUser(null);
     router.push("/");
