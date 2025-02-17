@@ -24,7 +24,7 @@ export default function Products() {
           Explore nosso <span className="text-[#43A046]">catálogo</span>
         </Typography>
       </header>
-      <main className="py-[1.56rem] px-[1.875rem] flex justify-between items-start gap-[2.5rem]">
+      <main className="h-screen py-[1.56rem] px-[1.875rem] flex justify-between items-start gap-[2.5rem]">
         <div className="flex-1">
           <Image
             className="rounded-[1rem]"

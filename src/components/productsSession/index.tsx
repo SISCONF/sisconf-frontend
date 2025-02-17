@@ -12,12 +12,12 @@ export default function ProductsSession() {
       <section>
         <SearchProductAndContact />
         <div className="py-[1rem] border border-black flex flex-wrap gap-[0.38rem]">
-          <ProductCard image={FoodPlaceholder} name="Maçã" price={4.99} />
-          <ProductCard image={FoodPlaceholder} name="Maçã" price={4.99} />
-          <ProductCard image={FoodPlaceholder} name="Maçã" price={4.99} />
-          <ProductCard image={FoodPlaceholder} name="Maçã" price={4.99} />
-          <ProductCard image={FoodPlaceholder} name="Maçã" price={4.99} />
-          <ProductCard image={FoodPlaceholder} name="Maçã" price={4.99} />
+          <ProductCard image={FoodPlaceholder} name="Morango" price={12.0} />
+          <ProductCard image={FoodPlaceholder} name="Morango" price={12.0} />
+          <ProductCard image={FoodPlaceholder} name="Morango" price={12.0} />
+          <ProductCard image={FoodPlaceholder} name="Morango" price={12.0} />
+          <ProductCard image={FoodPlaceholder} name="Morango" price={12.0} />
+          <ProductCard image={FoodPlaceholder} name="Morango" price={12.0} />
         </div>
       </section>
     </div>

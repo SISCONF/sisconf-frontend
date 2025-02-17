@@ -1,17 +1,15 @@
 // Components
-import Image from "next/image";
 import Link from "next/link";
 
-// Images
-import SearchIcon from "/public/assets/search.svg";
-import EmailContactIcon from "/public/assets/contact-us.svg";
+// Icons
+import { SearchIcon, MailIcon } from "lucide-react";
 
 export default function SearchProductAndContact() {
   return (
     <div className="flex items-center justify-between">
       <div className="max-w-[18rem] w-full relative flex items-center px-[0.6875rem] py-[0.43rem] rounded-[0.5rem] border-[0.135rem] border-[#43A046]">
         <button className="pr-[0.6875rem]">
-          <Image src={SearchIcon} alt="A green magnifying glass" />
+          <SearchIcon size={20} color="#43A046" />
         </button>
         <input
           className="focus:outline-none w-full"
@@ -28,11 +26,7 @@ export default function SearchProductAndContact() {
             {" "}
             Fale conosco
           </strong>
-          <Image
-            className="inline"
-            src={EmailContactIcon}
-            alt="a green email inbox with a person alongside it"
-          />
+          <MailIcon size={20} color="#43A046" className="inline-block" />
         </Link>
       </p>
     </div>
