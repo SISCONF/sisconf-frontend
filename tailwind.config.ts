@@ -23,6 +23,9 @@ const config: Config = {
         "tab-port": { max: "991px" },
         mobile: { max: "574px" },
       },
+      fontFamily: {
+        sans: ["var(--font-inter)", "sans-serif"],
+      },
       colors: {
         background: "hsl(var(--background))",
         foreground: "hsl(var(--foreground))",
