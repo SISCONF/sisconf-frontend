@@ -9,20 +9,23 @@ import {
 } from "@/components/ui/card";
 import { Typography } from "../typography";
 import { ReactNode } from "react";
+import { cn } from "@/lib/utils";
 
 interface CardConainerProps {
   title: string;
   description: string;
   children: ReactNode;
+  className?: string;
 }
 
 export function CardConainer({
   children,
   title,
+  className,
   description,
 }: CardConainerProps) {
   return (
-    <Card className="flex flex-col items-center justify-center w-[35.62rem] h-[33.12rem] bg-background border-none shadow-lg">
+    <Card className="flex flex-col items-center justify-center w-[35.62rem] min-h-[33.12rem] bg-background border-none shadow-lg">
       <CardHeader className="text-center gap-1">
         <CardTitle>
           <Typography variant="h3" fontWeight={"bold"}>
@@ -30,15 +33,15 @@ export function CardConainer({
           </Typography>
         </CardTitle>
         <CardDescription>
-          <Typography
-            variant={"body2"}
-            className="text-[#757575] text-[0.75rem]"
-          >
+          <Typography variant={"body2"} className="text-[#757575]">
             {description}
           </Typography>
         </CardDescription>
       </CardHeader>
-      <CardContent className="w-[23.75rem] h-fit">{children}</CardContent>
+
+      <CardContent className={cn(["w-[23.75rem] h-fit", className])}>
+        {children}
+      </CardContent>
     </Card>
   );
 }

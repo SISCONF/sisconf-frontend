@@ -8,6 +8,7 @@ interface InputFormProps {
   label: string;
   id: string;
   type: "email" | "number" | "text" | "password";
+  placeholder?: string;
   register: UseFormRegister<any>;
   name: string;
   required?: boolean;
@@ -20,6 +21,7 @@ export function InputForm({
   label,
   id,
   type,
+  placeholder,
   register,
   name,
   required = false,
@@ -30,14 +32,20 @@ export function InputForm({
 }: InputFormProps) {
   return (
     <div className={cn(["grid gap-2 w-full", className])}>
-      <Label htmlFor={id}>{label}</Label>
+      <Label htmlFor={id} className="font-medium">
+        {label}
+      </Label>
       <div className="relative">
         <Input
           id={id}
           type={type}
+          placeholder={placeholder}
           {...register(name)}
           required={required}
-          className={`h-[3.75rem] w-full ${inputClassName}`}
+          className={cn([
+            "h-[3.75rem] w-full border-brand-button",
+            inputClassName,
+          ])}
           {...rest}
         />
         {icon && (
