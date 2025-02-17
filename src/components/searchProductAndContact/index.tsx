@@ -9,7 +9,7 @@ import EmailContactIcon from "/public/assets/contact-us.svg";
 export default function SearchProductAndContact() {
   return (
     <div className="flex items-center justify-between">
-      <div className="max-w-[24.875rem] w-full relative flex items-center px-[0.6875rem] py-[0.43rem] rounded-[0.5rem] border-[0.135rem] border-[#43A046]">
+      <div className="max-w-[18rem] w-full relative flex items-center px-[0.6875rem] py-[0.43rem] rounded-[0.5rem] border-[0.135rem] border-[#43A046]">
         <button className="pr-[0.6875rem]">
           <Image src={SearchIcon} alt="A green magnifying glass" />
         </button>

@@ -5,7 +5,7 @@ import ProductsSession from "@/components/productsSession";
 
 // Images
 import VeggiesHeader from "/public/assets/products-header-veggies.png";
-import StrawberriesBanenr from "/public/assets/strawberries-banner.jpg";
+import StrawberriesBanner from "/public/assets/strawberries-banner.jpg";
 import CarrotsBanner from "/public/assets/carrots-banner.jpg";
 
 export default function Products() {
@@ -24,18 +24,17 @@ export default function Products() {
           Explore nosso <span className="text-[#43A046]">catálogo</span>
         </Typography>
       </header>
-      <main className="border py-[1.56rem] px-[1.875rem] flex justify-between gap-[2.5rem]">
-        <Image
-          className="rounded-[1.25rem] object-cover max-w-[20%]"
-          src={StrawberriesBanenr}
-          alt="a bunch of strawberries together"
-        />
+      <main className="py-[1.56rem] px-[1.875rem] flex justify-between items-start gap-[2.5rem]">
+        <div className="flex-1 min-w-[15rem]">
+          <Image
+            src={StrawberriesBanner}
+            alt="a bunch of strawberries together"
+          />
+        </div>
         <ProductsSession />
-        <Image
-          className="rounded-[1.25rem] object-cover max-w-[20%]"
-          src={CarrotsBanner}
-          alt="a bunch of carrots together"
-        />
+        <div className="flex-1 min-w-[15rem]">
+          <Image src={CarrotsBanner} alt="a bunch of carrots together" />
+        </div>
       </main>
     </>
   );
