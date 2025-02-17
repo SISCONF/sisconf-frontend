@@ -18,6 +18,9 @@ export default function ProductsSession() {
           <ProductCard image={FoodPlaceholder} name="Morango" price={12.0} />
           <ProductCard image={FoodPlaceholder} name="Morango" price={12.0} />
           <ProductCard image={FoodPlaceholder} name="Morango" price={12.0} />
+          <ProductCard image={FoodPlaceholder} name="Morango" price={12.0} />
+          <ProductCard image={FoodPlaceholder} name="Morango" price={12.0} />
+          <ProductCard image={FoodPlaceholder} name="Morango" price={12.0} />
         </div>
       </section>
     </div>

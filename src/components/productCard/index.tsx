@@ -1,5 +1,6 @@
 // Components
 import Image from "next/image";
+import Quantity from "../quantity";
 
 // Types
 import { StaticImageData } from "next/image";
@@ -27,11 +28,12 @@ export default function ProductCard({ image, name, price }: ProductCardProps) {
           <strong>{name}</strong>
           <strong>R$ {price.toFixed(2)}</strong>
         </span>
-        <div>
+        <div className="flex items-center justify-between">
           <button className="py-[0.3125rem] px-[0.475rem] rounded-lg flex items-center gap-[0.25rem] bg-[#237D31] text-white">
             <ShoppingBagIcon size={18} />
             Adicionar
           </button>
+          <Quantity />
         </div>
       </div>
     </div>

@@ -10,8 +10,8 @@ import CarrotsBanner from "/public/assets/carrots-banner.jpg";
 
 export default function Products() {
   return (
-    <>
-      <header className="relative">
+    <div className="min-h-screen">
+      <div className="relative">
         <Image
           src={VeggiesHeader}
           alt="a wooden table with fruits, veggies and seeds on it."
@@ -23,24 +23,24 @@ export default function Products() {
         >
           Explore nosso <span className="text-[#43A046]">catálogo</span>
         </Typography>
-      </header>
-      <main className="h-screen py-[1.56rem] px-[1.875rem] flex justify-between items-start gap-[2.5rem]">
-        <div className="flex-1">
+      </div>
+      <main className="py-[1.56rem] px-[1.875rem] flex justify-between gap-[2.5rem]">
+        <div className="flex-1 border border-black">
           <Image
-            className="rounded-[1rem]"
+            className="rounded-[1rem] object-cover h-full"
             src={StrawberriesBanner}
             alt="a bunch of strawberries together"
           />
         </div>
         <ProductsSession />
-        <div className="flex-1">
+        <div className="flex-1 border border-black">
           <Image
-            className="rounded-[1rem]"
+            className="rounded-[1rem] object-cover h-full"
             src={CarrotsBanner}
             alt="a bunch of carrots together"
           />
         </div>
       </main>
-    </>
+    </div>
   );
 }
