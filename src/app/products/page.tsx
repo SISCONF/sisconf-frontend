@@ -25,15 +25,20 @@ export default function Products() {
         </Typography>
       </header>
       <main className="py-[1.56rem] px-[1.875rem] flex justify-between items-start gap-[2.5rem]">
-        <div className="flex-1 min-w-[15rem]">
+        <div className="flex-1">
           <Image
+            className="rounded-[1rem]"
             src={StrawberriesBanner}
             alt="a bunch of strawberries together"
           />
         </div>
         <ProductsSession />
-        <div className="flex-1 min-w-[15rem]">
-          <Image src={CarrotsBanner} alt="a bunch of carrots together" />
+        <div className="flex-1">
+          <Image
+            className="rounded-[1rem]"
+            src={CarrotsBanner}
+            alt="a bunch of carrots together"
+          />
         </div>
       </main>
     </>
