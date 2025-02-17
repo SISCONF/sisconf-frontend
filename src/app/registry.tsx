@@ -14,7 +14,7 @@ export const Registry = ({ children }: RegistryProps) => {
 
   return (
     <QueryClientProvider client={queryClient}>
-      <body>
+      <body className="font-sans">
         <ThemeProvider
           attribute="class"
           defaultTheme="system"
