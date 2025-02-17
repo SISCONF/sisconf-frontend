@@ -17,6 +17,7 @@ import { useState } from "react";
 import { authLogin } from "@/actions/auth-login";
 import { useAuth } from "@/hooks/useAuth";
 import { InputForm } from "@/components/input-form";
+import { Eye, EyeClosed, LockIcon } from "lucide-react";
 
 interface LoginFormSchema {
   email: string;
@@ -74,6 +75,7 @@ export function LoginForm() {
             <InputForm
               label="Email"
               id="email"
+              type="email"
               name="email"
               register={register}
               required
@@ -81,9 +83,11 @@ export function LoginForm() {
             <InputForm
               label="Senha"
               id="password"
+              type="password"
               name="password"
               register={register}
               required
+              icon={<Eye className="h-5 w-5 " />}
             />
           </div>
 

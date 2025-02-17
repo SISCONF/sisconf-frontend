@@ -1,13 +1,13 @@
 import { Address } from "./address";
 
 export interface Person {
+  id: number;
   address: Address;
-  cnpj: string;
+  firstName: string;
+  lastName: string;
+  cnpj?: string;
   cpf: string;
   email: string;
-  firstName: string;
-  id: number;
-  keycloakId: string;
-  lastName: string;
   phone: string;
+  keycloakId: string | undefined;
 }
