@@ -2,12 +2,12 @@ import Image from "next/image";
 import StatusTag from "../status-tag";
 import { X } from "lucide-react"
 
-export interface ResumeOrderCardProps {
+export interface ResumeOrderItemList {
 }
 
-export default function ResumeOrderCard ({
+export function ResumeOrderItemList ({
 
-}: ResumeOrderCardProps) {
+}: ResumeOrderItemList) {
   return (
     <div className="max-[843px] h-24 relative flex flex-wrap gap-20 items-center">
         <div className="flex items-center gap-4">
