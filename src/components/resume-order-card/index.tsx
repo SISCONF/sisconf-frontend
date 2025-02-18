@@ -9,7 +9,7 @@ export default function ResumeOrderCard ({
 
 }: ResumeOrderCardProps) {
   return (
-    <div className=" m-10 max-[843px] relative flex flex-wrap gap-20 items-center">
+    <div className="max-[843px] h-24 relative flex flex-wrap gap-20 items-center">
         <div className="flex items-center gap-4">
             <Image 
                 alt="Food image"
