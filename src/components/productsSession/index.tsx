@@ -1,6 +1,7 @@
 // Components
 import SearchProductAndContact from "../searchProductAndContact";
 import ProductCard from "../productCard";
+import PaginationButtons from "../paginationButtons";
 
 // Images
 import FoodPlaceholder from "/public/assets/food-placeholder.jpg";
@@ -11,7 +12,7 @@ export default function ProductsSession() {
       <div>The tabs stay here</div>
       <section>
         <SearchProductAndContact />
-        <div className="py-[1rem] border border-black flex flex-wrap gap-[0.38rem]">
+        <div className="py-[1rem] flex flex-wrap gap-[4.32rem]">
           <ProductCard image={FoodPlaceholder} name="Morango" price={12.0} />
           <ProductCard image={FoodPlaceholder} name="Morango" price={12.0} />
           <ProductCard image={FoodPlaceholder} name="Morango" price={12.0} />
@@ -22,6 +23,7 @@ export default function ProductsSession() {
           <ProductCard image={FoodPlaceholder} name="Morango" price={12.0} />
           <ProductCard image={FoodPlaceholder} name="Morango" price={12.0} />
         </div>
+        <PaginationButtons />
       </section>
     </div>
   );
