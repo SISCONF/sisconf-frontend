@@ -36,7 +36,12 @@ export default function Quantity() {
         pattern="\d+"
         onChange={handleAmountInputChange}
         onBlur={handleAmountInputChange}
-        style={{ width: `${amount.toString().length + 1}ch` }}
+        style={{
+          width:
+            amount.toString().length > 3
+              ? "18px"
+              : `${amount.toString().length + 1}ch`,
+        }}
       />
       <CircleMinusIcon
         size={21}
