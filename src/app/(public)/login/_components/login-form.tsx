@@ -10,14 +10,12 @@ import {
 import { useRouter } from "next/navigation";
 import { Typography } from "@/components/typography";
 import { Button } from "@/components/ui/button";
-import { Label } from "@/components/ui/label";
-import { Input } from "@/components/ui/input";
 import { SubmitHandler, useForm } from "react-hook-form";
 import { useState } from "react";
 import { authLogin } from "@/actions/auth-login";
 import { useAuth } from "@/hooks/useAuth";
 import { InputForm } from "@/components/input-form";
-import { Eye, EyeClosed, LockIcon } from "lucide-react";
+import { Eye } from "lucide-react";
 
 interface LoginFormSchema {
   email: string;
@@ -74,20 +72,19 @@ export function LoginForm() {
           <div className="flex flex-col items-center justify-center gap-6 w-[23.75rem]">
             <InputForm
               label="Email"
-              id="email"
               type="email"
+              id="email"
               name="email"
               register={register}
               required
             />
             <InputForm
               label="Senha"
-              id="password"
               type="password"
+              id="password"
               name="password"
               register={register}
               required
-              icon={<Eye className="h-5 w-5 " />}
             />
           </div>
 

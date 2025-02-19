@@ -1,8 +1,8 @@
+import { ReactNode } from "react";
+import { cn } from "@/lib/utils";
 import { Label } from "@/components/ui/label";
 import { Input } from "@/components/ui/input";
-import { type UseFormRegister } from "react-hook-form";
-import { cn } from "@/lib/utils";
-import { ReactNode } from "react";
+import { UseFormRegister } from "react-hook-form";
 
 interface InputFormProps {
   label: string;
@@ -15,6 +15,7 @@ interface InputFormProps {
   className?: string;
   inputClassName?: string;
   icon?: ReactNode;
+  error?: string;
 }
 
 export function InputForm({
@@ -28,7 +29,7 @@ export function InputForm({
   className,
   inputClassName,
   icon,
-  ...rest
+  error,
 }: InputFormProps) {
   return (
     <div className={cn(["grid gap-2 w-full", className])}>
@@ -46,7 +47,6 @@ export function InputForm({
             "h-[3.75rem] w-full border-brand-button",
             inputClassName,
           ])}
-          {...rest}
         />
         {icon && (
           <button
@@ -57,6 +57,8 @@ export function InputForm({
           </button>
         )}
       </div>
+
+      {error && <span className="text-red-500 text-sm">{error}</span>}
     </div>
   );
 }

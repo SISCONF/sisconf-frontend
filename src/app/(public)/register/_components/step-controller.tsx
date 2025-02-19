@@ -1,10 +1,11 @@
 import { Button } from "@/components/ui/button";
 
 interface StepControllerProps {
-  onPrevious: () => void;
+  onPrevious?: () => void;
   onNext: () => void;
   isFirstStep: boolean;
   isLastStep: boolean;
+  buttonLabel: string;
 }
 
 export function StepController({
@@ -12,6 +13,7 @@ export function StepController({
   onNext,
   isFirstStep,
   isLastStep,
+  buttonLabel,
 }: StepControllerProps) {
   return (
     <div className="flex items-center gap-4">
@@ -27,7 +29,7 @@ export function StepController({
         onClick={onNext}
         className="w-32 h-11 font-semibold bg-brand-3 text-white hover:bg-brand-5 rounded"
       >
-        {isLastStep ? "SALVAR" : "PRÓXIMO"}
+        {isLastStep ? "SALVAR" : buttonLabel}
       </Button>
     </div>
   );

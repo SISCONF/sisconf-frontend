@@ -1,93 +1,119 @@
-import { InputForm } from "@/components/input-form";
-import { SubmitHandler, useForm } from "react-hook-form";
+"use client";
 
-interface ThirdStepSchema {
-  street: string;
-  zip_code: string;
-  city: string;
-  country_state: string;
-  number: number;
-  neighborhood: string;
-}
+import { useFormContext } from "react-hook-form";
+import { Customer } from "@/types/customer";
+import { Label } from "@/components/ui/label";
+import { Input } from "@/components/ui/input";
 
 export function ThirdStep() {
   const {
     register,
-    handleSubmit,
     formState: { errors },
-  } = useForm<ThirdStepSchema>();
-
-  const onSubmit: SubmitHandler<ThirdStepSchema> = async (data) => {
-    console.log(data);
-  };
+  } = useFormContext<Customer>();
 
   return (
-    <form
-      onSubmit={handleSubmit(onSubmit)}
-      className="flex flex-col items-center w-full gap-4"
-    >
-      <InputForm
-        label="RUA"
-        id="street"
-        type="text"
-        placeholder="Rua do País do Fogo"
-        register={register}
-        name="street"
-        required
-      />
-      <div className="flex items-center w-full gap-6">
-        <InputForm
-          label="CEP"
-          id="zip_code"
+    <div className="flex flex-col items-center w-full gap-4">
+      <div className="grid gap-2 w-full">
+        <Label htmlFor="person.address.street" className="font-medium">
+          RUA
+        </Label>
+        <Input
+          id="street"
           type="text"
-          placeholder="99999-999"
-          register={register}
-          name="zip_code"
-          required
+          placeholder="Rua do País do Fogo"
+          {...register("person.address.street", {
+            required: "Campo obrigatório",
+          })}
+          className="h-[3.75rem] w-full border-brand-button"
         />
-
-        <InputForm
-          label="CIDADE"
-          id="city"
-          type="text"
-          placeholder="Pau dos Ferros"
-          register={register}
-          name="city"
-          required
-        />
+        {errors.person?.address?.street && (
+          <span className="text-red-500">
+            {errors.person.address.street.message}
+          </span>
+        )}
       </div>
 
       <div className="flex items-center w-full gap-6">
-        <InputForm
-          label="ESTADO"
-          id="country_state"
-          type="text"
-          placeholder="Rio Grande do Norte"
-          register={register}
-          name="country_state"
-          required
-        />
+        <div className="grid gap-2 w-full">
+          <Label htmlFor="person.address.zipCode" className="font-medium">
+            CEP
+          </Label>
+          <Input
+            id="zipCode"
+            type="text"
+            placeholder="99999-999"
+            {...register("person.address.zipCode", {
+              required: "Campo obrigatório",
+            })}
+            className="h-[3.75rem] w-full border-brand-button"
+          />
+          {errors.person?.address?.zipCode && (
+            <span className="text-red-500">
+              {errors.person.address.zipCode.message}
+            </span>
+          )}
+        </div>
 
-        <InputForm
-          label="NÚMERO"
+        <div className="grid gap-2 w-full">
+          <Label htmlFor="person.address.city" className="font-medium">
+            CIDADE
+          </Label>
+          <Input
+            id="city"
+            type="number"
+            placeholder="Pau dos Ferros"
+            {...register("person.address.city", {
+              required: "Campo obrigatório",
+            })}
+            className="h-[3.75rem] w-full border-brand-button"
+          />
+          {errors.person?.address?.city && (
+            <span className="text-red-500">
+              {errors.person.address.city.message}
+            </span>
+          )}
+        </div>
+      </div>
+
+      <div className="grid gap-2 w-full">
+        <Label htmlFor="person.address.number" className="font-medium">
+          NÚMERO
+        </Label>
+        <Input
           id="number"
           type="number"
           placeholder="10"
-          register={register}
-          name="number"
-          required
+          {...register("person.address.number", {
+            required: "Campo obrigatório",
+          })}
+          className="h-[3.75rem] w-full border-brand-button"
         />
+        {errors.person?.address?.number && (
+          <span className="text-red-500">
+            {errors.person.address.number.message}
+          </span>
+        )}
       </div>
 
-      <InputForm
-        label="BAIRRO"
-        id="neighborhood"
-        type="text"
-        placeholder="Centro"
-        register={register}
-        name="neighborhood"
-        required
-      />
-    </form>
+      <div className="grid gap-2 w-full">
+        <Label htmlFor="person.address.neighbourhood" className="font-medium">
+          BAIRRO
+        </Label>
+        <Input
+          id="neighbourhood"
+          type="text"
+          placeholder="Centro"
+          {...register("person.address.neighbourhood", {
+            required: "Campo obrigatório",
+          })}
+          className="h-[3.75rem] w-full border-brand-button"
+        />
+        {errors.person?.address?.neighbourhood && (
+          <span className="text-red-500">
+            {errors.person.address.neighbourhood.message}
+          </span>
+        )}
+      </div>
+    </div>
   );
 }

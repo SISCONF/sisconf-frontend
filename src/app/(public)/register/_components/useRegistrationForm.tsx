@@ -45,6 +45,7 @@ export const useRegisterStepper = () => {
   };
 
   const handleNextStep = () => {
+    console.log("Aqui");
     if (currentStepIndex < STEPS.length - 1) {
       setCurrentStepIndex(currentStepIndex + 1);
     }
