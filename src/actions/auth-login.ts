@@ -14,7 +14,7 @@ export async function authLogin(email: string, password: string) {
       cookies().set("refresh_token", response.refreshToken, {});
       cookies().set("access_token", response.authenticationToken);
     }
-    console.log(response);
+
     return response;
   } catch (error: any) {
     throw new Error((error as ErrorResponse).message);

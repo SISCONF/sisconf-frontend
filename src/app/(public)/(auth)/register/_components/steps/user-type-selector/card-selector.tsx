@@ -17,7 +17,7 @@ export function CardSelector({
   return (
     <Card
       className={cn([
-        "flex items-center justify-center w-[11.25rem] h-[100px] bg-white border-2 border-brand-3 cursor-pointer transition-all duration-200 hover:shadow-md",
+        "flex items-center justify-center w-[14rem] h-[120px] bg-white border-2 border-brand-3 cursor-pointer transition-all duration-200 hover:shadow-md",
         selected && "bg-brand-3 border-brand-3",
       ])}
       onClick={onSelect}

@@ -1,11 +1,9 @@
 "use client";
 
-import { InputForm } from "@/components/input-form";
+import { useFormContext } from "react-hook-form";
+import { Customer } from "@/types/customer";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
-import { cn } from "@/lib/utils";
-import { Customer } from "@/types/customer";
-import { useFormContext } from "react-hook-form";
 
 export function FirstStep() {
   const {
@@ -17,11 +15,11 @@ export function FirstStep() {
     <div className="flex flex-col items-center w-full gap-4">
       <div className="flex items-center w-full gap-6">
         <div className="grid gap-2 w-full">
-          <Label htmlFor={"firsName"} className="font-medium">
+          <Label htmlFor={"person.firsName"} className="font-medium">
             NOME
           </Label>
           <Input
-            id="firsName"
+            id="person.firsName"
             type="text"
             placeholder="Insira seu primeiro nome"
             {...register("person.firstName")}
@@ -34,11 +32,11 @@ export function FirstStep() {
           )}
         </div>
         <div className="grid gap-2 w-full">
-          <Label htmlFor={"lastName"} className="font-medium">
+          <Label htmlFor={"person.lastName"} className="font-medium">
             SOBRENOME
           </Label>
           <Input
-            id="lastName"
+            id="person.lastName"
             type="text"
             placeholder="Insira seu sobrenome"
             {...register("person.lastName")}

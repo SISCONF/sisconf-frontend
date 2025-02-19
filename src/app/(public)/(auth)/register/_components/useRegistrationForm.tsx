@@ -35,6 +35,9 @@ const STEPS: Step[] = [
 export const useRegisterStepper = () => {
   const [currentStepIndex, setCurrentStepIndex] = useState(0);
   const [stepData, setStepData] = useState<Record<string, any>>({});
+  const [selectedUserType, setSelectedUserType] = useState<
+    "Client" | "Entrepreneur" | null
+  >(null);
 
   const currentStep = STEPS[currentStepIndex];
 
@@ -45,7 +48,6 @@ export const useRegisterStepper = () => {
   };
 
   const handleNextStep = () => {
-    console.log("Aqui");
     if (currentStepIndex < STEPS.length - 1) {
       setCurrentStepIndex(currentStepIndex + 1);
     }
@@ -67,5 +69,7 @@ export const useRegisterStepper = () => {
     stepData,
     isFirstStep: currentStepIndex === 0,
     isLastStep: currentStepIndex === STEPS.length - 1,
+    selectedUserType,
+    setSelectedUserType,
   };
 };

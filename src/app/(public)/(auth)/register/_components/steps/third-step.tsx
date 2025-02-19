@@ -41,7 +41,7 @@ export function ThirdStep() {
           <Input
             id="zipCode"
             type="text"
-            placeholder="99999-999"
+            placeholder="00000-000"
             {...register("person.address.zipCode", {
               required: "Campo obrigatório",
             })}
@@ -61,7 +61,6 @@ export function ThirdStep() {
           <Input
             id="city"
             type="number"
-            placeholder="Pau dos Ferros"
             {...register("person.address.city", {
               required: "Campo obrigatório",
             })}

@@ -1,12 +1,15 @@
 "use client";
 
 import { useFormContext } from "react-hook-form";
-import { InputForm } from "@/components/input-form";
 import { Customer } from "@/types/customer";
 import { Label } from "@/components/ui/label";
 import { Input } from "@/components/ui/input";
 
-export function SecondStep() {
+interface SecondStepProps {
+  isEntrepreneur: boolean;
+}
+
+export function SecondStep({ isEntrepreneur }: SecondStepProps) {
   const {
     register,
     formState: { errors },
@@ -31,18 +34,20 @@ export function SecondStep() {
           <span className="text-red-500">{errors.person.cpf.message}</span>
         )}
 
-        <div className="grid gap-2 w-full">
-          <Label htmlFor={"person.cnpj"} className="font-medium">
-            CNPJ
-          </Label>
-          <Input
-            id="person.cnpj"
-            type="text"
-            placeholder="XX.XXX.XXXX/XXXX-XX"
-            {...register("person.cnpj")}
-            className="h-[3.75rem] w-full border-brand-button"
-          />
-        </div>
+        {isEntrepreneur && (
+          <div className="grid gap-2 w-full">
+            <Label htmlFor={"person.cnpj"} className="font-medium">
+              CNPJ
+            </Label>
+            <Input
+              id="person.cnpj"
+              type="text"
+              placeholder="XX.XXX.XXXX/XXXX-XX"
+              {...register("person.cnpj")}
+              className="h-[3.75rem] w-full border-brand-button"
+            />
+          </div>
+        )}
 
         {errors.person?.cnpj && (
           <span className="text-red-500">{errors.person.cnpj.message}</span>

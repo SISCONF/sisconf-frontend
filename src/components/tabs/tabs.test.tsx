@@ -1,6 +1,6 @@
 import userEvent from "@testing-library/user-event";
 import { ComponentTabsPageObjects, initialProps } from "./tabs.page";
-import { TABS_LIST } from "@/app/(main)/content";
+import { TABS_LIST } from "@/app/(public)/(main)/content";
 
 const pageObjects = ComponentTabsPageObjects();
 
