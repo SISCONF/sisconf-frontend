@@ -1,8 +1,8 @@
 "use client";
 
+import { useState } from "react";
 import { ComponentTabs } from "@/components/tabs";
 import { ModeToggle } from "@/components/theme/mode-toggle";
-import { useState } from "react";
 
 export const TABS_LIST = [
   {
