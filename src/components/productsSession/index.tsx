@@ -7,7 +7,7 @@ import FoodPlaceholder from "/public/assets/food-placeholder.jpg";
 
 export default function ProductsSession() {
   return (
-    <div className="w-[820px]">
+    <div className="w-[860px]">
       <div>The tabs stay here</div>
       <section>
         <SearchProductAndContact />

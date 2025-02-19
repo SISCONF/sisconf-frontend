@@ -25,7 +25,7 @@ export default function Products() {
         </Typography>
       </div>
       <main className="py-[1.56rem] px-[1.875rem] flex justify-between gap-[2.5rem]">
-        <div className="flex-1 border border-black">
+        <div className="flex-1">
           <Image
             className="rounded-[1rem] object-cover h-full"
             src={StrawberriesBanner}
@@ -33,7 +33,7 @@ export default function Products() {
           />
         </div>
         <ProductsSession />
-        <div className="flex-1 border border-black">
+        <div className="flex-1">
           <Image
             className="rounded-[1rem] object-cover h-full"
             src={CarrotsBanner}
