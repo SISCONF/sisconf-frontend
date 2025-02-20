@@ -1,3 +1,5 @@
+"use client";
+
 import Header from '@/components/header';
 import PageTitle from '@/components/page-title';
 import { ResumeOrderCard } from '@/components/resume-order-card';
@@ -5,9 +7,17 @@ import { ResumeOrderItemList } from '@/components/resume-order-item-list';
 import ResumeOrdersList from '@/components/resume-orders-list';
 import { OrderItem } from '@/types/order-item';
 import { ArrowLeft } from 'lucide-react';
-import * as React from 'react';
+import { useState } from 'react';
 
 export default function ProductsSummary () {
+  const [orders, setOrders] = useState<OrderItem[]>(ordersList);
+
+  const removeOrder = (id: number) => {
+    setOrders(orders.filter((order) => order.id !== id));
+  }
+
+  const total = orders.reduce((acc, order) => acc + order.price, 0);
+
   return (
     <div className='px-16'>
       <Header />
@@ -23,22 +33,23 @@ export default function ProductsSummary () {
             <ResumeOrderItemList 
               key={order.id}
               order={order}
+              onRemove={() => removeOrder(order.id)}
             />
           ))}
         </ResumeOrdersList>
-        <ResumeOrderCard />
+        <ResumeOrderCard total={total} />
       </div>
     </div>
   );
 }
 
-const orders: OrderItem[] = [
+const ordersList: OrderItem[] = [
   {
     id: 1,
     image: "/strawberry.svg",
     name: "Morango",
     description: "lorem ipsum dolor siamet",
-    price: "R$ 300,00",
+    price: 200.00,
     status: "Aguardando",
   },
   {
@@ -46,7 +57,7 @@ const orders: OrderItem[] = [
     image: "/strawberry.svg",
     name: "Banana",
     description: "lorem ipsum dolor siamet",
-    price: "R$ 200,00",
+    price: 200.00,
     status: "Aprovado",
   },
   {
@@ -54,7 +65,7 @@ const orders: OrderItem[] = [
     image: "/strawberry.svg",
     name: "Maçã",
     description: "lorem ipsum dolor siamet",
-    price: "R$ 150,00",
+    price: 150.00,
     status: "Aprovado",
   },
   {
@@ -62,7 +73,7 @@ const orders: OrderItem[] = [
     image: "/strawberry.svg",
     name: "Laranja",
     description: "lorem ipsum dolor siamet",
-    price: "R$ 250,00",
+    price: 250.00,
     status: "Aguardando",
   },
 ];

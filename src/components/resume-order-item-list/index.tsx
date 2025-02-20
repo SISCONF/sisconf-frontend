@@ -3,15 +3,18 @@ import StatusTag from "../status-tag";
 import { X } from "lucide-react"
 import Quantity from "../quantity";
 import { OrderItem } from "@/types/order-item";
+import { formatPrice } from "@/lib/utils";
 
 export interface ResumeOrderItemList {
     order: OrderItem;
+    onRemove: (id:number) => void;
 }
 
 export function ResumeOrderItemList ({
-    order
+    order, 
+    onRemove,
 }: ResumeOrderItemList) {
-    const { name, description, image, price, status } = order;
+    const { id, name, description, image, price, status } = order;
 
     return (
     <div className="max-[843px] h-24 relative grid grid-cols-[3fr_1fr_1fr_1fr] place-items-center gap-12 pr-12">
@@ -31,14 +34,16 @@ export function ResumeOrderItemList ({
 
         <Quantity />
 
-        <span>{price}</span>
+        <span>{formatPrice(price)}</span>
 
         <StatusTag 
             text={status} 
             status={status}
         />
 
-        <X className="absolute top-0 right-0" />
+        <button onClick={() => onRemove(id)} className="">
+            <X className="absolute top-0 right-0" />        
+        </button>
     </div>
     );
 }
