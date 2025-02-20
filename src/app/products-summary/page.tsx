@@ -3,6 +3,7 @@ import PageTitle from '@/components/page-title';
 import { ResumeOrderCard } from '@/components/resume-order-card';
 import { ResumeOrderItemList } from '@/components/resume-order-item-list';
 import ResumeOrdersList from '@/components/resume-orders-list';
+import { OrderItem } from '@/types/order-item';
 import { ArrowLeft } from 'lucide-react';
 import * as React from 'react';
 
@@ -18,14 +19,50 @@ export default function ProductsSummary () {
 
       <div className='flex justify-between'>
         <ResumeOrdersList>
-          <ResumeOrderItemList status="Aguardando" />
-          <ResumeOrderItemList status="Aprovado" />
-          <ResumeOrderItemList status="Aprovado" />
-          <ResumeOrderItemList status="Aguardando"/>
+          {orders.map((order) => (
+            <ResumeOrderItemList 
+              key={order.id}
+              order={order}
+            />
+          ))}
         </ResumeOrdersList>
         <ResumeOrderCard />
       </div>
-
     </div>
   );
 }
+
+const orders: OrderItem[] = [
+  {
+    id: 1,
+    image: "/strawberry.svg",
+    name: "Morango",
+    description: "lorem ipsum dolor siamet",
+    price: "R$ 300,00",
+    status: "Aguardando",
+  },
+  {
+    id: 2,
+    image: "/strawberry.svg",
+    name: "Banana",
+    description: "lorem ipsum dolor siamet",
+    price: "R$ 200,00",
+    status: "Aprovado",
+  },
+  {
+    id: 3,
+    image: "/strawberry.svg",
+    name: "Maçã",
+    description: "lorem ipsum dolor siamet",
+    price: "R$ 150,00",
+    status: "Aprovado",
+  },
+  {
+    id: 4,
+    image: "/strawberry.svg",
+    name: "Laranja",
+    description: "lorem ipsum dolor siamet",
+    price: "R$ 250,00",
+    status: "Aguardando",
+  },
+];
