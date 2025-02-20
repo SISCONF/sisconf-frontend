@@ -16,9 +16,13 @@ export default function ResumeOrdersList ({
         <span>Status</span>
       </div>
       {children}
-      <div className='flex items-end gap-4 ml-auto'>
-        <button>Esvaziar sacola</button>
-        <button>Adicionar mais produtos</button>
+      <div className='flex items-end gap-4 ml-auto font-bold text-center'>
+        <button className='bg-slate-950 p-2 text-white rounded'>
+          Esvaziar sacola
+        </button>
+        <a href='/orders' className='text-green-800 p-2 underline'>
+          Adicionar mais produtos
+        </a>
       </div>
     </div>
   );
