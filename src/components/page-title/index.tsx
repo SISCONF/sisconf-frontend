@@ -14,7 +14,7 @@ export default function PageTitle({
     const router = useRouter()
 
     return (
-        <div className="flex items-center justify-center gap-2 text-primary">
+        <div className="flex items-center gap-2 text-primary text-green-700 mb-12">
             <button onClick={() => router.back()}>
                 {icon}
             </button>
