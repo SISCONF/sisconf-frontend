@@ -8,8 +8,8 @@ export default function ResumeOrdersList ({
   children
 }: ResumeOrdersListProps) {
   return (
-    <div className='max-w-[932px] px-11 py-5 flex flex-col gap-6'>
-      <div className='w-full grid grid-cols-[3fr_1fr_1fr_1fr] gap-12'>
+    <div className='max-w-[932px] px-11 py-5 flex flex-col gap-6 bg-slate-50 rounded-[8px]'>
+      <div className='w-full grid grid-cols-[3fr_1fr_1fr_1fr] gap-20'>
         <span>Produto</span>
         <span>Quantidade</span>
         <span>Preço</span>

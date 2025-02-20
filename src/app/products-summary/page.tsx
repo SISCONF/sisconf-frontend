@@ -18,10 +18,10 @@ export default function ProductsSummary () {
 
       <div className='flex justify-between'>
         <ResumeOrdersList>
-          <ResumeOrderItemList />
-          <ResumeOrderItemList />
-          <ResumeOrderItemList />
-          <ResumeOrderItemList />
+          <ResumeOrderItemList status="Aguardando" />
+          <ResumeOrderItemList status="Aprovado" />
+          <ResumeOrderItemList status="Aprovado" />
+          <ResumeOrderItemList status="Aguardando"/>
         </ResumeOrdersList>
         <ResumeOrderCard />
       </div>

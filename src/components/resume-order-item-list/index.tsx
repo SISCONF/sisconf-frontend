@@ -3,13 +3,14 @@ import StatusTag from "../status-tag";
 import { X } from "lucide-react"
 
 export interface ResumeOrderItemList {
+    status: "Aguardando" | "Aprovado"
 }
 
 export function ResumeOrderItemList ({
-
+    status
 }: ResumeOrderItemList) {
   return (
-    <div className="max-[843px] h-24 relative flex flex-wrap gap-20 items-center">
+    <div className="max-[843px] h-24 relative grid grid-cols-[3fr_1fr_1fr_1fr] place-items-center gap-12 pr-12">
         <div className="flex items-center gap-4">
             <Image 
                 alt="Food image"
@@ -29,9 +30,8 @@ export function ResumeOrderItemList ({
         <span>R$ 300,00</span>
 
         <StatusTag 
-            text="Aguardando" 
-            color="white" 
-            bgColor="green-500" 
+            text={status} 
+            status={status}
         />
 
         <X className="absolute top-0 right-0" />
