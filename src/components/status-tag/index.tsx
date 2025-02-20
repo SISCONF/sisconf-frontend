@@ -10,8 +10,8 @@ export default function StatusTag ({
     status
 }: StatusTagProps) {
   const statusStyles = {
-    Aguardando: "text-yellow-700 bg-yellow-200",
-    Aprovado: "text-green-700 bg-green-200"
+    Aguardando: "text-[#86640C] bg-[#F3DDA7]",
+    Aprovado: "text-[#237D31] bg-[#F0F4EA]"
   }
 
   return (

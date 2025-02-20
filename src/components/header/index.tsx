@@ -31,7 +31,7 @@ export default function Header ({
         <div className='flex items-center gap-4'>
           <a href="/orders">
               <ShoppingBag
-                className='text-green-600 size-7' 
+                className='text-[#43A046] size-7' 
               />
           </a>
           <button className='w-8 h-8'>
