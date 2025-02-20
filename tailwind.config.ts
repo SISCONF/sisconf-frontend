@@ -19,9 +19,18 @@ const config: Config = {
     },
     extend: {
       screens: {
-        "tab-land": { max: "1440px" },
-        "tab-port": { max: "991px" },
-        mobile: { max: "574px" },
+        "tab-land": {
+          max: "1440px",
+        },
+        "tab-port": {
+          max: "991px",
+        },
+        mobile: {
+          max: "574px",
+        },
+      },
+      fontFamily: {
+        sans: ["var(--font-roboto)", "sans-serif"],
       },
       colors: {
         background: "hsl(var(--background))",
@@ -55,14 +64,28 @@ const config: Config = {
           foreground: "hsl(var(--destructive-foreground))",
         },
         brand: {
+          "1": "var(--brand-1)",
+          "2": "var(--brand-2)",
+          "3": "var(--brand-3)",
+          "4": "var(--brand-4)",
+          "5": "var(--brand-5)",
           DEFAULT: "var(--brand)",
           button: "var(--brand-border-button)",
         },
         border: "hsl(var(--border))",
         input: "hsl(var(--input))",
         ring: "hsl(var(--ring))",
+        sidebar: {
+          DEFAULT: "hsl(var(--sidebar-background))",
+          foreground: "hsl(var(--sidebar-foreground))",
+          primary: "hsl(var(--sidebar-primary))",
+          "primary-foreground": "hsl(var(--sidebar-primary-foreground))",
+          accent: "hsl(var(--sidebar-accent))",
+          "accent-foreground": "hsl(var(--sidebar-accent-foreground))",
+          border: "hsl(var(--sidebar-border))",
+          ring: "hsl(var(--sidebar-ring))",
+        },
       },
-
       borderRadius: {
         lg: "var(--radius)",
         md: "calc(var(--radius) - 2px)",
