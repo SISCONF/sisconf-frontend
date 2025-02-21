@@ -50,7 +50,9 @@ export function NavMain({ navMainItems }: NavMainProps) {
                 <SidebarMenuButton tooltip={navItem.title}>
                   {navItem.icon && <navItem.icon />}
                   <span>{navItem.title}</span>
-                  <ChevronRight className="ml-auto transition-transform duration-200 group-data-[state=open]/collapsible:rotate-90" />
+                  {navItem.items && (
+                    <ChevronRight className="ml-auto transition-transform duration-200 group-data-[state=open]/collapsible:rotate-90" />
+                  )}
                 </SidebarMenuButton>
               </CollapsibleTrigger>
               <CollapsibleContent>
