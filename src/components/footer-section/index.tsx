@@ -16,7 +16,11 @@ export default function FooterSection({
         {title}
       </Typography>
       {sectionList.map((sectionItem) => (
-        <Link href={sectionItem.link} className="text-gray-500">
+        <Link
+          key={sectionItem.text}
+          href={sectionItem.link}
+          className="text-gray-500"
+        >
           {sectionItem.text}
         </Link>
       ))}
