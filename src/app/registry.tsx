@@ -6,6 +6,7 @@ import { AuthProvider } from "@/hooks/useAuth";
 import { Toaster } from "@/components/ui/toaster";
 import { ThemeProvider } from "@/components/theme";
 import NextTopLoader from "nextjs-toploader";
+import Footer from "@/components/footer";
 
 interface RegistryProps {
   children: ReactNode;
@@ -27,6 +28,7 @@ export const Registry = ({ children }: RegistryProps) => {
             <NextTopLoader color="#fff" showSpinner={false} />
             {children}
           </ThemeProvider>
+          <Footer />
           <Toaster />
         </body>
       </AuthProvider>
