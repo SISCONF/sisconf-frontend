@@ -110,7 +110,7 @@ const socialMediaLinks = [
 
 export default function Footer() {
   return (
-    <footer className="border border-black flex flex-col w-full py-[4.25rem] px-[4.5rem] gap-[2rem]">
+    <footer className="flex flex-col w-full py-[4.25rem] px-[4.5rem] gap-[2rem]">
       <div className="flex justify-between">
         {linksSection.map((data) => (
           <FooterSection
