@@ -1,3 +1,4 @@
+import { NavBar } from "@/components/header";
 import type { Metadata } from "next/types";
 import NextTopLoader from "nextjs-toploader";
 
@@ -15,6 +16,7 @@ export default function RootLayout({
 }>) {
   return (
     <>
+      <NavBar />
       <NextTopLoader color="#fff" showSpinner={false} />
       {children}
     </>

@@ -22,18 +22,16 @@ export function ModeToggle() {
   };
 
   return (
-    <Button
+    <button
       onClick={toggleTheme}
-      variant="outline"
-      size="icon"
       aria-label={`Switch to ${theme === "light" ? "dark" : "light"} theme`}
       className="border-brand-button"
     >
       {theme === "light" ? (
-        <MoonIcon className="h-[1.2rem] w-[1.2rem]" />
+        <MoonIcon className="h-[1.5rem] w-[1.5rem]" />
       ) : (
-        <SunIcon className="h-[1.2rem] w-[1.2rem]" />
+        <SunIcon className="h-[1.5rem] w-[1.5rem]" />
       )}
-    </Button>
+    </button>
   );
 }

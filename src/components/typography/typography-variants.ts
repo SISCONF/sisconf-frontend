@@ -9,7 +9,7 @@ export const typographyVariants = cva("dark:text-foreground teleading-4", {
       h4: "text-[1.75rem]",
       h5: "text-[1.5rem]",
       h6: "text-[1.25rem]",
-      body1: "text-[1.12rem]",
+      body1: "text-[1.125rem]",
       body2: "text-[1rem]",
     },
     fontWeight: {
@@ -26,7 +26,7 @@ export const typographyVariants = cva("dark:text-foreground teleading-4", {
     textColor: {
       white: "text-[#ffffff]",
       black: "text-[#000000]",
-      primary: "text-[#43A046]",
+      primary: "text-[#237D31]",
       secondary: "text-[#263238]",
     },
   },
