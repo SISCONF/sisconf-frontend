@@ -1,7 +1,7 @@
 // Components
-import SearchProductAndContact from "../searchProductAndContact";
-import ProductCard from "../productCard";
-import PaginationButtons from "../paginationButtons";
+import SearchProductAndContact from "../search-product-and-contact";
+import ProductCard from "../product-card";
+import PaginationButtons from "../pagination-buttons";
 
 // Images
 import FoodPlaceholder from "/public/assets/food-placeholder.jpg";

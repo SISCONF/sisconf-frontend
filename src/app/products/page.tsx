@@ -1,7 +1,7 @@
 // Components
 import Image from "next/image";
 import { Typography } from "@/components/typography";
-import ProductsSession from "@/components/productsSession";
+import ProductsSession from "@/components/products-session";
 
 // Images
 import VeggiesHeader from "/public/assets/products-header-veggies.png";
