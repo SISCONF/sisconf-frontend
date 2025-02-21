@@ -15,7 +15,7 @@ const nextConfig = {
         hostname: "localhost",
       },
       {
-        hostname: process.env.IMAGES_HOST || "",
+        hostname: process.env.IMAGES_HOST || "localhost",
       },
     ],
   },
