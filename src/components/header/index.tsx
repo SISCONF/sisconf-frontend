@@ -7,15 +7,19 @@ import { CartButton } from "./cart-button";
 import { Typography } from "../typography";
 import { motion } from "framer-motion";
 import { ModeToggle } from "../theme/mode-toggle";
+import { Button } from "../ui/button";
+import { useAuth } from "@/hooks/useAuth";
 
 const navItems = [
   { href: "/", label: "Início" },
   { href: "/partners", label: "Parceiros" },
-  { href: "/orders", label: "Nossos produtos" },
+  { href: "/products", label: "Nossos produtos" },
   { href: "/contact", label: "Fale conosco" },
 ];
 
 export function NavBar() {
+  const { isAuthenticated } = useAuth();
+
   return (
     <motion.header
       initial={{ opacity: 0, y: -10 }}
@@ -40,11 +44,33 @@ export function NavBar() {
 
         <div className="flex items-center w-fit h-fit gap-4">
           <ModeToggle />
-          <CartButton />
-          <Avatar>
-            <AvatarImage src="/avatar.svg" alt="Foto de perfil" />
-            <AvatarFallback>U</AvatarFallback>
-          </Avatar>
+          {isAuthenticated && <CartButton />}
+
+          {isAuthenticated ? (
+            <Avatar>
+              <AvatarImage src="/avatar.svg" alt="Foto de perfil" />
+              <AvatarFallback>U</AvatarFallback>
+            </Avatar>
+          ) : (
+            <div className="flex gap-2">
+              <Button asChild variant="outline">
+                <Link
+                  href="/login"
+                  className="dark:text-primary text-brand-3 font-semibold"
+                >
+                  Entrar
+                </Link>
+              </Button>
+              <Button asChild className="bg-brand-3 hover:bg-brand-5">
+                <Link
+                  href="/register"
+                  className="dark:text-primary font-semibold"
+                >
+                  Cadastre-se
+                </Link>
+              </Button>
+            </div>
+          )}
         </div>
       </div>
     </motion.header>

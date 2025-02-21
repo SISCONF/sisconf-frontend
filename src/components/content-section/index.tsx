@@ -1,6 +1,6 @@
 import Image from "next/image";
 import { Typography } from "../typography";
-import { ReactNode } from "react";
+import { ElementType, ReactNode } from "react";
 import { cn } from "@/lib/utils";
 
 interface ContentSectionProps {
@@ -9,7 +9,6 @@ interface ContentSectionProps {
   isRightImage?: boolean;
   imageUrl: string;
   actions?: ReactNode;
-  isContainer?: boolean;
 }
 
 export function ContentSection({
@@ -18,13 +17,11 @@ export function ContentSection({
   isRightImage,
   actions,
   imageUrl,
-  isContainer = false,
 }: ContentSectionProps) {
   return (
     <div
       className={cn(
-        "flex items-center justify-between w-full h-fit max-h-[33.75rem] gap-20 py-6",
-        isContainer && "container"
+        "flex items-center justify-between w-full h-fit max-h-[33.75rem] gap-20 py-6"
       )}
     >
       {!isRightImage && (

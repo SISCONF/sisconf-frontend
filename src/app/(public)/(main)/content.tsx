@@ -12,7 +12,7 @@ export function Content() {
       initial={{ opacity: 0 }}
       animate={{ opacity: 1 }}
       transition={{ duration: 0.5 }}
-      className="flex flex-col justify-center items-center w-full min-h-screen bg-background gap-8 px-20 py-12"
+      className="flex flex-col justify-center items-center w-full min-h-screen bg-background gap-20 px-20 py-12"
     >
       <MainHeroSection />
       <MainContentSections />

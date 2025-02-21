@@ -9,7 +9,12 @@ interface CardInfoProps {
 export function CardInfo({ name, description }: CardInfoProps) {
   return (
     <div className="flex flex-col items-center w-[18.75rem] h-fit p-2 gap-6">
-      <Image src="./assets/icon.svg" alt="" width={60} height={60} />
+      <Image
+        src="./assets/icon.svg"
+        alt="icone do card"
+        width={60}
+        height={60}
+      />
 
       <div className="flex flex-col w-full h-fit gap-6 text-center">
         <Typography
