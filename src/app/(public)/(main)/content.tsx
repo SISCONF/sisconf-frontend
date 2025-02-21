@@ -51,7 +51,6 @@ export function Content() {
       />
 
       {activeTab.component}
-      <Footer />
     </main>
   );
 }
