@@ -53,7 +53,7 @@ export function ContentSection({
 
       {isRightImage && (
         <Image
-          src="./assets/hero-image.svg"
+          src={imageUrl}
           alt="Circular arrangement of fruits and vegetables"
           width={500}
           height={500}

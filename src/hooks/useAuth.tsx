@@ -1,7 +1,7 @@
 "use client";
 
-import { createContext, useContext, useState } from "react";
-import { deleteCookie } from "cookies-next";
+import { createContext, useContext, useEffect, useState } from "react";
+import { deleteCookie, getCookie } from "cookies-next";
 import { User } from "@/types/user";
 import { useRouter } from "next/navigation";
 
@@ -20,7 +20,7 @@ export const AuthProvider = ({ children }: { children: React.ReactNode }) => {
   const [isAuthenticated, setIsAuthenticated] = useState(false);
   const [user, setUser] = useState<User | null>(null);
   const [isLoading, setIsLoading] = useState(true);
-
+  const token = getCookie("access_token");
   const router = useRouter();
 
   const handleLogout = async () => {
@@ -30,6 +30,12 @@ export const AuthProvider = ({ children }: { children: React.ReactNode }) => {
     setUser(null);
     router.push("/");
   };
+
+  useEffect(() => {
+    if (token) {
+      setIsAuthenticated(true);
+    }
+  }, [token]);
 
   return (
     <AuthContext.Provider
