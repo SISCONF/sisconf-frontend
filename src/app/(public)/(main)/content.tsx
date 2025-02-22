@@ -15,8 +15,8 @@ export function Content() {
       className="flex flex-col justify-center items-center w-full min-h-screen bg-background gap-20 px-20 py-12"
     >
       <MainHeroSection />
-      <MainContentSections />
       <MainTabsProducts />
+      <MainContentSections />
       <MainBenefits />
     </motion.main>
   );

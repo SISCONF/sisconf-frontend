@@ -9,6 +9,7 @@ interface ContentSectionProps {
   isRightImage?: boolean;
   imageUrl: string;
   actions?: ReactNode;
+  isContainer?: boolean;
 }
 
 export function ContentSection({
@@ -17,11 +18,13 @@ export function ContentSection({
   isRightImage,
   actions,
   imageUrl,
+  isContainer = false,
 }: ContentSectionProps) {
   return (
     <div
       className={cn(
-        "flex items-center justify-between w-full h-fit max-h-[33.75rem] gap-20 py-6"
+        "flex items-center justify-between w-full h-fit max-h-[33.75rem] gap-20 py-6",
+        isContainer && "container"
       )}
     >
       {!isRightImage && (

@@ -1,4 +1,5 @@
 import { CardInfo } from "@/components/card-info";
+import { Typography } from "@/components/typography";
 
 const MAIN_BENEFITS = [
   {
@@ -23,14 +24,19 @@ const MAIN_BENEFITS = [
 
 export function MainBenefits() {
   return (
-    <div className="flex items-center w-fit gap-4">
-      {MAIN_BENEFITS.map((item) => (
-        <CardInfo
-          key={item.id}
-          name={item.name}
-          description={item.description}
-        />
-      ))}
+    <div className="flex flex-col items-center gap-10">
+      <Typography variant={"h2"} fontWeight={"bold"} textColor={"primary"}>
+        BENEFÍCIOS DE COMPRAR CONOSCO
+      </Typography>
+      <div className="flex items-center w-fit gap-4">
+        {MAIN_BENEFITS.map((item) => (
+          <CardInfo
+            key={item.id}
+            name={item.name}
+            description={item.description}
+          />
+        ))}
+      </div>
     </div>
   );
 }

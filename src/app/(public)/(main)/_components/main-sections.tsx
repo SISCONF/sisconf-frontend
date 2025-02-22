@@ -33,6 +33,7 @@ export function MainContentSections() {
             </Button>
           }
           imageUrl={section.imageUrl}
+          isContainer
         />
       ))}
     </>
