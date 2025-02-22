@@ -1,44 +1,78 @@
-import Image from 'next/image';
-import * as React from 'react';
-import { ShoppingBag } from "lucide-react";
+"use client";
 
-export interface HeaderProps {
-}
+import Link from "next/link";
+import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
+import { NavItem } from "./nav-tem";
+import { CartButton } from "./cart-button";
+import { Typography } from "../typography";
+import { motion } from "framer-motion";
+import { ModeToggle } from "../theme/mode-toggle";
+import { Button } from "../ui/button";
+import { useAuth } from "@/hooks/useAuth";
+import { NavDropDown } from "./nav-dropdown";
+import { useMemo } from "react";
+import { User } from "@/types/user";
 
-export default function Header ({
+const NAV_ITEMS = [
+  { href: "/", label: "Início" },
+  { href: "/partners", label: "Parceiros" },
+  { href: "/products", label: "Nossos produtos" },
+  { href: "/contact", label: "Fale conosco" },
+];
 
-}: HeaderProps) {
+export function NavBar() {
+  const { isAuthenticated, user, logout } = useAuth();
+
   return (
-    <div className='w-full flex justify-between items-center py-6 mb-7'>
-      <span className='mr-8 w-fit text-2xl font-bold text-black'>RJ Frutas</span>
+    <motion.header
+      initial={{ opacity: 0, y: -10 }}
+      animate={{ opacity: 1, y: 0 }}
+      transition={{ duration: 0.2 }}
+      className="sticky top-0 z-50 w-full h- bg-background/95 backdrop-blur shadow-md supports-[backdrop-filter]:bg-background/60 px-20"
+    >
+      <div className="flex w-full h-fit items-center justify-between gap-6 py-4">
+        <Link href="/" className="flex items-center">
+          <Typography variant={"h5"} fontWeight={"bold"}>
+            RJ Frutas
+          </Typography>
+        </Link>
 
-      <nav className='flex justify-between flex-1 items-center'>
-        <ul className='flex gap-10 text-base text-black'>
-            <li> 
-                <a href="/">Início</a>
-            </li>
-            <li> 
-                <a href="/parterns">Parceiros</a> 
-            </li>
-            <li> 
-                <a href="/orders">Nossos produtos</a> 
-            </li>
-            <li> 
-                <a href="/contact">Fale conosco</a> 
-            </li>
-        </ul>
+        <nav className="mobile:hidden flex flex-1 justify-start">
+          <ul className="flex gap-6">
+            {NAV_ITEMS.map((item) => (
+              <NavItem key={item.href} {...item} />
+            ))}
+          </ul>
+        </nav>
 
-        <div className='flex items-center gap-4'>
-          <a href="/orders">
-              <ShoppingBag
-                className='text-[#43A046] size-7' 
-              />
-          </a>
-          <button className='w-8 h-8'>
-              <Image alt='Foto de perfil' src={"/avatar.svg"} width={32} height={32} />
-          </button>
+        <div className="flex items-center w-fit h-fit gap-4">
+          <ModeToggle />
+          {isAuthenticated && <CartButton />}
+
+          {isAuthenticated ? (
+            <NavDropDown user={user as User} handleLogout={() => logout()} />
+          ) : (
+            <div className="flex gap-2">
+              <Button asChild variant="outline">
+                <Link
+                  href="/login"
+                  className="dark:text-primary text-brand-3 font-semibold"
+                >
+                  Entrar
+                </Link>
+              </Button>
+              <Button asChild className="bg-brand-3 hover:bg-brand-5">
+                <Link
+                  href="/register"
+                  className="dark:text-primary font-semibold"
+                >
+                  Cadastre-se
+                </Link>
+              </Button>
+            </div>
+          )}
         </div>
-      </nav>
-    </div>
+      </div>
+    </motion.header>
   );
 }
