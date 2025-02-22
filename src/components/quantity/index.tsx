@@ -22,7 +22,7 @@ export default function Quantity() {
   };
 
   return (
-    <div className="flex text-[#237D31] font-bold items-center gap-[0.5rem] bg-[#F0F4EA] py-[0.3125rem] px-[0.475rem] rounded-lg">
+    <div className="w-fit flex text-[#237D31] font-bold items-center gap-[0.5rem] bg-[#F0F4EA] py-[0.3125rem] px-[0.475rem] rounded-lg">
       <CirclePlusIcon
         size={21}
         onClick={() => setAmount((prevState) => prevState + 1)}

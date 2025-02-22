@@ -3,8 +3,6 @@
 import { useState } from "react";
 import { ComponentTabs } from "@/components/tabs";
 import { ModeToggle } from "@/components/theme/mode-toggle";
-import Footer from "@/components/footer";
-
 export const TABS_LIST = [
   {
     id: 0,
@@ -49,7 +47,6 @@ export function Content() {
         defaultValue="frutas"
         onTabChange={handleTabChange}
       />
-
       {activeTab.component}
     </main>
   );
