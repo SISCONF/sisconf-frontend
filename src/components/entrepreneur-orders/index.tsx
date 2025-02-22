@@ -2,11 +2,16 @@ import * as React from 'react';
 import PageTitle from '../page-title';
 import { Card, CardContent, CardDescription, CardTitle } from '../ui/card';
 import { Typography } from '../typography';
+import { DataTable } from '../ui/data-table';
+import { columns } from '../ui/columns';
+import { EntrepreneurOrder } from '@/types/entrepreneur-orders';
 
 export interface EntrepreneurOrdersProps {
+    orders: EntrepreneurOrder[]
 }
 
 export default function EntrepreneurOrders ({
+    orders
 
 }: EntrepreneurOrdersProps) {
   return (
@@ -15,7 +20,7 @@ export default function EntrepreneurOrders ({
             text="Meus pedidos" 
         />
 
-        <div className='flex flex-wrap items-center w-full justify-between'>
+        <div className='flex flex-wrap items-center w-full justify-between gap-9'>
             <Card 
                 title='Total de pedidos' 
                 content='50'
@@ -66,6 +71,11 @@ export default function EntrepreneurOrders ({
                     </Typography>
                 </CardContent>
             </Card>
+            
+            <DataTable 
+                className='mt-4 w-full'
+                columns={columns} data={orders} 
+            />
         </div>
 
     </div>
