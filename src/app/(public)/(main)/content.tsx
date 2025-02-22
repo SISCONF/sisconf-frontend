@@ -1,53 +1,23 @@
 "use client";
 
-import { useState } from "react";
-import { ComponentTabs } from "@/components/tabs";
-import { ModeToggle } from "@/components/theme/mode-toggle";
-export const TABS_LIST = [
-  {
-    id: 0,
-    name: "frutas",
-    label: "Frutas",
-    component: <div>Ola</div>,
-  },
-  {
-    id: 1,
-    name: "verduras",
-    label: "Verduras",
-    component: <div>Tudo</div>,
-  },
-  {
-    id: 2,
-    name: "legumes",
-    label: "Legumes",
-    component: <div>Bem?</div>,
-  },
-
-  {
-    id: 3,
-    name: "outros",
-    label: "Outros",
-    component: <div>Bem?</div>,
-  },
-];
+import { motion } from "framer-motion";
+import { MainContentSections } from "./_components/main-sections";
+import { MainBenefits } from "./_components/main-beneficies";
+import { MainTabsProducts } from "./_components/main-tabs-products";
+import { MainHeroSection } from "./_components/main-hero-section";
 
 export function Content() {
-  const [activeTab, setActiveTab] = useState(TABS_LIST[0]);
-
-  const handleTabChange = (id: number) => {
-    const selectedTab = TABS_LIST.find((tab) => tab.id === id);
-    setActiveTab(selectedTab || TABS_LIST[0]);
-  };
-
   return (
-    <main className="flex flex-col justify-center items-center w-full h-screen bg-background gap-2">
-      <ModeToggle />
-      <ComponentTabs
-        tabList={TABS_LIST}
-        defaultValue="frutas"
-        onTabChange={handleTabChange}
-      />
-      {activeTab.component}
-    </main>
+    <motion.main
+      initial={{ opacity: 0 }}
+      animate={{ opacity: 1 }}
+      transition={{ duration: 0.5 }}
+      className="flex flex-col justify-center items-center w-full min-h-screen bg-background gap-20 px-20 py-12"
+    >
+      <MainHeroSection />
+      <MainTabsProducts />
+      <MainContentSections />
+      <MainBenefits />
+    </motion.main>
   );
 }

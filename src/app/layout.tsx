@@ -3,6 +3,7 @@ import "./globals.css";
 import { Registry } from "./registry";
 
 import { Roboto } from "next/font/google";
+import { NavBar } from "@/components/header";
 
 const roboto = Roboto({
   subsets: ["latin"],
@@ -26,7 +27,10 @@ export default function RootLayout({
       <head>
         <meta httpEquiv="Access-Control-Allow-Origin" content="*" />
       </head>
-      <Registry>{children}</Registry>
+      <Registry>
+        <NavBar />
+        {children}
+      </Registry>
     </html>
   );
 }

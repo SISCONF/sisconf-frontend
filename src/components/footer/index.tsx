@@ -108,7 +108,7 @@ const socialMediaLinks = [
   },
 ];
 
-export default function Footer() {
+export function Footer() {
   return (
     <footer className="flex flex-col w-full py-[4.25rem] px-[4.5rem] gap-[2rem]">
       <div className="flex justify-between">
