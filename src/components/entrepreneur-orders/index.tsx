@@ -9,6 +9,20 @@ import { EntrepreneurOrder } from '@/types/entrepreneur-orders';
 import { Package } from 'lucide-react';
 import { AlertDialogComponent } from '../alert-dialog';
 import { useState } from 'react';
+import { ComponentTabs } from '../tabs';
+
+export const TABS_LIST = [
+    {
+      id: 0,
+      name: "orders",
+      label: "Pedidos",
+    },
+    {
+      id: 1,
+      name: "orders-group",
+      label: "Grupos de pedidos",
+    },
+];
 
 export interface EntrepreneurOrdersProps {
     orders: EntrepreneurOrder[]
@@ -19,6 +33,12 @@ export default function EntrepreneurOrders ({
 
 }: EntrepreneurOrdersProps) {
     const [open, setOpen] = useState(false);
+    const [activeTab, setActiveTab] = useState(TABS_LIST[0]);
+
+    const handleTabChange = (id: number) => {
+        const selectedTab = TABS_LIST.find((tab) => tab.id === id);
+        setActiveTab(selectedTab || TABS_LIST[0]);
+    };
 
     return (
         <div className='p-12'>
@@ -26,7 +46,7 @@ export default function EntrepreneurOrders ({
                 text="Meus pedidos" 
             />
 
-            <div className='flex flex-wrap items-center w-full justify-between gap-9'>
+            <div className='flex flex-wrap items-center w-full justify-between'>
                 <Card 
                     title='Total de pedidos' 
                     content='50'
@@ -78,20 +98,32 @@ export default function EntrepreneurOrders ({
                     </CardContent>
                 </Card>
 
-                <div className='flex items-center justify-between w-full'>
+                <div className='flex items-end justify-between w-full mt-9'>
+                    <ComponentTabs 
+                        tabList={TABS_LIST} 
+                        defaultValue="orders" 
+                        onTabChange={handleTabChange} 
+                    />
+
                     <button 
-                        className='flex items-center gap-2 bg-[#237D31] text-white text-[14px] rounded p-2'
+                        className='flex items-center gap-2 bg-[#237D31] text-white text-[14px] rounded p-2 h-11'
                         onClick={() => setOpen(true)}
                     >
                         <Package size={24} />
                         Agrupar pedidos
                     </button>
                 </div>
+
                 
-                <DataTable 
-                    className='mt-4 w-full'
-                    columns={columns} data={orders} 
-                />
+                {
+                    activeTab.name === 'orders' && (
+                        <DataTable 
+                            className='mt-4 w-full'
+                            columns={columns} data={orders} 
+                        />
+                    )
+                }
+
 
                 <AlertDialogComponent open={open} setOpen={setOpen} />
             </div>
