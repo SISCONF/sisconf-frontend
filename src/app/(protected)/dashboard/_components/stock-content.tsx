@@ -1,47 +1,33 @@
 import FoodPlaceholderImage from "/public/assets/food-placeholder.jpg";
+import { DataTable } from "@/components/ui/data-table";
+import { columns } from "./columns";
+import { StockFood } from "./columns";
 
-const dummyData = [
+const dummyData: StockFood[] = [
   {
     id: 1,
-    image: FoodPlaceholderImage,
-    food: "Maçã",
+    food: { image: FoodPlaceholderImage, title: "Maçã" },
     type: "Fruta",
     amount: 2,
   },
   {
     id: 2,
-    image: FoodPlaceholderImage,
-    food: "Maçã",
+    food: { image: FoodPlaceholderImage, title: "Banana" },
     type: "Fruta",
-    amount: 5,
+    amount: 10,
   },
   {
     id: 3,
-    image: FoodPlaceholderImage,
-    food: "Maçã",
+    food: { image: FoodPlaceholderImage, title: "Uva" },
     type: "Fruta",
-    amount: 3,
-  },
-  {
-    id: 4,
-    image: FoodPlaceholderImage,
-    food: "Maçã",
-    type: "Fruta",
-    amount: 7,
-  },
-  {
-    id: 5,
-    image: FoodPlaceholderImage,
-    food: "Maçã",
-    type: "Fruta",
-    amount: 11,
+    amount: 6,
   },
 ];
 
 export default function StockContent() {
   return (
     <div className="border border-black px-[3rem] py-[3rem]">
-      Hello World :)
+      <DataTable data={dummyData} columns={columns} />
     </div>
   );
 }
