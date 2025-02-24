@@ -102,7 +102,10 @@ export default function EntrepreneurOrders ({
                     <ComponentTabs 
                         tabList={TABS_LIST} 
                         defaultValue="orders" 
-                        onTabChange={handleTabChange} 
+                        onTabChange={handleTabChange}
+                        width='140px'
+                        height='32px' 
+                        verticalPadding='8px'
                     />
 
                     <button 
