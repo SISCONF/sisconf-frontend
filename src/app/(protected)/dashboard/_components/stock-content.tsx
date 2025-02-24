@@ -36,6 +36,13 @@ const dummyData: StockFood[] = [
 
 export default function StockContent() {
   const [foodsToActOn, setFoodsToActOn] = useState<StockFoodInfo[]>([]);
+  const [foods, setFoods] = useState<StockFood[]>(dummyData);
+
+  const updateAmount = (foodId: number, amount: number) => {
+    setFoods((prevState) =>
+      prevState.map((food) => (food.id === foodId ? { ...food, amount } : food))
+    );
+  };
 
   return (
     <div className="px-[3rem] py-[3rem]">
@@ -47,7 +54,7 @@ export default function StockContent() {
           <Trash2Icon />
         </Button>
       </div>
-      <DataTable data={dummyData} columns={columns(setFoodsToActOn)} />
+      <DataTable data={foods} columns={columns(foods, updateAmount)} />
     </div>
   );
 }

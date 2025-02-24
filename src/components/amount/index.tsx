@@ -3,17 +3,18 @@
 // Components
 import { CirclePlusIcon, CircleMinusIcon } from "lucide-react";
 
-import { ChangeEvent, ChangeEventHandler, useState } from "react";
+import { ChangeEvent, ChangeEventHandler } from "react";
 
 type QuantityProps = {
   initialAmount?: number;
+  updateAmount: (amount: number) => void;
 };
 
-export default function Amount({ initialAmount }: QuantityProps) {
-  const [amount, setAmount] = useState<number>(
-    initialAmount ? initialAmount : 1
-  );
-  const decreaseable = amount > 1;
+export default function Amount({
+  updateAmount,
+  initialAmount = 1,
+}: QuantityProps) {
+  const decreaseable = initialAmount > 1;
 
   const handleAmountInputChange: ChangeEventHandler = (
     e: ChangeEvent<HTMLInputElement>
@@ -21,37 +22,37 @@ export default function Amount({ initialAmount }: QuantityProps) {
     const amountInputValue = Number(e.target.value);
 
     if (amountInputValue < 1 || isNaN(amountInputValue)) {
-      setAmount(1);
+      updateAmount(amountInputValue);
       return;
     }
-    setAmount(amountInputValue);
+    updateAmount(amountInputValue);
   };
 
   return (
     <div className="w-fit flex text-[#237D31] font-bold items-center gap-[0.5rem] bg-[#F0F4EA] py-[0.3125rem] px-[0.475rem] rounded-lg">
       <CirclePlusIcon
         size={21}
-        onClick={() => setAmount((prevState) => prevState + 1)}
+        onClick={() => updateAmount(initialAmount + 1)}
       />
       <input
         type="text"
         min={1}
         className="focus:outline-none text-center bg-[#F0F4EA]"
-        value={amount}
+        value={initialAmount}
         inputMode="numeric"
         pattern="\d+"
         onChange={handleAmountInputChange}
         onBlur={handleAmountInputChange}
         style={{
           width:
-            amount.toString().length > 3
+            initialAmount.toString().length > 3
               ? "18px"
-              : `${amount.toString().length + 1}ch`,
+              : `${initialAmount.toString().length + 1}ch`,
         }}
       />
       <CircleMinusIcon
         size={21}
-        onClick={() => decreaseable && setAmount((prevState) => prevState - 1)}
+        onClick={() => decreaseable && updateAmount(initialAmount - 1)}
         className={
           decreaseable ? "cursor-pointer" : "cursor-not-allowed text-gray-400"
         }

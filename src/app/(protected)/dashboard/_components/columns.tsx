@@ -19,7 +19,8 @@ export type StockFood = {
 };
 
 export const columns = (
-  setFoodsToActOn: (data: StockFoodInfo[]) => void | StockFoodInfo[]
+  foods: StockFood[],
+  updateAmount: (foodId: number, amount: number) => void
 ): ColumnDef<StockFood>[] => [
   {
     id: "select",
@@ -30,16 +31,7 @@ export const columns = (
             table.getIsAllPageRowsSelected() ||
             (table.getIsSomePageRowsSelected() && "indeterminate")
           }
-          onCheckedChange={(value) => {
-            table.toggleAllPageRowsSelected(!!value);
-            const allFoodsInfo = table.getRowModel().rows.map((food) => {
-              return {
-                foodId: food.original.id,
-                amount: food.original.amount,
-              };
-            });
-            setFoodsToActOn(allFoodsInfo);
-          }}
+          onCheckedChange={(value) => table.toggleAllPageRowsSelected(!!value)}
           aria-label="Select all"
         />
       );
@@ -89,8 +81,13 @@ export const columns = (
     accessorKey: "amount",
     header: "Quantidade",
     cell: ({ row }) => {
-      const amount = parseInt(row.getValue("amount"));
-      return <Amount initialAmount={amount} />;
+      const foodAmount = foods.find((food) => food.id === row.original.id);
+      return (
+        <Amount
+          initialAmount={foodAmount ? foodAmount.amount : 1}
+          updateAmount={(newAmount) => updateAmount(row.original.id, newAmount)}
+        />
+      );
     },
   },
 ];
