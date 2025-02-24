@@ -6,25 +6,25 @@ import { CirclePlusIcon, CircleMinusIcon } from "lucide-react";
 import { ChangeEvent, ChangeEventHandler, useState } from "react";
 
 type QuantityProps = {
-  initialQuantity?: number;
+  initialAmount?: number;
 };
 
-export default function Quantity({ initialQuantity }: QuantityProps) {
+export default function Amount({ initialAmount }: QuantityProps) {
   const [amount, setAmount] = useState<number>(
-    initialQuantity ? initialQuantity : 1
+    initialAmount ? initialAmount : 1
   );
   const decreaseable = amount > 1;
 
   const handleAmountInputChange: ChangeEventHandler = (
     e: ChangeEvent<HTMLInputElement>
   ) => {
-    const quantityInputValue = Number(e.target.value);
+    const amountInputValue = Number(e.target.value);
 
-    if (quantityInputValue < 1 || isNaN(quantityInputValue)) {
+    if (amountInputValue < 1 || isNaN(amountInputValue)) {
       setAmount(1);
       return;
     }
-    setAmount(quantityInputValue);
+    setAmount(amountInputValue);
   };
 
   return (

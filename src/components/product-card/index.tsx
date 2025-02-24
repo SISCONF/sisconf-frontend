@@ -1,5 +1,5 @@
 import Image from "next/image";
-import Quantity from "../quantity";
+import Quantity from "../amount";
 import { StaticImageData } from "next/image";
 import { Heart, ShoppingBagIcon } from "lucide-react";
 import { Button } from "../ui/button";

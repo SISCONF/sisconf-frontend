@@ -1,9 +1,17 @@
+"use client";
+
 import FoodPlaceholderImage from "/public/assets/food-placeholder.jpg";
 import { DataTable } from "@/components/ui/data-table";
 import { columns } from "./columns";
 import { StockFood } from "./columns";
 import { Button } from "@/components/ui/button";
 import { Trash2Icon } from "lucide-react";
+import { useState } from "react";
+
+export type StockFoodInfo = {
+  foodId: number;
+  amount: number;
+};
 
 const dummyData: StockFood[] = [
   {
@@ -27,6 +35,8 @@ const dummyData: StockFood[] = [
 ];
 
 export default function StockContent() {
+  const [foodsToActOn, setFoodsToActOn] = useState<StockFoodInfo[]>([]);
+
   return (
     <div className="px-[3rem] py-[3rem]">
       <div className="flex gap-4 pb-4">
@@ -37,7 +47,7 @@ export default function StockContent() {
           <Trash2Icon />
         </Button>
       </div>
-      <DataTable data={dummyData} columns={columns} />
+      <DataTable data={dummyData} columns={columns(setFoodsToActOn)} />
     </div>
   );
 }

@@ -1,9 +1,10 @@
 "use client";
 
 import { ColumnDef } from "@tanstack/react-table";
-import Quantity from "@/components/quantity";
 import Image, { StaticImageData } from "next/image";
 import { Checkbox } from "@/components/ui/checkbox";
+import { StockFoodInfo } from "./stock-content";
+import Amount from "@/components/amount";
 
 export type FoodData = {
   image: string | StaticImageData;
@@ -17,7 +18,9 @@ export type StockFood = {
   amount: number;
 };
 
-export const columns: ColumnDef<StockFood>[] = [
+export const columns = (
+  setFoodsToActOn: (data: StockFoodInfo[]) => void | StockFoodInfo[]
+): ColumnDef<StockFood>[] => [
   {
     id: "select",
     header: ({ table }) => {
@@ -27,7 +30,16 @@ export const columns: ColumnDef<StockFood>[] = [
             table.getIsAllPageRowsSelected() ||
             (table.getIsSomePageRowsSelected() && "indeterminate")
           }
-          onCheckedChange={(value) => table.toggleAllPageRowsSelected(!!value)}
+          onCheckedChange={(value) => {
+            table.toggleAllPageRowsSelected(!!value);
+            const allFoodsInfo = table.getRowModel().rows.map((food) => {
+              return {
+                foodId: food.original.id,
+                amount: food.original.amount,
+              };
+            });
+            setFoodsToActOn(allFoodsInfo);
+          }}
           aria-label="Select all"
         />
       );
@@ -78,7 +90,7 @@ export const columns: ColumnDef<StockFood>[] = [
     header: "Quantidade",
     cell: ({ row }) => {
       const amount = parseInt(row.getValue("amount"));
-      return <Quantity initialQuantity={amount} />;
+      return <Amount initialAmount={amount} />;
     },
   },
 ];
