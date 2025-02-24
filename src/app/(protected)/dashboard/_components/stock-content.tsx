@@ -30,10 +30,10 @@ export default function StockContent() {
   return (
     <div className="px-[3rem] py-[3rem]">
       <div className="flex gap-4 pb-4">
-        <Button className="bg-green-700 hover:bg-green-900">
+        <Button className="bg-green-700 hover:bg-green-900 disabled:bg-gray-500 disabled:cursor-not-allowed">
           Atualizar quantidade
         </Button>
-        <Button className="bg-red-500 hover:bg-red-700">
+        <Button className="bg-red-500 hover:bg-red-700 disabled:bg-gray-500 disabled:cursor-not-allowed">
           <Trash2Icon />
         </Button>
       </div>
