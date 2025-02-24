@@ -3,6 +3,7 @@
 import { ColumnDef } from "@tanstack/react-table";
 import Quantity from "@/components/quantity";
 import Image, { StaticImageData } from "next/image";
+import { Checkbox } from "@/components/ui/checkbox";
 
 export type FoodData = {
   image: string | StaticImageData;
@@ -17,6 +18,32 @@ export type StockFood = {
 };
 
 export const columns: ColumnDef<StockFood>[] = [
+  {
+    id: "select",
+    header: ({ table }) => {
+      return (
+        <Checkbox
+          checked={
+            table.getIsAllPageRowsSelected() ||
+            (table.getIsSomePageRowsSelected() && "indeterminate")
+          }
+          onCheckedChange={(value) => table.toggleAllPageRowsSelected(!!value)}
+          aria-label="Select all"
+        />
+      );
+    },
+    cell: ({ row }) => {
+      return (
+        <Checkbox
+          checked={row.getIsSelected()}
+          onCheckedChange={(value) => row.toggleSelected(!!value)}
+          aria-label="Select row"
+        />
+      );
+    },
+    enableSorting: false,
+    enableHiding: false,
+  },
   {
     accessorKey: "id",
     header: "#",
