@@ -20,7 +20,8 @@ export type StockFood = {
 
 export const columns = (
   foods: StockFood[],
-  updateAmount: (foodId: number, amount: number) => void
+  updateAmount: (foodId: number, amount: number) => void,
+  updateSelected: (foodId: number, amount: number) => void
 ): ColumnDef<StockFood>[] => [
   {
     id: "select",
@@ -31,7 +32,23 @@ export const columns = (
             table.getIsAllPageRowsSelected() ||
             (table.getIsSomePageRowsSelected() && "indeterminate")
           }
-          onCheckedChange={(value) => table.toggleAllPageRowsSelected(!!value)}
+          onCheckedChange={(value) => {
+            table.toggleAllPageRowsSelected(!!value);
+            const selectedFoods = value
+              ? table.getRowModel().rows.map((row) => {
+                  const rowFood = foods.find(
+                    (food) => food.id === row.original.id
+                  );
+                  return {
+                    foodId: row.original.id,
+                    amount: rowFood ? rowFood.amount : row.original.amount,
+                  };
+                })
+              : [];
+            for (const selectedFood of selectedFoods) {
+              updateSelected(selectedFood.foodId, selectedFood.amount);
+            }
+          }}
           aria-label="Select all"
         />
       );
@@ -40,7 +57,10 @@ export const columns = (
       return (
         <Checkbox
           checked={row.getIsSelected()}
-          onCheckedChange={(value) => row.toggleSelected(!!value)}
+          onCheckedChange={(value) => {
+            row.toggleSelected(!!value);
+            const rowFood = foods.find((food) => food.id === row.original.id);
+          }}
           aria-label="Select row"
         />
       );
