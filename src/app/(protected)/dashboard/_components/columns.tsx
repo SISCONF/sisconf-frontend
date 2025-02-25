@@ -3,8 +3,8 @@
 import { ColumnDef } from "@tanstack/react-table";
 import Image, { StaticImageData } from "next/image";
 import { Checkbox } from "@/components/ui/checkbox";
-import { StockFoodInfo } from "./stock-content";
 import Amount from "@/components/amount";
+import { StockFoodInfo } from "./stock-content";
 
 export type FoodData = {
   image: string | StaticImageData;
@@ -21,7 +21,8 @@ export type StockFood = {
 export const columns = (
   foods: StockFood[],
   updateAmount: (foodId: number, amount: number) => void,
-  updateSelected: (foodId: number, amount: number) => void
+  updateSelected: (foodId: number, amount: number) => void,
+  updateAll: (selectedItems: StockFoodInfo[]) => void
 ): ColumnDef<StockFood>[] => [
   {
     id: "select",
@@ -45,9 +46,7 @@ export const columns = (
                   };
                 })
               : [];
-            for (const selectedFood of selectedFoods) {
-              updateSelected(selectedFood.foodId, selectedFood.amount);
-            }
+            updateAll(selectedFoods);
           }}
           aria-label="Select all"
         />
@@ -60,6 +59,10 @@ export const columns = (
           onCheckedChange={(value) => {
             row.toggleSelected(!!value);
             const rowFood = foods.find((food) => food.id === row.original.id);
+            updateSelected(
+              row.original.id,
+              rowFood ? rowFood.amount : row.original.amount
+            );
           }}
           aria-label="Select row"
         />

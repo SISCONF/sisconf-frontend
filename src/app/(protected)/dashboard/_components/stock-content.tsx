@@ -57,9 +57,9 @@ export default function StockContent() {
     setFoodsToActOn((prevState) => [...prevState, { foodId, amount }]);
   };
 
-  useEffect(() => {
-    console.log("Se liga, BOY!", foodsToActOn);
-  }, [foodsToActOn]);
+  const updateAll = (selected: StockFoodInfo[]) => {
+    setFoodsToActOn(selected);
+  };
 
   return (
     <div className="px-[3rem] py-[3rem]">
@@ -79,7 +79,7 @@ export default function StockContent() {
       </div>
       <DataTable
         data={foods}
-        columns={columns(foods, updateAmount, updateSelected)}
+        columns={columns(foods, updateAmount, updateSelected, updateAll)}
       />
     </div>
   );
