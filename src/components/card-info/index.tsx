@@ -21,7 +21,7 @@ export function CardInfo({ name, description }: CardInfoProps) {
           variant={"h5"}
           fontWeight={"bold"}
           textColor={"primary"}
-          className="line-clamp-1"
+          className="line-clamp-1 dark:text-brand-1"
         >
           {name}
         </Typography>

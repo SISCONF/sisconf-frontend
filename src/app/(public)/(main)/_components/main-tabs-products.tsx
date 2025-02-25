@@ -85,8 +85,8 @@ export function MainTabsProducts() {
           Conheça nossos produtos
         </Typography>
         <Typography variant={"body1"} className="w-[31.25rem]">
-          Trabalhamos com frutas e verduras frescas, selecionadas para garantir
-          qualidade e sabor. Confira e faça sua escolha.
+          Trabalhamos com frutas e legumes frescos. Confira nossas opções e faça
+          sua escolha.
         </Typography>
       </div>
 

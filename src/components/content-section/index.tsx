@@ -42,7 +42,7 @@ export function ContentSection({
           variant={"h2"}
           fontWeight={"bold"}
           textColor={"primary"}
-          className="leading-5"
+          className="leading-5 dark:text-brand-1"
         >
           {title}
         </Typography>
