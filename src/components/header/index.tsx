@@ -12,6 +12,7 @@ import { useAuth } from "@/hooks/useAuth";
 import { NavDropDown } from "./nav-dropdown";
 import { useMemo } from "react";
 import { User } from "@/types/user";
+import Image from "next/image";
 
 const NAV_ITEMS = [
   { href: "/", label: "Início" },
@@ -32,9 +33,13 @@ export function NavBar() {
     >
       <div className="flex w-full h-fit items-center justify-between gap-6 py-4">
         <Link href="/" className="flex items-center">
-          <Typography variant={"h5"} fontWeight={"bold"}>
-            RJ Frutas
-          </Typography>
+          <Image
+            src={"./assets/Logo-RJ.svg"}
+            alt="Logo da empresa"
+            width={54}
+            height={54}
+            priority
+          />
         </Link>
 
         <nav className="mobile:hidden flex flex-1 justify-start">

@@ -7,14 +7,14 @@ const CONTENT_SECTIONS = [
     description:
       "A RJ Frutas&Verduras é uma empresa comprometida em oferecer produtos frescos e de alta qualidade aos nossos clientes. Para garantir a alta qualidade de nossas mercadorias, pontualidade na entrega e a máxima experiência de atendimento para nossos clientes, contamos com uma equipe de profissionais qualificados e treinados.",
     isRightImage: true,
-    imageUrl: "./assets/image-content.svg",
+    imageUrl: "/assets/logo.png",
   },
   {
     title: "Por que nos escolher?",
     description:
       "Nossa busca pela qualidade começa na origem de cada fruta e vegetal. Com uma logística impecável, garantimos que cada item chegue à sua mesa fresco e em sua melhor forma. Dessa forma, não apenas entregamos alimentos, mas sim um padrão elevado de frescor que faz a diferença em sua vida cotidiana.",
     isRightImage: false,
-    imageUrl: "./assets/image-content.svg",
+    imageUrl: "/assets/fruit-2.svg",
   },
 ];
 

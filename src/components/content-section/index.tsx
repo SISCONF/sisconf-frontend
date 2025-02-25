@@ -31,8 +31,8 @@ export function ContentSection({
         <Image
           src={imageUrl}
           alt="Content info"
-          width={500}
-          height={500}
+          width={400}
+          height={400}
           className="object-cover"
         />
       )}
@@ -58,8 +58,8 @@ export function ContentSection({
         <Image
           src={imageUrl}
           alt="Circular arrangement of fruits and vegetables"
-          width={500}
-          height={500}
+          width={400}
+          height={400}
           className="object-cover"
         />
       )}
