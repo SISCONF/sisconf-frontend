@@ -10,6 +10,19 @@ import { Package } from 'lucide-react';
 import { AlertDialogComponent } from '../alert-dialog';
 import { useState } from 'react';
 import { ComponentTabs } from '../tabs';
+import { OrdersGroup } from '@/types/orders-group';
+import { ordersGroupColumns } from '../ui/orders-group-columns';
+
+const tabConfig: { [key: string]: { columns: any; data: (orders: any[]) => any[] } } = {
+    orders: {
+        columns: columns,
+        data: (orders: EntrepreneurOrder[]) => orders,
+    },
+    "orders-group": {
+        columns: ordersGroupColumns,
+        data: (ordersGroup: OrdersGroup[]) => ordersGroup,
+    },
+};
 
 export const TABS_LIST = [
     {
@@ -26,19 +39,22 @@ export const TABS_LIST = [
 
 export interface EntrepreneurOrdersProps {
     orders: EntrepreneurOrder[]
+    ordersGroup: OrdersGroup[]
 }
 
 export default function EntrepreneurOrders ({
-    orders
-
+    orders,
+    ordersGroup
 }: EntrepreneurOrdersProps) {
     const [open, setOpen] = useState(false);
-    const [activeTab, setActiveTab] = useState(TABS_LIST[0]);
+    const [activeTab, setActiveTab] = useState<{ id: number; name: string; label: string }>(TABS_LIST[0]);
 
     const handleTabChange = (id: number) => {
         const selectedTab = TABS_LIST.find((tab) => tab.id === id);
         setActiveTab(selectedTab || TABS_LIST[0]);
     };
+
+    const { columns, data } = tabConfig[activeTab.name];
 
     return (
         <div className='p-12'>
@@ -118,15 +134,13 @@ export default function EntrepreneurOrders ({
                 </div>
 
                 
-                {
-                    activeTab.name === 'orders' && (
-                        <DataTable 
-                            className='mt-4 w-full'
-                            columns={columns} data={orders} 
-                        />
-                    )
-                }
+                <DataTable 
+                    className='mt-4 w-full text-base'
+                    columns={columns} 
+                    data={data(activeTab.name === "orders" ? orders : ordersGroup)} 
+                />
 
+                
 
                 <AlertDialogComponent open={open} setOpen={setOpen} />
             </div>
