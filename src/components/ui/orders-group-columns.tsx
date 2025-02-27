@@ -5,9 +5,15 @@ import { ColumnDef } from "@tanstack/react-table"
 import { Eye } from "lucide-react"
 import StatusTag from "../status-tag"
 import { formatPrice } from "@/lib/utils"
-import { useRouter } from "next/navigation"
+import { Dispatch, SetStateAction } from "react"
 
-export const ordersGroupColumns: ColumnDef<OrdersGroup>[] = [
+type OrdersGroupColumnsProps = {
+  setSelectedOrdersGroup: Dispatch<SetStateAction<OrdersGroup | null>>
+}
+
+export const ordersGroupColumns = ({
+  setSelectedOrdersGroup
+}: OrdersGroupColumnsProps): ColumnDef<OrdersGroup>[] => [
   {
     accessorKey: "id",
     header: "ID do grupo",
@@ -55,12 +61,7 @@ export const ordersGroupColumns: ColumnDef<OrdersGroup>[] = [
     accessorKey: "actions",
     header: "Itens",
     cell: ({ row }) => {
-      const router = useRouter();
-
-      const handleViewDetails = () => {
-        const orderGroupId = row.original.id; 
-        router.push(`/orders-group/${orderGroupId}`); 
-      };
+      const handleViewDetails = () => setSelectedOrdersGroup(row.original)
 
       return (
           <button 
