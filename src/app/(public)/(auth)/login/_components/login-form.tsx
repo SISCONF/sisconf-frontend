@@ -88,7 +88,7 @@ export function LoginForm() {
             />
           </div>
 
-          {error && <div className="max-w-sm text-red-500">{error}</div>}
+          {error && <div id="error-message" className="max-w-sm text-red-500">{error}</div>}
 
           <Button
             type="submit"
