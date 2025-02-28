@@ -7,14 +7,16 @@ import ResumeOrdersList from "@/components/resume-orders-list";
 import { OrderItem } from "@/types/order-item";
 import { OrdersGroup } from "@/types/orders-group";
 import { ArrowLeft } from "lucide-react";
-import { useState } from "react";
+import { Dispatch, SetStateAction, useState } from "react";
 
 interface OrdersGroupDetailsProps {
   selectedOrdersGroup: OrdersGroup
+  setSelectedOrdersGroup: Dispatch<SetStateAction<OrdersGroup | null>>
 }
 
 export function OrdersGroupDetails ({
-  selectedOrdersGroup
+  selectedOrdersGroup, 
+  setSelectedOrdersGroup
 }: OrdersGroupDetailsProps) {
     const [orders, setOrders] = useState<OrderItem[]>(ordersList);
 
@@ -29,6 +31,7 @@ export function OrdersGroupDetails ({
         <PageTitle 
           text={`Grupo de pedidos #${selectedOrdersGroup.id}`}
           icon={<ArrowLeft size={24} />} 
+          onClick={() => setSelectedOrdersGroup(null)}
         />
   
         <div className='flex justify-between'>

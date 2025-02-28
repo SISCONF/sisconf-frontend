@@ -184,6 +184,7 @@ export default function Page() {
           selectedOrdersGroup ? (
             <OrdersGroupDetails 
               selectedOrdersGroup={selectedOrdersGroup}
+              setSelectedOrdersGroup={setSelectedOrdersGroup}
             />
           ) : (
             <EntrepreneurOrders 
