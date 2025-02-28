@@ -4,21 +4,26 @@ import { X } from "lucide-react"
 import Quantity from "../quantity";
 import { OrderItem } from "@/types/order-item";
 import { formatPrice } from "@/lib/utils";
+import { Typography } from "../typography";
 
-export interface ResumeOrderItemList {
+export interface ResumeOrderItemList extends React.HtmlHTMLAttributes<HTMLDivElement> {
     order: OrderItem;
     onRemove: (id:number) => void;
+    userType: "customer" | "entrepreneur"
 }
 
 export function ResumeOrderItemList ({
     order, 
+    userType,
+    className,
     onRemove,
+    ...props
 }: ResumeOrderItemList) {
     const { id, name, description, image, price, status } = order;
 
     return (
-    <div className="max-[843px] h-24 relative grid grid-cols-[3fr_1fr_1fr_1fr] place-items-center gap-12 pr-12 font-medium">
-        <div className="flex items-center gap-4">
+    <div className={className}{...props}>
+        <div className="flex items-center flex-1 gap-4">
             <Image 
                 alt="Food image"
                 src={image}
@@ -32,18 +37,24 @@ export function ResumeOrderItemList ({
             </div>
         </div>
 
-        <Quantity />
+        {
+            userType === "customer" ? <Quantity /> : <Typography variant={"body1"}>1</Typography> 
+        }
+
 
         <span>{formatPrice(price)}</span>
 
-        <StatusTag 
-            text={status} 
-            status={status}
-        />
-
-        <button onClick={() => onRemove(id)} className="">
-            <X className="absolute top-0 right-0" />        
-        </button>
+        { userType === "customer" && 
+            (
+                <>
+                    <StatusTag text={status} status={status} />
+                    
+                    <button onClick={() => onRemove(id)} className="">
+                        <X className="absolute top-0 right-0" />        
+                    </button>
+                </>
+            ) 
+        }
     </div>
     );
 }

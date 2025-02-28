@@ -32,9 +32,14 @@ export function OrdersGroupDetails ({
         />
   
         <div className='flex justify-between'>
-          <ResumeOrdersList className='px-11 py-5 flex flex-col gap-6'>
+          <ResumeOrdersList 
+            className='px-11 py-5 flex flex-col gap-6'
+            userType="entrepreneur"
+          >
             {orders.map((order) => (
               <ResumeOrderItemList 
+                className="max-[843px] h-24 relative grid grid-cols-[3fr_1fr_1fr] place-items-center gap-12 pr-12 font-medium"
+                userType="entrepreneur"
                 key={order.id}
                 order={order}
                 onRemove={() => removeOrder(order.id)}
