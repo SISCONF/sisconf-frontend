@@ -22,39 +22,42 @@ export function ResumeOrderItemList ({
     const { id, name, description, image, price, status } = order;
 
     return (
-    <div className={className}{...props}>
-        <div className="flex items-center flex-1 gap-4">
-            <Image 
-                alt="Food image"
-                src={image}
-                width={85}
-                height={91}
-            />
+        <>
+            <div className={className}{...props}>
+                <div className="flex items-center flex-1 gap-4 w-full">
+                    <Image 
+                        alt="Food image"
+                        src={image}
+                        width={85}
+                        height={91}
+                    />
 
-            <div className="flex flex-col gap-1">
-                <span>{name}</span>
-                <span>{description}</span>
+                    <div className="flex flex-col gap-1">
+                        <span>{name}</span>
+                        <span>{description}</span>
+                    </div>
+                </div>
+
+                {
+                    userType === "customer" ? <Quantity /> : <Typography variant={"body1"}>1</Typography> 
+                }
+
+
+                <span>{formatPrice(price)}</span>
+
+                { userType === "customer" && 
+                    (
+                        <>
+                            <StatusTag text={status} status={status} />
+                            
+                            <button onClick={() => onRemove(id)} className="">
+                                <X className="absolute top-0 right-0" />        
+                            </button>
+                        </>
+                    ) 
+                }
             </div>
-        </div>
-
-        {
-            userType === "customer" ? <Quantity /> : <Typography variant={"body1"}>1</Typography> 
-        }
-
-
-        <span>{formatPrice(price)}</span>
-
-        { userType === "customer" && 
-            (
-                <>
-                    <StatusTag text={status} status={status} />
-                    
-                    <button onClick={() => onRemove(id)} className="">
-                        <X className="absolute top-0 right-0" />        
-                    </button>
-                </>
-            ) 
-        }
-    </div>
+            <hr className="bg-[#D9D9D9]" />
+        </>
     );
 }

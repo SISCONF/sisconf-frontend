@@ -33,17 +33,17 @@ export function OrdersGroupDetails ({
   
         <div className='flex justify-between'>
           <ResumeOrdersList 
-            className='px-11 py-5 flex flex-col gap-6'
+            className='px-11 py-5 flex flex-col justify-center w-full'
             userType="entrepreneur"
           >
             {orders.map((order) => (
-              <ResumeOrderItemList 
-                className="max-[843px] h-24 relative grid grid-cols-[3fr_1fr_1fr] place-items-center gap-12 pr-12 font-medium"
-                userType="entrepreneur"
-                key={order.id}
-                order={order}
-                onRemove={() => removeOrder(order.id)}
-              />
+                <ResumeOrderItemList 
+                  className="max-[843px] py-2 relative grid grid-cols-[3fr_1fr_1fr] place-items-center gap-12 pr-12 font-medium"
+                  userType="entrepreneur"
+                  key={order.id}
+                  order={order}
+                  onRemove={() => removeOrder(order.id)}
+                />
             ))}
           </ResumeOrdersList>
           <ResumeOrderCard total={total} />
