@@ -20,7 +20,7 @@ export default function ResumeOrdersList ({
         {userType === "customer" && <span>Status</span>}
       </div>
       {children}
-      <div className='flex items-end gap-4 ml-auto font-bold text-center'>
+      <div className='flex items-end gap-4 ml-auto font-bold text-center mt-8'>
         {
           userType === "customer" ? (
             <>
