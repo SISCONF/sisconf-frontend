@@ -7,10 +7,10 @@ describe('customer login tests', () => {
 
   it("should login when valid credentials", () => {
     cy.visit(`${nextBaseUrl}/login`)
-    cy.get<{ id: number, email: string, password: string }>("@customerTestUser")
-    .then(customerTestUser => {
-      cy.get("input[id='email']").type(customerTestUser.email)
-      cy.get("input[id='password']").type(customerTestUser.password);
+    cy.get<{ id: number, email: string, password: string }>("@testUser")
+    .then(testUser => {
+      cy.get("input[id='email']").type(testUser.email)
+      cy.get("input[id='password']").type(testUser.password);
       cy.get("button[type='submit']").contains("Entrar").click();
 
       cy.get("body").should("not.contain", "a[href='/login']");
@@ -20,9 +20,9 @@ describe('customer login tests', () => {
 
   it("should not login when invalid credentials", () => {
     cy.visit(`${nextBaseUrl}/login`)
-    cy.get<{ id: number, email: string, password: string }>("@customerTestUser")
-    .then(customerTestUser => {
-      cy.get("input[id='email']").type(customerTestUser.email)
+    cy.get<{ id: number, email: string, password: string }>("@testUser")
+    .then(testUser => {
+      cy.get("input[id='email']").type(testUser.email)
       cy.get("input[id='password']").type("abcd123@");
       cy.get("button[type='submit']").contains("Entrar").click();
 
@@ -33,14 +33,14 @@ describe('customer login tests', () => {
   })
 
   afterEach(() => {
-    cy.loginCustomerUser();
-    cy.get<{ id: number, email: string, password: string }>("@customerTestUser")
-    .then(customerTestUser => {
+    cy.get<{ id: number, email: string, password: string }>("@testUser")
+    .then(testUser => {
+      cy.loginTestUser(testUser);
       cy.getCookie("access_token").then(cookie => {
         if (cookie && cookie.value) {
           cy.request({
             method: "DELETE",
-            url: `/api/customers/${customerTestUser.id}`,
+            url: `/api/customers/${testUser.id}`,
             headers: {
               Authorization: `Bearer ${cookie.value}`
             }

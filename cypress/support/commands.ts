@@ -29,13 +29,52 @@ export {}
 declare global {
   namespace Cypress {
     interface Chainable {
-      loginCustomerUser(): Chainable<void>
+      loginTestUser(testUser: { id: number, email: string, password: string }): Chainable<void>
       createCustomerUser(): Chainable<void>
+      createEntrepreneurUser(): Chainable<void>
     }
   }
 }
 
 import { faker } from "@faker-js/faker";
+
+Cypress.Commands.add("createEntrepreneurUser", () => {
+    const email = faker.internet.email();
+    const password = faker.internet.password({
+        length: 8
+    });
+
+    cy.request({
+        method: "POST",
+        url: "/api/entrepreneurs",
+        body: {
+            businessName: "Horta do Lucas",
+            person: {
+                firstName: faker.person.firstName(),
+                lastName: faker.person.lastName(),
+                password: password,
+                password2: password,
+                cpf: "222.222.222-22",
+                cnpj: "33.333.333/0001-11",
+                phone: "(84) 98777-7777",
+                email: email,
+                address: {
+                    street: "Chico Cajá",
+                    zipCode: "59900-000",
+                    neighbourhood: "Chico Cajá",
+                    number: 90,
+                    city: 3783
+                }
+            }
+        }
+    }).then(response => {
+        cy.wrap({
+            id: response.body.id,
+            email: email,
+            password: password
+        }).as("testUser");
+    })
+});
 
 Cypress.Commands.add("createCustomerUser", () => {
     const email = faker.internet.email();
@@ -70,19 +109,19 @@ Cypress.Commands.add("createCustomerUser", () => {
             id: response.body.id, 
             email: email, 
             password: password 
-        }).as("customerTestUser");
+        }).as("testUser");
     });
 });
 
-Cypress.Commands.add("loginCustomerUser", () => {
-    cy.get<{ id: number, email: string, password: string }>("@customerTestUser")
-    .then((customerTestUser) => {
+Cypress.Commands.add("loginTestUser", (testUser: { id: number, email: string, password: string }) => {
+    cy.get<{ id: number, email: string, password: string }>("@testUser")
+    .then((testUser) => {
         cy.request({
             method: "POST",
             url: "/api/people/login",
             body: {
-                email: customerTestUser.email,
-                password: customerTestUser.password
+                email: testUser.email,
+                password: testUser.password
             }
         }).then(response => {
             cy.setCookie("access_token", response.body.authenticationToken);
