@@ -36,6 +36,7 @@ export function OrdersGroupDetails ({
   
         <div className='flex justify-between'>
           <ResumeOrdersList 
+            headerClassName="w-full grid grid-cols-[3fr_1fr_1fr] gap-20 text-[#103E13] font-bold"
             className='px-11 py-5 flex flex-col justify-center w-full'
             userType="entrepreneur"
           >

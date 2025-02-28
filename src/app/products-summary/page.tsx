@@ -33,12 +33,13 @@ export default function ProductsSummary () {
 
       <div className='flex justify-between'>
         <ResumeOrdersList 
-          className='max-w-[932px] px-11 py-5 flex flex-col gap-6 bg-slate-50 rounded-[8px]'
+          className='max-w-[932px] w-full px-11 py-5 flex flex-col bg-slate-50 rounded-[8px]'
+          headerClassName='w-full grid grid-cols-[3fr_1fr_1fr_1fr] text-[#103E13] font-bold'
           userType='customer'
         >
           {orders.map((order) => (
             <ResumeOrderItemList 
-              className='max-[843px] h-24 relative grid grid-cols-[3fr_1fr_1fr_1fr] place-items-center gap-12 pr-12 font-medium'
+              className='max-[843px] py-2 relative grid grid-cols-[3fr_1fr_1fr_1fr] place-items-center pr-12 font-medium'
               userType='customer'
               key={order.id}
               order={order}

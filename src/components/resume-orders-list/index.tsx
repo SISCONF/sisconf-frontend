@@ -3,17 +3,19 @@ import * as React from 'react';
 export interface ResumeOrdersListProps extends React.HtmlHTMLAttributes<HTMLDivElement> {
   children: React.ReactNode
   userType: "customer" | "entrepreneur"
+  headerClassName: string
 }
 
 export default function ResumeOrdersList ({
   children,
   className,
+  headerClassName,
   userType,
   ...props
 }: ResumeOrdersListProps) {
   return (
     <div className={className}{...props}>
-      <div className='w-full grid grid-cols-[3fr_1fr_1fr] gap-20 text-[#103E13] font-bold'>
+      <div className={headerClassName}>
         <span>Produto</span>
         <span>Quantidade</span>
         <span>Preço</span>
