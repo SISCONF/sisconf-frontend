@@ -1,4 +1,4 @@
-import PageNavigationButton from "../pageNavigationButton";
+import PageNavigationButton from "../page-navigation-button";
 
 export default function PaginationButtons() {
   return (

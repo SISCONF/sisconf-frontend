@@ -1,4 +1,4 @@
-import * as React from 'react';
+import * as React from "react";
 
 export interface ResumeOrdersListProps extends React.HtmlHTMLAttributes<HTMLDivElement> {
   children: React.ReactNode

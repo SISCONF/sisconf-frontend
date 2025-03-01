@@ -1,10 +1,12 @@
-"use client"
+"use client";
 
-import { useRouter } from "next/navigation"
+import { useRouter } from "next/navigation";
+import { Button } from "../ui/button";
+import { Typography } from "../typography";
 
 interface PageTitleProps extends React.ButtonHTMLAttributes<HTMLButtonElement> {
-    icon?: React.ReactNode
-    text: string
+  icon?: React.ReactNode;
+  text: string;
 }
 
 export default function PageTitle({  

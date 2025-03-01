@@ -1,6 +1,5 @@
 "use client";
 
-import Header from '@/components/header';
 import PageTitle from '@/components/page-title';
 import { ResumeOrderCard } from '@/components/resume-order-card';
 import { ResumeOrderItemList } from '@/components/resume-order-item-list';
@@ -23,7 +22,6 @@ export default function ProductsSummary () {
 
   return (
     <div className='px-16'>
-      <Header />
 
       <PageTitle 
         text='Meus pedidos'

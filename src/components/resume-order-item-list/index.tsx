@@ -1,7 +1,7 @@
 import Image from "next/image";
 import StatusTag from "../status-tag";
-import { X } from "lucide-react"
-import Quantity from "../quantity";
+import { X } from "lucide-react";
+import Quantity from "../amount";
 import { OrderItem } from "@/types/order-item";
 import { formatPrice } from "@/lib/utils";
 import { Typography } from "../typography";
