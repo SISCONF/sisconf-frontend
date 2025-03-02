@@ -61,7 +61,10 @@ describe("entrepreneur login tests", () => {
     afterEach(() => {
         cy.get<{ id: number, email: string, password: string }>("@testUser")
         .then(testUser => {
-            cy.loginTestUser(testUser);
+            cy.loginTestUser(testUser).then(response => {
+                cy.setCookie("access_token", response.body.authenticationToken);
+                cy.setCookie("refresh_token", response.body.refreshToken);
+            });
             cy.getCookie("access_token").then(cookie => {
                 if (cookie && cookie.value) {
                     cy.request({

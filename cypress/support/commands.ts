@@ -29,19 +29,44 @@ export {}
 declare global {
   namespace Cypress {
     interface Chainable {
-      loginTestUser(testUser: { id: number, email: string, password: string }): Chainable<void>
+      loginTestUser(testUser: TestUserLoginData): Chainable<Cypress.Response<any>>
       createCustomerUser(): Chainable<void>
-      createEntrepreneurUser(): Chainable<void>
+      createEntrepreneurUser(): Chainable<Cypress.Response<any>>
+      deleteTestUser(testUserId: number, authenticationToken: string, route: string): Chainable<Cypress.Response<any>>
     }
   }
 }
 
 import { faker } from "@faker-js/faker";
+import { TestUser, TestUserLoginData } from "../types/users";
 
 Cypress.Commands.add("createEntrepreneurUser", () => {
-    const email = faker.internet.email();
-    const password = faker.internet.password({
-        length: 8
+    let authenticationToken = "";
+    const testEntrepreneurLoginData: TestUserLoginData = {
+        email: Cypress.env("testEntrepreneurEmail"),
+        password: Cypress.env("testEntrepreneurPassword")
+    }
+
+    cy.loginTestUser(testEntrepreneurLoginData).then(response => {
+        if (response.status == 200) {
+            authenticationToken = response.body.authenticationToken;
+
+            cy.request({
+                method: "GET",
+                url: "/api/entrepreneurs/me",
+                headers: {
+                    Authorization: `Bearer ${authenticationToken}`
+                }
+            }).then(response => {
+                cy.deleteTestUser(
+                    response.body.id,
+                    authenticationToken,
+                    "entrepreneurs"
+                );
+            });
+        } else {
+            cy.log("Entrepreneur is not created. Creating...");
+        }
     });
 
     cy.request({
@@ -52,12 +77,12 @@ Cypress.Commands.add("createEntrepreneurUser", () => {
             person: {
                 firstName: faker.person.firstName(),
                 lastName: faker.person.lastName(),
-                password: password,
-                password2: password,
+                password: testEntrepreneurLoginData.password,
+                password2: testEntrepreneurLoginData.password,
                 cpf: "222.222.222-22",
                 cnpj: "33.333.333/0001-11",
                 phone: "(84) 98777-7777",
-                email: email,
+                email: testEntrepreneurLoginData.email,
                 address: {
                     street: "Chico Cajá",
                     zipCode: "59900-000",
@@ -70,16 +95,39 @@ Cypress.Commands.add("createEntrepreneurUser", () => {
     }).then(response => {
         cy.wrap({
             id: response.body.id,
-            email: email,
-            password: password
+            email: testEntrepreneurLoginData.email,
+            password: testEntrepreneurLoginData.password
         }).as("testUser");
-    })
+    });
 });
 
 Cypress.Commands.add("createCustomerUser", () => {
-    const email = faker.internet.email();
-    const password = faker.internet.password({
-        length: 8
+    let authenticationToken = "";
+    const testCustomerLoginData: TestUserLoginData = {
+        email: Cypress.env("testCustomerEmail"),
+        password: Cypress.env("testCustomerPassword")
+    }
+
+    cy.loginTestUser(testCustomerLoginData).then(response => {
+        if (response.status == 200) {
+            authenticationToken = response.body.authenticationToken;
+
+            cy.request({
+                method: "GET",
+                url: "/api/customers/me",
+                headers: {
+                    Authorization: `Bearer ${authenticationToken}`
+                }
+            }).then(response => {
+                cy.deleteTestUser(
+                    response.body.id,
+                    authenticationToken,
+                    "customers"
+                );
+            });
+        } else {
+            cy.log("Customer is not created. Creating...");
+        }
     });
 
     cy.request({
@@ -90,11 +138,11 @@ Cypress.Commands.add("createCustomerUser", () => {
             person: {
                 firstName: faker.person.firstName(),
                 lastName: faker.person.lastName(),
-                password: password,
-                password2: password,
+                password: testCustomerLoginData.password,
+                password2: testCustomerLoginData.password,
                 cpf: "000.000.000-00",
                 phone: "(84) 98000-0000",
-                email: email,
+                email: testCustomerLoginData.email,
                 address: {
                     street: "Chico Cajá",
                     zipCode: "59900-000",
@@ -107,25 +155,32 @@ Cypress.Commands.add("createCustomerUser", () => {
     }).then(response => {
         cy.wrap({ 
             id: response.body.id, 
-            email: email, 
-            password: password 
+            email: testCustomerLoginData.email, 
+            password: testCustomerLoginData.password 
         }).as("testUser");
     });
 });
 
-Cypress.Commands.add("loginTestUser", (testUser: { id: number, email: string, password: string }) => {
-    cy.get<{ id: number, email: string, password: string }>("@testUser")
-    .then((testUser) => {
-        cy.request({
-            method: "POST",
-            url: "/api/people/login",
-            body: {
-                email: testUser.email,
-                password: testUser.password
-            }
-        }).then(response => {
-            cy.setCookie("access_token", response.body.authenticationToken);
-            cy.setCookie("refresh_token", response.body.refreshToken);
-        });
-    });
+Cypress.Commands.add("loginTestUser", (userLoginData: TestUserLoginData) => {
+    cy.request({
+        method: "POST",
+        url: "/api/people/login",
+        body: {
+            email: userLoginData.email,
+            password: userLoginData.password
+        },
+        failOnStatusCode: false
+    }).then(response => response);
+});
+
+Cypress.Commands.add(
+    "deleteTestUser", 
+    (testUserId: number, authenticationToken: string, route: string) => {
+    cy.request({
+        method: "DELETE",
+        url: `/api/${route}/${testUserId}`,
+        headers: {
+            Authorization: `Bearer ${authenticationToken}`
+        }
+    }).then(response => response);
 });
