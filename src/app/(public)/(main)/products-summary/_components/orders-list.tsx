@@ -16,7 +16,7 @@ export default function ProductsSummary () {
   const total = orders.reduce((acc, order) => acc + order.price, 0);
 
   return (
-    <div className='px-16'>
+    <div>
       <div className='flex justify-between'>
         <ResumeOrdersList 
           className='max-w-[932px] w-full px-11 py-5 flex flex-col bg-slate-50 rounded-[8px]'
@@ -45,6 +45,7 @@ const ordersList: OrderItem[] = [
     image: "/strawberry.svg",
     name: "Morango",
     description: "lorem ipsum dolor siamet",
+    amount: 2,
     price: 200.00,
     status: "Aguardando",
   },
@@ -53,6 +54,7 @@ const ordersList: OrderItem[] = [
     image: "/strawberry.svg",
     name: "Banana",
     description: "lorem ipsum dolor siamet",
+    amount: 2,
     price: 200.00,
     status: "Aprovado",
   },
@@ -61,6 +63,7 @@ const ordersList: OrderItem[] = [
     image: "/strawberry.svg",
     name: "Maçã",
     description: "lorem ipsum dolor siamet",
+    amount: 2,
     price: 150.00,
     status: "Aprovado",
   },
@@ -69,6 +72,7 @@ const ordersList: OrderItem[] = [
     image: "/strawberry.svg",
     name: "Laranja",
     description: "lorem ipsum dolor siamet",
+    amount: 2,
     price: 250.00,
     status: "Aguardando",
   },
