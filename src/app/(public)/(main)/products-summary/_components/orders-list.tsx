@@ -1,17 +1,12 @@
 "use client";
 
-import PageTitle from '@/components/page-title';
 import { ResumeOrderCard } from '@/components/resume-order-card';
 import { ResumeOrderItemList } from '@/components/resume-order-item-list';
 import ResumeOrdersList from '@/components/resume-orders-list';
 import { OrderItem } from '@/types/order-item';
-import { ArrowLeft } from 'lucide-react';
-import { useRouter } from 'next/navigation';
 import { useState } from 'react';
 
 export default function ProductsSummary () {
-  const router = useRouter()
-
   const [orders, setOrders] = useState<OrderItem[]>(ordersList);
 
   const removeOrder = (id: number) => {
@@ -22,13 +17,6 @@ export default function ProductsSummary () {
 
   return (
     <div className='px-16'>
-
-      <PageTitle 
-        text='Meus pedidos'
-        icon={<ArrowLeft size={24} />} 
-        onClick={() => router.back()}
-      />
-
       <div className='flex justify-between'>
         <ResumeOrdersList 
           className='max-w-[932px] w-full px-11 py-5 flex flex-col bg-slate-50 rounded-[8px]'
