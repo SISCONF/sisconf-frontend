@@ -9,4 +9,5 @@ export interface Food {
   name: string;
   unitPrice: number;
   category: FoodCategory;
+  imageUrl: string;
 }

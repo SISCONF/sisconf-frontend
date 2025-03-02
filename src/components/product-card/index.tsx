@@ -26,6 +26,8 @@ export default function ProductCard({
             className="h-full w-full object-cover rounded-xl"
             src={image || ""}
             alt={`A picture of a ${name}.`}
+            width={300}
+            height={300}
           />
         </div>
         <div className="pt-[0.5rem] h-full flex flex-col justify-between">
