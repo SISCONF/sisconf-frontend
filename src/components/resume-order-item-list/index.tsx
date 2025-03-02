@@ -1,10 +1,13 @@
+"use client"
+
 import Image from "next/image";
 import StatusTag from "../status-tag";
 import { X } from "lucide-react";
-import Quantity from "../amount";
 import { OrderItem } from "@/types/order-item";
 import { formatPrice } from "@/lib/utils";
 import { Typography } from "../typography";
+import Amount from "../amount";
+import { useState } from "react";
 
 export interface ResumeOrderItemList extends React.HtmlHTMLAttributes<HTMLDivElement> {
     order: OrderItem;
@@ -19,7 +22,9 @@ export function ResumeOrderItemList ({
     onRemove,
     ...props
 }: ResumeOrderItemList) {
-    const { id, name, description, image, price, status } = order;
+    const { id, name, description, image, price, status, amount } = order;
+
+    const [quantity, setQuantity] = useState(amount);
 
     return (
         <>
@@ -39,7 +44,7 @@ export function ResumeOrderItemList ({
                 </div>
 
                 {
-                    userType === "customer" ? <Quantity /> : <Typography variant={"body1"}>1</Typography> 
+                    userType === "customer" ? <Amount updateAmount={setQuantity} initialAmount={quantity} /> : <Typography variant={"body1"}>1</Typography> 
                 }
 
 
