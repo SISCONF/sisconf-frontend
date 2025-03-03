@@ -93,10 +93,17 @@
   body {
     @apply bg-background text-foreground;
     font-family: "Roboto", sans-serif;
+
+    ::-webkit-scrollbar {
+      width: 5px;
+    }
+
+    ::-webkit-scrollbar-thumb {
+      background: #b1b1b1;
+      border-radius: 5px;
+    }
   }
 }
-
-
 
 @layer base {
   * {

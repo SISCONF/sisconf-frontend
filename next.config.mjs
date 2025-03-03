@@ -17,6 +17,9 @@ const nextConfig = {
       {
         hostname: process.env.IMAGES_HOST || "localhost",
       },
+      {
+        hostname: "sisconf-foods-images-bucket.s3.us-east-2.amazonaws.com",
+      },
     ],
   },
   eslint: {

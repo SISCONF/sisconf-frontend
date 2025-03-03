@@ -30,7 +30,7 @@ const client = async <T = any>(
   const headers: HeadersInit = { "Content-Type": "application/json" };
 
   if (options.auth !== false) {
-    const token = cookies().get("access")?.value;
+    const token = cookies().get("access_token")?.value;
     if (token) {
       headers.Authorization = `Bearer ${token}`;
     }
