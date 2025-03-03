@@ -5,8 +5,8 @@ import { DataTable } from "@/components/ui/data-table";
 import { columns } from "./columns";
 import { StockFood } from "./columns";
 import { Button } from "@/components/ui/button";
-import { Trash2Icon } from "lucide-react";
-import { useState, useEffect } from "react";
+import { Trash2Icon, CirclePlusIcon, RefreshCcwIcon } from "lucide-react";
+import { useState } from "react";
 
 export type StockFoodInfo = {
   foodId: number;
@@ -68,6 +68,7 @@ export default function StockContent() {
           disabled={foodsToActOn.length === 0}
           className="bg-green-700 hover:bg-green-900 disabled:bg-gray-500 disabled:cursor-not-allowed"
         >
+          <RefreshCcwIcon />
           Atualizar quantidade
         </Button>
         <Button
@@ -75,6 +76,10 @@ export default function StockContent() {
           className="bg-red-500 hover:bg-red-700 disabled:bg-gray-500 disabled:cursor-not-allowed"
         >
           <Trash2Icon />
+        </Button>
+        <Button className="bg-green-700 hover:bg-green-900 ml-auto">
+          <CirclePlusIcon />
+          Adicionar comida ao estoque
         </Button>
       </div>
       <DataTable
