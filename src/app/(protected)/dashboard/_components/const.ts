@@ -23,32 +23,6 @@ export const SIDE_BAR_NAV_ITEMS = [
     url: "#",
     icon: SquareTerminal,
     isActive: true,
-    items: [
-      {
-        title: "Clientes",
-        url: "#",
-      },
-      {
-        title: "Geral",
-        url: "#",
-      },
-    ],
-  },
-  {
-    title: "Financeiro",
-    url: "#",
-    icon: DollarSign,
-    isActive: true,
-    items: [
-      {
-        title: "Lucro",
-        url: "#",
-      },
-      {
-        title: "Gastos",
-        url: "#",
-      },
-    ],
   },
   {
     title: "Estoque",
