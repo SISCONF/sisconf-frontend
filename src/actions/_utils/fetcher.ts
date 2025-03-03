@@ -30,7 +30,7 @@ const client = async <T = any>(
   const headers: HeadersInit = { "Content-Type": "application/json" };
 
   if (options.auth !== false) {
-    const token = cookies().get("access")?.value;
+    const token = cookies().get("access_token")?.value;
     if (token) {
       headers.Authorization = `Bearer ${token}`;
     }
@@ -67,10 +67,11 @@ const client = async <T = any>(
   try {
     const response = await fetch(url.toString(), config);
 
+    const data = await response.json().catch(() => null);
+
     if (!response.ok) {
-      const error = await response.json().catch(() => response.text());
       const errorMessage =
-        error?.errors?.[0]?.detail || error?.message || "Erro desconhecido";
+      data?.errors?.[0]?.detail || data?.message || "Erro desconhecido";
       return Promise.reject({
         status: response.status,
         message: errorMessage,
@@ -84,7 +85,6 @@ const client = async <T = any>(
       return null;
     }
 
-    const data = await response.json().catch(() => null);
     return data ?? null;
   } catch (error) {
     return Promise.reject({
