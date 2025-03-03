@@ -9,13 +9,20 @@ type ProductCardProps = {
   image?: string | StaticImageData;
   name: string;
   price: number;
+  amountProps: {
+    initialAmount: number;
+    handleChangeAmount: (amount: number) => void;
+  };
   variant?: "default" | "green";
+  handleAddToBag: () => void;
 };
 
 export default function ProductCard({
   image,
   name,
   price,
+  amountProps,
+  handleAddToBag,
   variant = "default",
 }: ProductCardProps) {
   if (variant === "default") {
@@ -26,6 +33,8 @@ export default function ProductCard({
             className="h-full w-full object-cover rounded-xl"
             src={image || ""}
             alt={`A picture of a ${name}.`}
+            width={300}
+            height={300}
           />
         </div>
         <div className="pt-[0.5rem] h-full flex flex-col justify-between">
@@ -34,11 +43,17 @@ export default function ProductCard({
             <strong>R$ {price.toFixed(2)}</strong>
           </span>
           <div className="flex items-center justify-between">
-            <button className="py-[0.3125rem] px-[0.475rem] rounded-lg flex items-center gap-[0.25rem] bg-[#237D31] text-white">
+            <button
+              onClick={handleAddToBag}
+              className="py-[0.3125rem] px-[0.475rem] rounded-lg flex items-center gap-[0.25rem] bg-[#237D31] text-white"
+            >
               <ShoppingBagIcon size={18} />
               Adicionar
             </button>
-            <Quantity />
+            <Quantity
+              updateAmount={amountProps.handleChangeAmount}
+              initialAmount={amountProps.initialAmount}
+            />
           </div>
         </div>
       </div>

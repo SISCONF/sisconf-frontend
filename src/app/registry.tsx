@@ -6,6 +6,7 @@ import { AuthProvider } from "@/hooks/useAuth";
 import { Toaster } from "@/components/ui/toaster";
 import { ThemeProvider } from "@/components/theme";
 import NextTopLoader from "nextjs-toploader";
+import { GroceryBagProvider } from "@/contexts/grocery-bag-context";
 
 interface RegistryProps {
   children: ReactNode;
@@ -18,15 +19,17 @@ export const Registry = ({ children }: RegistryProps) => {
     <QueryClientProvider client={queryClient}>
       <AuthProvider>
         <body>
-          <ThemeProvider
-            attribute="class"
-            defaultTheme="system"
-            enableSystem
-            disableTransitionOnChange
-          >
-            <NextTopLoader color="#fff" showSpinner={false} />
-            {children}
-          </ThemeProvider>
+          <GroceryBagProvider>
+            <ThemeProvider
+              attribute="class"
+              defaultTheme="system"
+              enableSystem
+              disableTransitionOnChange
+            >
+              <NextTopLoader color="#fff" showSpinner={false} />
+              {children}
+            </ThemeProvider>
+          </GroceryBagProvider>
           <Toaster />
         </body>
       </AuthProvider>

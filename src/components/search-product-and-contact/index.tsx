@@ -3,8 +3,15 @@ import Link from "next/link";
 
 // Icons
 import { SearchIcon, MailIcon } from "lucide-react";
+import { ChangeEvent } from "react";
 
-export default function SearchProductAndContact() {
+type SearchProductAndContact = {
+  handleChange: (e: ChangeEvent<HTMLInputElement>) => void;
+};
+
+export default function SearchProductAndContact({
+  handleChange,
+}: SearchProductAndContact) {
   return (
     <div className="flex items-center justify-between">
       <div className="max-w-[18rem] w-full relative flex items-center px-[0.6875rem] py-[0.43rem] rounded-[0.5rem] border-[0.135rem] border-[#43A046]">
@@ -17,6 +24,7 @@ export default function SearchProductAndContact() {
           name="name"
           id="food-name"
           placeholder="Buscar por mais alimentos"
+          onChange={handleChange}
         />
       </div>
       <p>
