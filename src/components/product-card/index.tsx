@@ -9,6 +9,10 @@ type ProductCardProps = {
   image?: string | StaticImageData;
   name: string;
   price: number;
+  amountProps: {
+    initialAmount: number;
+    handleChangeAmount: (amount: number) => void;
+  };
   variant?: "default" | "green";
 };
 
@@ -16,6 +20,7 @@ export default function ProductCard({
   image,
   name,
   price,
+  amountProps,
   variant = "default",
 }: ProductCardProps) {
   if (variant === "default") {
@@ -40,7 +45,10 @@ export default function ProductCard({
               <ShoppingBagIcon size={18} />
               Adicionar
             </button>
-            <Quantity />
+            <Quantity
+              updateAmount={amountProps.handleChangeAmount}
+              initialAmount={amountProps.initialAmount}
+            />
           </div>
         </div>
       </div>

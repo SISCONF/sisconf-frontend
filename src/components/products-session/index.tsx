@@ -6,9 +6,14 @@ import ProductCard from "../product-card";
 
 // Images
 import FoodPlaceholder from "/public/assets/food-placeholder.jpg";
+
+// Utilities
 import { useQuery } from "@tanstack/react-query";
 import { fetchFoods } from "@/actions/food/fetch-foods";
-import { ChangeEvent, useMemo, useState } from "react";
+import { ChangeEvent, useEffect, useMemo, useState } from "react";
+
+import { useGroceryBag } from "@/contexts/grocery-bag-context";
+import { GroceryBagItem } from "@/types/grocery-bag";
 
 export default function ProductsSession() {
   const {
@@ -20,24 +25,36 @@ export default function ProductsSession() {
     queryFn: () => fetchFoods(),
   });
 
-  const handleChange = (e: ChangeEvent<HTMLInputElement>) => {
-    setSearchString(e.target.value);
+  const { groceryBag, addToBag } = useGroceryBag();
+
+  const [amounts, setAmounts] = useState<Record<string, number>>({});
+  const [searchText, setSearchText] = useState("");
+
+  const filteredFoods: GroceryBagItem[] | undefined = useMemo(() => {
+    if (foods) {
+      return foods
+        .filter((food) =>
+          food.name.toLowerCase().includes(searchText.toLowerCase())
+        )
+        .map((food) => ({
+          food,
+          amount: amounts[food.id] || 1,
+        }));
+    }
+  }, [searchText, foods, amounts]);
+
+  const updateAmount = (foodId: number, amount: number) => {
+    setAmounts((prev) => ({ ...prev, [foodId]: amount }));
   };
 
-  const [searchString, setSearchString] = useState<string>("");
-
-  const filteredFoods = useMemo(() => {
-    if (!foods) return;
-    if (!searchString) return foods;
-    return foods.filter((food) =>
-      food.name.toLowerCase().includes(searchString.toLowerCase())
-    );
-  }, [foods, searchString]);
+  const handleSearch = (e: ChangeEvent<HTMLInputElement>) => {
+    setSearchText(e.target.value);
+  };
 
   return (
     <div className="w-[860px]">
       <section>
-        <SearchProductAndContact handleChange={handleChange} />
+        <SearchProductAndContact handleChange={handleSearch} />
         {isLoading ? (
           <span>Carregando...</span>
         ) : error ? (
@@ -45,8 +62,13 @@ export default function ProductsSession() {
         ) : (
           filteredFoods && (
             <div className="my-[1rem] flex flex-wrap gap-[4.2rem] h-[800px] overflow-y-auto">
-              {filteredFoods.map((food) => (
+              {filteredFoods.map(({ food, amount }) => (
                 <ProductCard
+                  amountProps={{
+                    handleChangeAmount: (amount: number) =>
+                      updateAmount(food.id, amount),
+                    initialAmount: amount,
+                  }}
                   name={food.name}
                   price={food.unitPrice}
                   key={food.id}
