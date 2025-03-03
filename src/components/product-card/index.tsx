@@ -14,6 +14,7 @@ type ProductCardProps = {
     handleChangeAmount: (amount: number) => void;
   };
   variant?: "default" | "green";
+  handleAddToBag: () => void;
 };
 
 export default function ProductCard({
@@ -21,6 +22,7 @@ export default function ProductCard({
   name,
   price,
   amountProps,
+  handleAddToBag,
   variant = "default",
 }: ProductCardProps) {
   if (variant === "default") {
@@ -41,7 +43,10 @@ export default function ProductCard({
             <strong>R$ {price.toFixed(2)}</strong>
           </span>
           <div className="flex items-center justify-between">
-            <button className="py-[0.3125rem] px-[0.475rem] rounded-lg flex items-center gap-[0.25rem] bg-[#237D31] text-white">
+            <button
+              onClick={handleAddToBag}
+              className="py-[0.3125rem] px-[0.475rem] rounded-lg flex items-center gap-[0.25rem] bg-[#237D31] text-white"
+            >
               <ShoppingBagIcon size={18} />
               Adicionar
             </button>

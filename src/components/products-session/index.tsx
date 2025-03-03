@@ -10,7 +10,7 @@ import FoodPlaceholder from "/public/assets/food-placeholder.jpg";
 // Utilities
 import { useQuery } from "@tanstack/react-query";
 import { fetchFoods } from "@/actions/food/fetch-foods";
-import { ChangeEvent, useEffect, useMemo, useState } from "react";
+import { ChangeEvent, useMemo, useState } from "react";
 
 import { useGroceryBag } from "@/contexts/grocery-bag-context";
 import { GroceryBagItem } from "@/types/grocery-bag";
@@ -25,7 +25,7 @@ export default function ProductsSession() {
     queryFn: () => fetchFoods(),
   });
 
-  const { groceryBag, addToBag } = useGroceryBag();
+  const { addToBag } = useGroceryBag();
 
   const [amounts, setAmounts] = useState<Record<string, number>>({});
   const [searchText, setSearchText] = useState("");
@@ -69,6 +69,7 @@ export default function ProductsSession() {
                       updateAmount(food.id, amount),
                     initialAmount: amount,
                   }}
+                  handleAddToBag={() => addToBag({ food, amount: amount })}
                   name={food.name}
                   price={food.unitPrice}
                   key={food.id}
