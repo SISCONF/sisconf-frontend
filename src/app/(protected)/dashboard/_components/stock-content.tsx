@@ -7,6 +7,7 @@ import { StockFood } from "./columns";
 import { Button } from "@/components/ui/button";
 import { Trash2Icon, CirclePlusIcon, RefreshCcwIcon } from "lucide-react";
 import { useState } from "react";
+import { CustomDialog } from "@/components/custom-dialog";
 
 export type StockFoodInfo = {
   foodId: number;
@@ -76,11 +77,19 @@ export default function StockContent() {
           className="bg-red-500 hover:bg-red-700 disabled:bg-gray-500 disabled:cursor-not-allowed"
         >
           <Trash2Icon />
+          Deletar do estoque
         </Button>
-        <Button className="bg-green-700 hover:bg-green-900 ml-auto">
-          <CirclePlusIcon />
-          Adicionar comida ao estoque
-        </Button>
+        <CustomDialog
+          triggeringComponent={
+            <Button className="bg-green-700 hover:bg-green-900 ml-auto">
+              <CirclePlusIcon />
+              Adicionar comida ao estoque
+            </Button>
+          }
+          title="Adicionar Comidas ao Estoque"
+          description="Adicione, abaixo, as comidas que você quer que sejam adicionadas ao estoque"
+          children={<div>Hello World</div>}
+        />
       </div>
       <DataTable
         data={foods}
