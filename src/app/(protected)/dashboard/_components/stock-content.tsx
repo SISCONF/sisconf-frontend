@@ -6,8 +6,11 @@ import { columns } from "./columns";
 import { StockFood } from "./columns";
 import { Button } from "@/components/ui/button";
 import { Trash2Icon, CirclePlusIcon, RefreshCcwIcon } from "lucide-react";
-import { useState } from "react";
+import { useMemo, useState } from "react";
 import { CustomDialog } from "@/components/custom-dialog";
+import { fetchStock } from "@/actions/stock/fetch-stock";
+import { useQuery } from "@tanstack/react-query";
+import { useAuth } from "@/hooks/useAuth";
 
 export type StockFoodInfo = {
   foodId: number;
@@ -36,6 +39,19 @@ const dummyData: StockFood[] = [
 ];
 
 export default function StockContent() {
+  const { user, isAuthenticated } = useAuth();
+  const userId = useMemo(() => user?.id, [user]);
+
+  const {
+    data: stock,
+    isLoading,
+    error,
+  } = useQuery({
+    queryKey: ["stock"],
+    queryFn: () => fetchStock(userId!),
+    enabled: Boolean(userId),
+  });
+
   const [foodsToActOn, setFoodsToActOn] = useState<StockFoodInfo[]>([]);
   const [foods, setFoods] = useState<StockFood[]>(dummyData);
 

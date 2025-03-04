@@ -14,26 +14,26 @@ export function middleware(request: NextRequest) {
     return NextResponse.next();
   }
 
-  //   if (!authToken && !publicRoute) {
-  //     const redirectUrl = request.nextUrl.clone();
-  //     redirectUrl.pathname = REDIRECT_WHEN_NOT_AUTHENTICATED_ROUTE;
-  //
-  //     return NextResponse.redirect(redirectUrl);
-  //   }
-  //
-  //   if (
-  //     authToken &&
-  //     publicRoute &&
-  //     publicRoute.whenAuthenticated === "redirect"
-  //   ) {
-  //     const redirectUrl = request.nextUrl.clone();
-  //     redirectUrl.pathname = "/";
-  //     return NextResponse.redirect(redirectUrl);
-  //   }
-  //
-  //   if (authToken && !publicRoute) {
-  //     return NextResponse.next();
-  //   }
+  if (!authToken && !publicRoute) {
+    const redirectUrl = request.nextUrl.clone();
+    redirectUrl.pathname = REDIRECT_WHEN_NOT_AUTHENTICATED_ROUTE;
+
+    return NextResponse.redirect(redirectUrl);
+  }
+
+  if (
+    authToken &&
+    publicRoute &&
+    publicRoute.whenAuthenticated === "redirect"
+  ) {
+    const redirectUrl = request.nextUrl.clone();
+    redirectUrl.pathname = "/";
+    return NextResponse.redirect(redirectUrl);
+  }
+
+  if (authToken && !publicRoute) {
+    return NextResponse.next();
+  }
 
   return NextResponse.next();
 }
@@ -47,6 +47,6 @@ export const config = {
      * - _next/image (image optimization files)
      * - favicon.ico, sitemap.xml, robots.txt (metadata files)
      */
-    "/((?!api|_next/static|_next/image|favicon.ico|sitemap.xml|robots.txt).*)",
+    "/((?!api|_next/static|_next/image|assets|icons|favicon.ico|sitemap.xml|robots.txt).*)",
   ],
 };
