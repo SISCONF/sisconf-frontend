@@ -1,13 +1,14 @@
 "use client"
 
 import { formatPrice, cn } from "@/lib/utils"
-import { EntrepreneurOrder } from "@/types/entrepreneur-orders"
 import { ColumnDef } from "@tanstack/react-table"
 import { Eye } from "lucide-react"
-import StatusTag from "../status-tag"
+import StatusTag, { StatusTagProps } from "../status-tag"
 import { Checkbox } from "@/components/ui/checkbox"
+import { Order, OrderStatus } from "@/types/order"
+import { Food } from "@/types/food"
 
-export const columns: ColumnDef<EntrepreneurOrder>[] = [
+export const columns: ColumnDef<Order>[] = [
   {
         id: "select",
         header: ({ table }) => (
@@ -29,50 +30,76 @@ export const columns: ColumnDef<EntrepreneurOrder>[] = [
         ),
   },
   {
-    accessorKey: "orderId",
+    accessorKey: "id",
     header: "ID do pedido",
   },
   {
-    accessorKey: "date",
+    accessorKey: "orderDate",
     header: "Data",
-  },
-  {
-    accessorKey: "client",
-    header: "Cliente",
+    cell: ({ row }) => {
+      const orderDate: string = row.getValue("orderDate")
+      const date = new Date(orderDate)
+
+      const formattedDate = date.toLocaleDateString("pt-BR", {
+        day: "2-digit",
+        month: "2-digit",
+        year: "numeric"
+      })
+
+      return <div>{formattedDate}</div>
+    }
   },
   {
     accessorKey: "status",
     header: "Status",
     cell: ({ row }) => {
-        const statusValue: "Aguardando" | "Aprovado" = row.getValue("status")
+        const statusMap: Record<OrderStatus, StatusTagProps["status"]> = {
+          [OrderStatus.Aguardando]: "Aguardando",
+          [OrderStatus.Aprovado]: "Aprovado",
+          
+        }
+        const statusValue: OrderStatus = row.getValue("status")
+        const statusText = statusMap[statusValue] 
 
 
-        return <StatusTag status={statusValue} text={statusValue} />
+        return <StatusTag status={statusText} text={statusText} />
     },
   },
   {
-    accessorKey: "amount",
+    accessorKey: "totalPrice",
     header: "Total",
     cell: ({ row }) => {
-        const amount = parseFloat(row.getValue("amount"))
+        const totalPrice = parseFloat(row.getValue("totalPrice"))
    
-        return <div className="font-medium">{formatPrice(amount)}</div>
+        return <div className="font-medium">{formatPrice(totalPrice)}</div>
     },
   },
   {
-    accessorKey: "items",
+    accessorKey: "foods", 
     header: "Itens",
-  },
-  {
-    accessorKey: "actions",
-    header: "Ações",
     cell: ({ row }) => {
-        return (
-            <button className="bg-[#F0F4EA] text-[#237D31] p-1 rounded-[8px]">
-                <Eye size={20} />
-            </button>
-        )
+        const foods: Food[] = row.getValue("foods")
+        const foodNames: string = foods
+          .map((food) => 
+            food.name
+              .toLowerCase()
+              .replace(/\b\w/g, (char) => char.toUpperCase()) // Capitaliza cada palavra
+          )
+          .join(", ")
+
+        return <div className="truncate max-w-[300px]">{foodNames}</div>
     },
-  }
+  },
+  // {
+  //   accessorKey: "actions",
+  //   header: "Ações",
+  //   cell: ({ row }) => {
+  //       return (
+  //           <button className="bg-[#F0F4EA] text-[#237D31] p-1 rounded-[8px]">
+  //               <Eye size={20} />
+  //           </button>
+  //       )
+  //   },
+  // }
 ]
 

@@ -25,6 +25,8 @@ import { useEffect, useState } from "react";
 import { EntrepreneurOrder } from "@/types/entrepreneur-orders";
 import { SIDE_BAR_NAV_ITEMS } from "./_components/const";
 import Link from "next/link";
+import { useQuery } from "@tanstack/react-query";
+import { fetchOrders } from "@/actions/orders/fetch-orders";
 
 
 const ordersGroup: OrdersGroup[] = [
@@ -88,6 +90,13 @@ export default function Page() {
   const [selectedOrdersGroup, setSelectedOrdersGroup] = useState<OrdersGroup | null>(null);
   const [selectedNavItem, setSelectedNavItem] = useState("pedidos");
 
+  const { 
+    data
+  } = useQuery({
+    queryKey: ["orders"],
+    queryFn: () => fetchOrders()
+  })
+
   const handleNavigation = (item: string) => {
     setSelectedNavItem(item);
   }
@@ -134,7 +143,7 @@ export default function Page() {
               />
             ) : (
               <EntrepreneurOrders 
-                orders={orders} 
+                orders={data ?? []} 
                 ordersGroup={ordersGroup}
                 setSelectedOrdersGroup={setSelectedOrdersGroup}
               />

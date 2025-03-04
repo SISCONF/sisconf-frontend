@@ -12,6 +12,7 @@ import React, { Dispatch, SetStateAction, useState } from 'react';
 import { ComponentTabs } from '../tabs';
 import { OrdersGroup } from '@/types/orders-group';
 import { ordersGroupColumns } from '../ui/orders-group-columns';
+import { Order } from '@/types/order';
 
 type TabsProps = {}
 
@@ -29,7 +30,7 @@ export const TABS_LIST = [
 ];
 
 export interface EntrepreneurOrdersProps {
-    orders: EntrepreneurOrder[]
+    orders: Order[]
     ordersGroup: OrdersGroup[]
     setSelectedOrdersGroup: Dispatch<SetStateAction<OrdersGroup | null>>
 }
