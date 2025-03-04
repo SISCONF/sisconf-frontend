@@ -1,16 +1,15 @@
 "use client";
 
-import PageTitle from '@/components/page-title';
+import { createOrder } from '@/actions/orders/create-order';
 import { ResumeOrderCard } from '@/components/resume-order-card';
 import { ResumeOrderItemList } from '@/components/resume-order-item-list';
 import ResumeOrdersList from '@/components/resume-orders-list';
+import { Order } from '@/types/order';
 import { OrderItem } from '@/types/order-item';
-import { ArrowLeft } from 'lucide-react';
-import { useRouter } from 'next/navigation';
+import { useMutation, useQuery } from '@tanstack/react-query';
 import { useState } from 'react';
 
 export default function ProductsSummary () {
-  const router = useRouter()
 
   const [orders, setOrders] = useState<OrderItem[]>(ordersList);
 
@@ -20,18 +19,35 @@ export default function ProductsSummary () {
 
   const total = orders.reduce((acc, order) => acc + order.price, 0);
 
+  const mutation = useMutation({
+    mutationFn: createOrder,
+    onSuccess: (data) => {
+      console.log("Pedido criado com sucesso!", data);
+    },
+    onError: (error) => {
+      console.error("Erro ao criar o pedido:", error);
+    },
+  });
+  
+  const handleSubmit = () => {
+    const ordersData: Order = {
+      foodsQuantities: orders.map((order) => ({
+        foodId: order.id,
+        quantity: order.amount,
+        quantityType: "KG"
+      }))
+    }
+
+    console.log("orders data: ", JSON.stringify(ordersData))
+    mutation.mutate(ordersData);
+  };
+
+
   return (
-    <div className='px-16'>
-
-      <PageTitle 
-        text='Meus pedidos'
-        icon={<ArrowLeft size={24} />} 
-        onClick={() => router.back()}
-      />
-
-      <div className='flex justify-between'>
+    <div>
+      <div className='flex justify-between gap-x-5'>
         <ResumeOrdersList 
-          className='max-w-[932px] w-full px-11 py-5 flex flex-col bg-slate-50 rounded-[8px]'
+          className='max-w-[932px] flex-grow px-11 py-5 flex flex-col bg-slate-50 rounded-[8px]'
           headerClassName='w-full grid grid-cols-[3fr_1fr_1fr_1fr] text-[#103E13] font-bold'
           userType='customer'
         >
@@ -45,7 +61,7 @@ export default function ProductsSummary () {
             />
           ))}
         </ResumeOrdersList>
-        <ResumeOrderCard total={total} />
+        <ResumeOrderCard onSubmit={handleSubmit} total={total} />
       </div>
     </div>
   );
@@ -57,6 +73,7 @@ const ordersList: OrderItem[] = [
     image: "/strawberry.svg",
     name: "Morango",
     description: "lorem ipsum dolor siamet",
+    amount: 2,
     price: 200.00,
     status: "Aguardando",
   },
@@ -65,6 +82,7 @@ const ordersList: OrderItem[] = [
     image: "/strawberry.svg",
     name: "Banana",
     description: "lorem ipsum dolor siamet",
+    amount: 2,
     price: 200.00,
     status: "Aprovado",
   },
@@ -73,6 +91,7 @@ const ordersList: OrderItem[] = [
     image: "/strawberry.svg",
     name: "Maçã",
     description: "lorem ipsum dolor siamet",
+    amount: 2,
     price: 150.00,
     status: "Aprovado",
   },
@@ -81,6 +100,7 @@ const ordersList: OrderItem[] = [
     image: "/strawberry.svg",
     name: "Laranja",
     description: "lorem ipsum dolor siamet",
+    amount: 2,
     price: 250.00,
     status: "Aguardando",
   },

@@ -3,6 +3,7 @@ export interface OrderItem {
     image: string;
     name: string;
     description: string;
+    amount: number;
     price: number;
     status: "Aguardando" | "Aprovado";
 }
