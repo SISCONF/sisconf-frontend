@@ -1,7 +1,7 @@
 import type { Metadata } from "next";
 import "./globals.css";
 import { Registry } from "./registry";
-import { GroceryBagProvider } from "@/contexts/grocery-bag-context";
+import { GroceryBagProvider } from "@/hooks/grocery-bag-context";
 
 import { Roboto } from "next/font/google";
 import { NavBar } from "@/components/header";

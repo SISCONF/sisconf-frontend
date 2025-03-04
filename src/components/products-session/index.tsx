@@ -12,8 +12,9 @@ import { useQuery } from "@tanstack/react-query";
 import { fetchFoods } from "@/actions/food/fetch-foods";
 import { ChangeEvent, useMemo, useState } from "react";
 
-import { useGroceryBag } from "@/contexts/grocery-bag-context";
+import { useGroceryBag } from "@/hooks/grocery-bag-context";
 import { GroceryBagItem } from "@/types/grocery-bag";
+import { useAuth } from "@/hooks/useAuth";
 
 export default function ProductsSession() {
   const {
@@ -25,7 +26,10 @@ export default function ProductsSession() {
     queryFn: () => fetchFoods(),
   });
 
-  const { addToBag } = useGroceryBag();
+  const { user, isAuthenticated } = useAuth();
+  const { addToBag } = useGroceryBag(
+    isAuthenticated && user?.id ? user.id : null
+  );
 
   const [amounts, setAmounts] = useState<Record<string, number>>({});
   const [searchText, setSearchText] = useState("");
