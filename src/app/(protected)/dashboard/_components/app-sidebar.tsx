@@ -12,14 +12,18 @@ import {
 } from "@/components/ui/sidebar";
 import { SIDE_BAR_NAV_ITEMS, SIDE_BAR_TEAM, SIDE_BAR_USER } from "./const";
 
-export function AppSidebar({ ...props }: React.ComponentProps<typeof Sidebar>) {
+interface AppSidebarProps extends React.ComponentProps<typeof Sidebar> {
+  onNavigation: (item: string) => void;
+}
+
+export function AppSidebar({ onNavigation, ...props }: AppSidebarProps) {
   return (
     <Sidebar collapsible="icon" {...props}>
       <SidebarHeader>
         <TeamContent content={SIDE_BAR_TEAM} />
       </SidebarHeader>
       <SidebarContent>
-        <NavMain navMainItems={SIDE_BAR_NAV_ITEMS} />
+        <NavMain navMainItems={SIDE_BAR_NAV_ITEMS} onNavClick={onNavigation} />
       </SidebarContent>
       <SidebarFooter>
         <NavUser user={SIDE_BAR_USER} />

@@ -16,6 +16,7 @@ export default function Products() {
           src={VeggiesHeader}
           alt="a wooden table with fruits, veggies and seeds on it."
           className="w-screen"
+          priority
         />
         <Typography
           variant="h1"
@@ -38,6 +39,7 @@ export default function Products() {
             className="rounded-[1rem] object-cover h-full"
             src={CarrotsBanner}
             alt="a bunch of carrots together"
+            priority
           />
         </div>
       </main>

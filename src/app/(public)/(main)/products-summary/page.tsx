@@ -1,7 +1,6 @@
-import { PageTitle } from "@/components/page-title";
-import { OrderItem } from "@/types/order-item";
+import PageTitle from "@/components/page-title";
 import { ArrowLeft } from "lucide-react";
-import { OrdersList } from "./_components/orders-list";
+import OrdersList from "./_components/orders-list";
 
 export default function ProductsSummaryPage() {
   return (

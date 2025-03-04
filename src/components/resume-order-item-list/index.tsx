@@ -4,35 +4,60 @@ import { X } from "lucide-react";
 import Quantity from "../amount";
 import { OrderItem } from "@/types/order-item";
 import { formatPrice } from "@/lib/utils";
+import { Typography } from "../typography";
 
-export interface ResumeOrderItemList {
-  order: OrderItem;
-  onRemove: (id: number) => void;
+export interface ResumeOrderItemList extends React.HtmlHTMLAttributes<HTMLDivElement> {
+    order: OrderItem;
+    onRemove: (id:number) => void;
+    userType: "customer" | "entrepreneur"
 }
 
-export function ResumeOrderItemList({ order, onRemove }: ResumeOrderItemList) {
-  const { id, name, description, image, price, status } = order;
+export function ResumeOrderItemList ({
+    order, 
+    userType,
+    className,
+    onRemove,
+    ...props
+}: ResumeOrderItemList) {
+    const { id, name, description, image, price, status } = order;
 
-  return (
-    <div className="max-[843px] h-24 relative grid grid-cols-[3fr_1fr_1fr_1fr] place-items-center gap-12 pr-12 font-medium">
-      <div className="flex items-center gap-4">
-        <Image alt="Food image" src={image} width={85} height={91} />
+    return (
+        <>
+            <div className={className}{...props}>
+                <div className="flex items-center flex-1 gap-4 w-full">
+                    <Image 
+                        alt="Food image"
+                        src={image}
+                        width={85}
+                        height={91}
+                    />
 
-        <div className="flex flex-col gap-1">
-          <span>{name}</span>
-          <span>{description}</span>
-        </div>
-      </div>
+                    <div className="flex flex-col gap-1">
+                        <span>{name}</span>
+                        <span>{description}</span>
+                    </div>
+                </div>
 
-      <Quantity />
+                {
+                    userType === "customer" ? <Quantity /> : <Typography variant={"body1"}>1</Typography> 
+                }
 
-      <span>{formatPrice(price)}</span>
 
-      <StatusTag text={status} status={status} />
+                <span>{formatPrice(price)}</span>
 
-      <button onClick={() => onRemove(id)} className="">
-        <X className="absolute top-0 right-0" />
-      </button>
-    </div>
-  );
+                { userType === "customer" && 
+                    (
+                        <>
+                            <StatusTag text={status} status={status} />
+                            
+                            <button onClick={() => onRemove(id)} className="">
+                                <X className="absolute top-0 right-0" />        
+                            </button>
+                        </>
+                    ) 
+                }
+            </div>
+            <hr className="bg-[#D9D9D9]" />
+        </>
+    );
 }

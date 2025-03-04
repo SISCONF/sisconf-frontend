@@ -17,6 +17,7 @@ import {
   SidebarMenuSubButton,
   SidebarMenuSubItem,
 } from "@/components/ui/sidebar";
+import Link from "next/link";
 
 interface ItemProps {
   title: string;
@@ -31,9 +32,10 @@ interface NavMainProps {
     isActive?: boolean;
     items?: ItemProps[];
   }[];
+  onNavClick: (item: string) => void;
 }
 
-export function NavMain({ navMainItems }: NavMainProps) {
+export function NavMain({ navMainItems, onNavClick }: NavMainProps) {
   return (
     <SidebarGroup>
       <SidebarGroupLabel>Platform</SidebarGroupLabel>
@@ -47,9 +49,11 @@ export function NavMain({ navMainItems }: NavMainProps) {
           >
             <SidebarMenuItem>
               <CollapsibleTrigger asChild>
-                <SidebarMenuButton tooltip={navItem.title}>
+                <SidebarMenuButton tooltip={navItem.title}
+                  onClick={() => onNavClick(navItem.title)}
+                >
                   {navItem.icon && <navItem.icon />}
-                  <span>{navItem.title}</span>
+                    <span>{navItem.title}</span>
                   {navItem.items && (
                     <ChevronRight className="ml-auto transition-transform duration-200 group-data-[state=open]/collapsible:rotate-90" />
                   )}
@@ -60,9 +64,9 @@ export function NavMain({ navMainItems }: NavMainProps) {
                   {navItem.items?.map((subItem) => (
                     <SidebarMenuSubItem key={subItem.title}>
                       <SidebarMenuSubButton asChild>
-                        <a href={subItem.url}>
+                        <Link href={subItem.url}>
                           <span>{subItem.title}</span>
-                        </a>
+                        </Link>
                       </SidebarMenuSubButton>
                     </SidebarMenuSubItem>
                   ))}
