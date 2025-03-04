@@ -13,7 +13,9 @@ import {
 } from "@/components/ui/breadcrumb";
 import { Separator } from "@/components/ui/separator";
 import {
+  SidebarContent,
   SidebarInset,
+  SidebarMenuItem,
   SidebarProvider,
   SidebarTrigger,
 } from "@/components/ui/sidebar";
@@ -21,6 +23,8 @@ import StockContent from "./_components/stock-content";
 import { OrdersGroup } from "@/types/orders-group";
 import { useEffect, useState } from "react";
 import { EntrepreneurOrder } from "@/types/entrepreneur-orders";
+import { SIDE_BAR_NAV_ITEMS } from "./_components/const";
+import Link from "next/link";
 
 
 const ordersGroup: OrdersGroup[] = [
@@ -82,10 +86,15 @@ const orders: EntrepreneurOrder[] = [
 
 export default function Page() {
   const [selectedOrdersGroup, setSelectedOrdersGroup] = useState<OrdersGroup | null>(null);
+  const [selectedNavItem, setSelectedNavItem] = useState("pedidos");
+
+  const handleNavigation = (item: string) => {
+    setSelectedNavItem(item);
+  }
 
   return (
     <SidebarProvider>
-      <AppSidebar />
+      <AppSidebar onNavigation={handleNavigation} />
       <SidebarInset>
         <header className="flex h-16 shrink-0 items-center gap-2 transition-[width,height] ease-linear group-has-[[data-collapsible=icon]]/sidebar-wrapper:h-12">
           <div className="flex items-center gap-2 px-4">
@@ -114,22 +123,24 @@ export default function Page() {
           </div>
           <div className="min-h-[100vh] flex-1 rounded-xl bg-muted/50 md:min-h-min" />
         </div> */}
-        <StockContent />
+        {/* <StockContent /> */}
 
-        {
-          selectedOrdersGroup ? (
-            <OrdersGroupDetails 
-              selectedOrdersGroup={selectedOrdersGroup}
-              setSelectedOrdersGroup={setSelectedOrdersGroup}
-            />
-          ) : (
-            <EntrepreneurOrders 
-              orders={orders} 
-              ordersGroup={ordersGroup}
-              setSelectedOrdersGroup={setSelectedOrdersGroup}
-            />
-          )
+        {selectedNavItem === "Estoque" && <StockContent />}
+        {selectedNavItem === "Pedidos" && 
+            selectedOrdersGroup ? (
+              <OrdersGroupDetails 
+                selectedOrdersGroup={selectedOrdersGroup}
+                setSelectedOrdersGroup={setSelectedOrdersGroup}
+              />
+            ) : (
+              <EntrepreneurOrders 
+                orders={orders} 
+                ordersGroup={ordersGroup}
+                setSelectedOrdersGroup={setSelectedOrdersGroup}
+              />
+            )
         }
+
       </SidebarInset>
     </SidebarProvider>
   );
