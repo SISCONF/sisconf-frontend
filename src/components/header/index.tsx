@@ -1,17 +1,14 @@
 "use client";
 
 import Link from "next/link";
-import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
 import { NavItem } from "./nav-tem";
 import { CartButton } from "./cart-button";
-import { Typography } from "../typography";
-import { motion } from "framer-motion";
 import { ModeToggle } from "../theme/mode-toggle";
 import { Button } from "../ui/button";
 import { useAuth } from "@/hooks/useAuth";
 import { NavDropDown } from "./nav-dropdown";
-import { useMemo } from "react";
 import { User } from "@/types/user";
+import Image from "next/image";
 
 const NAV_ITEMS = [
   { href: "/", label: "Início" },
@@ -24,17 +21,16 @@ export function NavBar() {
   const { isAuthenticated, user, logout } = useAuth();
 
   return (
-    <motion.header
-      initial={{ opacity: 0, y: -10 }}
-      animate={{ opacity: 1, y: 0 }}
-      transition={{ duration: 0.2 }}
-      className="sticky top-0 z-50 w-full h- bg-background/95 backdrop-blur shadow-md supports-[backdrop-filter]:bg-background/60 px-20"
-    >
-      <div className="flex w-full h-fit items-center justify-between gap-6 py-4">
+    <header className="sticky top-0 z-50 w-full h- bg-background/95 backdrop-blur shadow-md supports-[backdrop-filter]:bg-background/60 px-20">
+      <div className="container flex w-full h-fit items-center justify-between gap-6 py-4 px-0">
         <Link href="/" className="flex items-center">
-          <Typography variant={"h5"} fontWeight={"bold"}>
-            RJ Frutas
-          </Typography>
+          <Image
+            src={"./assets/Logo-RJ.svg"}
+            alt="Logo da empresa"
+            width={54}
+            height={54}
+            priority
+          />
         </Link>
 
         <nav className="mobile:hidden flex flex-1 justify-start">
@@ -73,6 +69,6 @@ export function NavBar() {
           )}
         </div>
       </div>
-    </motion.header>
+    </header>
   );
 }

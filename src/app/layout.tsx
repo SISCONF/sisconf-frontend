@@ -28,10 +28,7 @@ export default function RootLayout({
       <head>
         <meta httpEquiv="Access-Control-Allow-Origin" content="*" />
       </head>
-      <Registry>
-        <NavBar />
-        {children}
-      </Registry>
+      <Registry>{children}</Registry>
     </html>
   );
 }

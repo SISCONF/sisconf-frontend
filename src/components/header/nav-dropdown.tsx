@@ -10,7 +10,7 @@ import { Button } from "../ui/button";
 import { Typography } from "../typography";
 
 const NAV_DROPDOWN_OPTIONS = [
-  { name: "Meu Perfil", path: "/" },
+  { name: "Meu Perfil", path: "/perfil" },
   { name: "Meus Pedidos", path: "/" },
   { name: "Configurações", path: "/" },
 ];
@@ -25,10 +25,6 @@ export function NavDropDown({ user, handleLogout }: NavDropDownProps) {
 
   const toggleDropdown = () => setIsOpen(!isOpen);
 
-  const handleOptionClick = () => {
-    setIsOpen(false);
-  };
-
   return (
     <div className="relative">
       <Button
@@ -36,23 +32,21 @@ export function NavDropDown({ user, handleLogout }: NavDropDownProps) {
         size={"icon"}
         onClick={() => toggleDropdown()}
       >
-        <UserAvatar />
+        <UserAvatar profile={user} />
       </Button>
       {isOpen && (
         <div className="absolute z-50 right-0 mt-2 w-[17.5rem] border dark:border-brand-5 bg-background shadow-lg">
           <div className="flex items-center gap-3 p-4">
-            <UserAvatar />
+            <UserAvatar profile={user} />
             <div className="flex flex-col items-start">
               <Typography
                 fontWeight={"semibold"}
                 className="text-md text-primary"
               >
-                {/* {user.person.email} */}
-                Hash11
+                {user.person.firstName}
               </Typography>
               <Typography className="text-sm text-muted-foreground">
-                {/* {user.person.email} */}
-                hash11@gmail.com
+                {user.person.email}
               </Typography>
             </div>
           </div>
@@ -60,7 +54,11 @@ export function NavDropDown({ user, handleLogout }: NavDropDownProps) {
           <ul className="p-2">
             {NAV_DROPDOWN_OPTIONS.map((option) => (
               <li key={option.name}>
-                <MenuOption label={option.name} href={option.path} />
+                <MenuOption
+                  label={option.name}
+                  href={option.path}
+                  onClick={() => toggleDropdown()}
+                />
               </li>
             ))}
 
@@ -81,20 +79,32 @@ export function NavDropDown({ user, handleLogout }: NavDropDownProps) {
   );
 }
 
-function UserAvatar() {
+function UserAvatar({ profile }: { profile: User }) {
   return (
     <Avatar className="h-10 w-10">
       <AvatarImage src="/avatar.svg" alt="Foto de perfil" />
-      <AvatarFallback>User</AvatarFallback>
+      <AvatarFallback>
+        {profile.person.firstName[0]}
+        {profile.person.lastName[0]}
+      </AvatarFallback>
     </Avatar>
   );
 }
 
-const MenuOption = ({ label, href }: { label: string; href: string }) => {
+const MenuOption = ({
+  label,
+  href,
+  onClick,
+}: {
+  label: string;
+  href: string;
+  onClick: () => void;
+}) => {
   return (
     <Link
       href={href}
       className="flex items-center gap-3 rounded-md px-3 py-2 text-sm hover:bg-muted"
+      onClick={onClick}
     >
       <UserIcon className="h-4 w-4" />
       {label}
