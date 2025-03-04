@@ -9,8 +9,8 @@ export function Content() {
   return (
     <main className="flex flex-col justify-center items-center w-full min-h-screen bg-background gap-20 px-20 py-12">
       <MainHeroSection />
-      <MainTabsProducts />
       <MainContentSections />
+      <MainTabsProducts />
       <MainBenefits />
     </main>
   );

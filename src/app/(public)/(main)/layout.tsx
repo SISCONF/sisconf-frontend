@@ -1,6 +1,7 @@
 import type { Metadata } from "next/types";
 import NextTopLoader from "nextjs-toploader";
 import { Footer } from "@/components/footer";
+import { NavBar } from "@/components/header";
 
 export const dynamic = "force-dynamic";
 
@@ -16,6 +17,7 @@ export default function RootLayout({
 }>) {
   return (
     <>
+      <NavBar />
       <NextTopLoader color="#fff" showSpinner={false} />
       {children}
       <Footer />

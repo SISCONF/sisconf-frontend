@@ -1,23 +1,28 @@
 "use client";
 
-import { ReactNode, useEffect, useState } from "react";
-import { motion } from "framer-motion";
+import { ReactNode } from "react";
+import { motion, useInView } from "framer-motion";
+import { useRef } from "react";
 
 interface AnimationContainerProps {
   children: ReactNode;
+  index?: number;
 }
 
-export function AnimationContainer({ children }: AnimationContainerProps) {
-  const [isMounted, setIsMounted] = useState(false);
+export function AnimationContainer({
+  children,
+  index = 0,
+}: AnimationContainerProps) {
+  const ref = useRef(null);
+  const isInView = useInView(ref, { once: true, margin: "-100px 0px 0px 0px" });
 
-  useEffect(() => {
-    setIsMounted(true);
-  }, []);
   return (
     <motion.div
-      initial={false}
-      animate={isMounted ? { opacity: 1 } : {}}
-      transition={{ duration: 0.5 }}
+      ref={ref}
+      initial={{ opacity: 0, x: -100 }}
+      animate={isInView ? { opacity: 1, x: 0 } : {}}
+      transition={{ duration: 0.5, delay: index * 0.2 }}
+      className="w-full"
     >
       {children}
     </motion.div>

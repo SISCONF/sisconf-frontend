@@ -1,5 +1,6 @@
 import { Button } from "@/components/ui/button";
 import { ContentSection } from "@/components/content-section";
+import { AnimationContainer } from "@/components/animation-container";
 
 const CONTENT_SECTIONS = [
   {
@@ -22,19 +23,20 @@ export function MainContentSections() {
   return (
     <>
       {CONTENT_SECTIONS.map((section, index) => (
-        <ContentSection
-          key={index}
-          title={section.title}
-          description={section.description}
-          isRightImage={section.isRightImage}
-          actions={
-            <Button className="w-[150px] h-11 bg-brand-3 hover:bg-brand-5 text-white">
-              Saiba mais
-            </Button>
-          }
-          imageUrl={section.imageUrl}
-          isContainer
-        />
+        <AnimationContainer key={index} index={index}>
+          <ContentSection
+            title={section.title}
+            description={section.description}
+            isRightImage={section.isRightImage}
+            actions={
+              <Button className="w-[150px] h-11 bg-brand-3 hover:bg-brand-5 text-white">
+                Saiba mais
+              </Button>
+            }
+            imageUrl={section.imageUrl}
+            isContainer
+          />
+        </AnimationContainer>
       ))}
     </>
   );
