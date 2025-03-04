@@ -29,7 +29,7 @@ export default function ResumeOrdersList ({
               <button className='bg-slate-950 p-2 text-white rounded'>
                 Esvaziar sacola
               </button>
-              <a href='/orders' className='text-green-800 p-2 underline'>
+              <a href='/products' className='text-green-800 p-2 underline'>
                 Adicionar mais produtos
               </a>
             </>
