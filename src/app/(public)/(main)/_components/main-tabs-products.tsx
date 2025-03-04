@@ -8,6 +8,7 @@ import { fetchFoods } from "@/actions/food/fetch-foods";
 import { useQuery } from "@tanstack/react-query";
 import { CustomCarousel } from "@/components/custom-carousel";
 import { Food, FoodCategory } from "@/types/food";
+import { Spinner } from "@/components/spinner";
 
 const TABS_LIST = [
   {
@@ -18,14 +19,14 @@ const TABS_LIST = [
   },
   {
     id: 1,
-    name: "verduras",
-    label: "Verduras",
+    name: "legumes",
+    label: "Legumes",
     category: FoodCategory.Vegetable,
   },
   {
     id: 2,
-    name: "legumes",
-    label: "Legumes",
+    name: "verduras",
+    label: "Verduras",
     category: FoodCategory.Vegetable,
   },
   {
@@ -62,7 +63,7 @@ export function MainTabsProducts() {
   }, [foods, activeTab.category, handleFilterByCategory]);
 
   if (isLoading) {
-    return <div>Carregando...</div>;
+    return <Spinner />;
   }
 
   if (error) {
@@ -85,8 +86,8 @@ export function MainTabsProducts() {
           Conheça nossos produtos
         </Typography>
         <Typography variant={"body1"} className="w-[31.25rem]">
-          Trabalhamos com frutas e verduras frescas, selecionadas para garantir
-          qualidade e sabor. Confira e faça sua escolha.
+          Trabalhamos com frutas e legumes frescos. Confira nossas opções e faça
+          sua escolha.
         </Typography>
       </div>
 
