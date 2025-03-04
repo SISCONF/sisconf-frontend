@@ -4,6 +4,7 @@ import { createContext, useContext, useEffect, useState } from "react";
 import { deleteCookie, getCookie } from "cookies-next";
 import { User } from "@/types/user";
 import { useRouter } from "next/navigation";
+import { fetchCustomerMe } from "@/actions/customer/fetch-customer-me";
 
 interface AuthContextType {
   user: User | null;
@@ -32,9 +33,26 @@ export const AuthProvider = ({ children }: { children: React.ReactNode }) => {
   };
 
   useEffect(() => {
-    if (token) {
-      setIsAuthenticated(true);
-    }
+    const loadUser = async () => {
+      try {
+        setIsLoading(true);
+        if (token) {
+          const userData = await fetchCustomerMe();
+          setUser(userData);
+          setIsAuthenticated(true);
+        } else {
+          setUser(null);
+          setIsAuthenticated(false);
+        }
+      } catch (error) {
+        setUser(null);
+        setIsAuthenticated(false);
+      } finally {
+        setIsLoading(false);
+      }
+    };
+
+    loadUser();
   }, [token]);
 
   return (
