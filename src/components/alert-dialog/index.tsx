@@ -7,16 +7,25 @@ import {
   AlertDialogFooter,
   AlertDialogHeader,
   AlertDialogTitle,
-  AlertDialogTrigger,
 } from "@/components/ui/alert-dialog";
-import { Button } from "@/components/ui/button";
+import { OrdersGroup } from "@/types/orders-group";
+import { QueryObserverBaseResult, RefetchOptions } from "@tanstack/react-query";
 
 interface AlertDialogProps {
   open: boolean;
   setOpen: (open: boolean) => void;
+  handleSubmit: () => void;
+  handleRefresh: (
+    options?: RefetchOptions
+  ) => Promise<QueryObserverBaseResult<OrdersGroup[], Error>>;
 }
 
-export function AlertDialogComponent({ open, setOpen }: AlertDialogProps) {
+export function AlertDialogComponent({
+  open,
+  setOpen,
+  handleSubmit,
+  handleRefresh,
+}: AlertDialogProps) {
   return (
     <AlertDialog open={open} onOpenChange={setOpen}>
       <AlertDialogContent>
@@ -32,7 +41,10 @@ export function AlertDialogComponent({ open, setOpen }: AlertDialogProps) {
           <AlertDialogCancel className="bg-[#A1A1A1] text-white">
             Cancelar
           </AlertDialogCancel>
-          <AlertDialogAction className="bg-[#237D31] text-white">
+          <AlertDialogAction
+            onClick={handleSubmit}
+            className="bg-[#237D31] text-white"
+          >
             Agrupar
           </AlertDialogAction>
         </AlertDialogFooter>

@@ -18,12 +18,16 @@ import {
   SidebarTrigger,
 } from "@/components/ui/sidebar";
 import StockContent from "./_components/stock-content";
-import { OrdersGroup } from "@/types/orders-group";
-import { useEffect, useState } from "react";
-import { EntrepreneurOrder } from "@/types/entrepreneur-orders";
-import { useQuery } from "@tanstack/react-query";
+import {
+  OrdersGroup,
+  OrdersGroupCreation,
+  OrdersGroupStatus,
+} from "@/types/orders-group";
+import { useState } from "react";
+import { useQuery, useMutation } from "@tanstack/react-query";
 import { fetchOrders } from "@/actions/orders/fetch-orders";
 import { fetchOrdersGroup } from "@/actions/orders/fetch-orders-group";
+import { createOrdersGroup } from "@/actions/orders-group/create-orders-group";
 
 export default function Page() {
   const [selectedOrdersGroup, setSelectedOrdersGroup] =
@@ -31,19 +35,37 @@ export default function Page() {
   const [selectedNavItem, setSelectedNavItem] = useState("Pedidos");
   const [selectedOrders, setSelectedOrders] = useState<number[]>([]);
 
-  const { data: orders } = useQuery({
+  const { data: orders, refetch: refetchOrders } = useQuery({
     queryKey: ["orders"],
     queryFn: () => fetchOrders(),
   });
 
   const {
     data: ordersGroup,
+    refetch: refetchOrdersGroup,
     isLoading,
     error,
   } = useQuery({
-    queryKey: ["foods"],
+    queryKey: ["ordersGroup"],
     queryFn: () => fetchOrdersGroup(),
+    enabled: false,
   });
+
+  const mutation = useMutation({
+    mutationFn: createOrdersGroup,
+    onSuccess: (data) => console.log("Deu certo!", data),
+    onError: (error) => console.log("Erro ao agrupar pedidos", error),
+  });
+
+  const handleOrdersGrouping = () => {
+    const ordersGroupData: OrdersGroupCreation = {
+      ordersIds: selectedOrders,
+      currentStatus: OrdersGroupStatus.Recebido,
+      docUrl: "",
+    };
+
+    mutation.mutate(ordersGroupData);
+  };
 
   const handleOrdersSelection = (orderId: number) => {
     setSelectedOrders((prev) => {
@@ -65,10 +87,6 @@ export default function Page() {
   const handleNavigation = (item: string) => {
     setSelectedNavItem(item);
   };
-
-  useEffect(() => {
-    console.log("Q q é isso????", selectedOrders);
-  }, [selectedOrders]);
 
   return (
     <SidebarProvider>
@@ -107,6 +125,8 @@ export default function Page() {
             setSelectedOrdersGroup={setSelectedOrdersGroup}
             handleOrdersSelection={handleOrdersSelection}
             handleAllOrdersSelection={handleAllOrdersSelection}
+            handleOrdersGrouping={handleOrdersGrouping}
+            refetchProps={{ refetchOrders, refetchOrdersGroup }}
           />
         )}
       </SidebarInset>

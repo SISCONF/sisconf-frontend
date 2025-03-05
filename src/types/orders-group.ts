@@ -15,3 +15,9 @@ export type OrdersGroup = {
   docUrl: string;
   orders: Order[];
 };
+
+export type OrdersGroupCreation = {
+  currentStatus: OrdersGroupStatus;
+  docUrl: "";
+  ordersIds: number[];
+};

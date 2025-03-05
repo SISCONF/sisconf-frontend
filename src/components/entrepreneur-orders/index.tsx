@@ -1,20 +1,18 @@
 "use client";
 
 import PageTitle from "../page-title";
-import { Card, CardContent, CardDescription, CardTitle } from "../ui/card";
+import { Card, CardContent, CardTitle } from "../ui/card";
 import { Typography } from "../typography";
 import { DataTable } from "../ui/data-table";
 import { columns } from "../ui/columns";
-import { EntrepreneurOrder } from "@/types/entrepreneur-orders";
 import { Package } from "lucide-react";
 import { AlertDialogComponent } from "../alert-dialog";
-import React, { Dispatch, SetStateAction, useState } from "react";
+import React, { Dispatch, SetStateAction, useEffect, useState } from "react";
 import { ComponentTabs } from "../tabs";
 import { OrdersGroup } from "@/types/orders-group";
 import { ordersGroupColumns } from "../ui/orders-group-columns";
 import { Order } from "@/types/order";
-
-type TabsProps = {};
+import { QueryObserverBaseResult, RefetchOptions } from "@tanstack/react-query";
 
 export const TABS_LIST = [
   {
@@ -35,6 +33,15 @@ export interface EntrepreneurOrdersProps {
   setSelectedOrdersGroup: Dispatch<SetStateAction<OrdersGroup | null>>;
   handleOrdersSelection: (orderId: number) => void;
   handleAllOrdersSelection: (ordersId: number[]) => void;
+  handleOrdersGrouping: () => void;
+  refetchProps: {
+    refetchOrders: (
+      options?: RefetchOptions
+    ) => Promise<QueryObserverBaseResult<Order[], Error>>;
+    refetchOrdersGroup: (
+      options?: RefetchOptions
+    ) => Promise<QueryObserverBaseResult<OrdersGroup[], Error>>;
+  };
 }
 
 export default function EntrepreneurOrders({
@@ -43,6 +50,8 @@ export default function EntrepreneurOrders({
   setSelectedOrdersGroup,
   handleOrdersSelection,
   handleAllOrdersSelection,
+  handleOrdersGrouping,
+  refetchProps,
 }: EntrepreneurOrdersProps) {
   const [open, setOpen] = useState(false);
   const [activeTab, setActiveTab] = useState<{
@@ -55,6 +64,17 @@ export default function EntrepreneurOrders({
     const selectedTab = TABS_LIST.find((tab) => tab.id === id);
     setActiveTab(selectedTab || TABS_LIST[0]);
   };
+
+  useEffect(() => {
+    switch (activeTab.id) {
+      case 0:
+        refetchProps.refetchOrders();
+        break;
+      case 1:
+        refetchProps.refetchOrdersGroup();
+        break;
+    }
+  }, [activeTab]);
 
   return (
     <div className="p-12">
@@ -166,7 +186,12 @@ export default function EntrepreneurOrders({
           />
         )}
 
-        <AlertDialogComponent open={open} setOpen={setOpen} />
+        <AlertDialogComponent
+          handleSubmit={handleOrdersGrouping}
+          open={open}
+          setOpen={setOpen}
+          handleRefresh={refetchProps.refetchOrdersGroup}
+        />
       </div>
     </div>
   );
