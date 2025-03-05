@@ -1,8 +1,11 @@
+import { Order } from "./order";
+
 export type OrdersGroup = {
-    id: number
-    date: string
-    sheet: string
-    total: number
-    status: "Entregue" | "Recebido" | "Fechado"
-    items: string
-}
+  id: number;
+  totalPrice: number;
+  orderDate: string;
+  currentStatus: "PLACED" | "RECEIVED" | "DELIVERED";
+  itemQuantity: number;
+  docUrl: string;
+  orders: Order[];
+};

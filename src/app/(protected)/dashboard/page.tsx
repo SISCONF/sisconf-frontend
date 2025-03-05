@@ -23,33 +23,34 @@ import { useState } from "react";
 import { EntrepreneurOrder } from "@/types/entrepreneur-orders";
 import { useQuery } from "@tanstack/react-query";
 import { fetchOrders } from "@/actions/orders/fetch-orders";
+import { fetchOrdersGroup } from "@/actions/orders/fetch-orders-group";
 
-const ordersGroup: OrdersGroup[] = [
-  {
-    id: 1,
-    date: "2023-01-01",
-    sheet: "Sheet1",
-    total: 100,
-    status: "Entregue",
-    items: "Item1, Item2",
-  },
-  {
-    id: 2,
-    date: "2023-01-02",
-    sheet: "Sheet2",
-    total: 200,
-    status: "Recebido",
-    items: "Item3, Item4",
-  },
-  {
-    id: 3,
-    date: "2023-01-03",
-    sheet: "Sheet3",
-    total: 300,
-    status: "Fechado",
-    items: "Item5, Item6",
-  },
-];
+// const ordersGroup: OrdersGroup[] = [
+//   {
+//     id: 1,
+//     date: "2023-01-01",
+//     sheet: "Sheet1",
+//     total: 100,
+//     status: "Entregue",
+//     items: "Item1, Item2",
+//   },
+//   {
+//     id: 2,
+//     date: "2023-01-02",
+//     sheet: "Sheet2",
+//     total: 200,
+//     status: "Recebido",
+//     items: "Item3, Item4",
+//   },
+//   {
+//     id: 3,
+//     date: "2023-01-03",
+//     sheet: "Sheet3",
+//     total: 300,
+//     status: "Fechado",
+//     items: "Item5, Item6",
+//   },
+// ];
 
 const orders: EntrepreneurOrder[] = [
   {
@@ -91,6 +92,15 @@ export default function Page() {
     queryFn: () => fetchOrders(),
   });
 
+  const {
+    data: ordersGroup,
+    isLoading,
+    error,
+  } = useQuery({
+    queryKey: ["foods"],
+    queryFn: () => fetchOrdersGroup(),
+  });
+
   const handleNavigation = (item: string) => {
     setSelectedNavItem(item);
   };
@@ -128,7 +138,7 @@ export default function Page() {
         ) : (
           <EntrepreneurOrders
             orders={data ?? []}
-            ordersGroup={ordersGroup}
+            ordersGroup={!isLoading && ordersGroup ? ordersGroup : []}
             setSelectedOrdersGroup={setSelectedOrdersGroup}
           />
         )}

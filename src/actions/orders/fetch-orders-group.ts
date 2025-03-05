@@ -4,7 +4,7 @@ import { client, ErrorResponse } from "../_utils/fetcher";
 import { RequestMethods } from "../_utils/request-methods";
 import { OrdersGroup } from "@/types/orders-group";
 
-export async function fetchOrders(): Promise<OrdersGroup[]> {
+export async function fetchOrdersGroup(): Promise<OrdersGroup[]> {
   try {
     const response = await client("/orders-group", {
       method: RequestMethods.GET,
