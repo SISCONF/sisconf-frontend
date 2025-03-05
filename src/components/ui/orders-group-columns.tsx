@@ -1,9 +1,10 @@
 "use client";
 
-import { OrdersGroup } from "@/types/orders-group";
+import { OrdersGroup, OrdersGroupStatus } from "@/types/orders-group";
+import { Order } from "@/types/order";
 import { ColumnDef } from "@tanstack/react-table";
 import { Eye } from "lucide-react";
-import StatusTag from "../status-tag";
+import StatusTag, { StatusTagProps } from "../status-tag";
 import { formatDate, formatPrice } from "@/lib/utils";
 import { Dispatch, SetStateAction } from "react";
 
@@ -42,10 +43,15 @@ export const ordersGroupColumns = ({
     accessorKey: "currentStatus",
     header: "Status",
     cell: ({ row }) => {
-      const statusValue: "Recebido" | "Aprovado" | "Entregue" =
-        row.getValue("currentStatus");
+      const statusMap: Record<OrdersGroupStatus, StatusTagProps["status"]> = {
+        [OrdersGroupStatus.Entregue]: "Entregue",
+        [OrdersGroupStatus.Fechado]: "Fechado",
+        [OrdersGroupStatus.Recebido]: "Recebido",
+      };
+      const statusValue: OrdersGroupStatus = row.getValue("currentStatus");
+      const statusText = statusMap[statusValue];
 
-      return <StatusTag status={statusValue} text={statusValue} />;
+      return <StatusTag status={statusText} text={statusText} />;
     },
   },
   {
@@ -58,8 +64,16 @@ export const ordersGroupColumns = ({
     },
   },
   {
-    accessorKey: "items",
+    accessorKey: "orders",
     header: "Itens",
+    cell: ({ row }) => {
+      const orders: Order[] = row.getValue("orders");
+      const ordersFoodsNames: string[] = orders
+        .map((order) => order.foods)
+        .map((foodsList) => foodsList.map((foodItem) => foodItem.name))
+        .map((foodName) => foodName.join(", "));
+      return <span>{ordersFoodsNames}</span>;
+    },
   },
   {
     accessorKey: "actions",
