@@ -141,7 +141,13 @@ export default function EntrepreneurOrders ({
                     )
                 }
 
-                <AlertDialogComponent open={open} setOpen={setOpen} />
+                <AlertDialogComponent 
+                    open={open} 
+                    setOpen={setOpen}
+                    title='Deseja salvar esse grupo de pedidos?'
+                    description='Um novo grupo de pedidos será criado' 
+                    actionButtonText='Agrupar'
+                />
             </div>
 
         </div>
