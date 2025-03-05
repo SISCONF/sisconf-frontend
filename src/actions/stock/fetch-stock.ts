@@ -1,12 +1,12 @@
 "use server";
 
-import { Food } from "@/types/food";
 import { client, ErrorResponse } from "../_utils/fetcher";
 import { RequestMethods } from "../_utils/request-methods";
+import { Stock } from "@/types/stock";
 
-export async function fetchFoods(): Promise<Food[]> {
+export async function fetchStock(entrepreneurId: number): Promise<Stock> {
   try {
-    const response = await client("/foods", {
+    const response = await client(`/stocks/entrepreneurs/${entrepreneurId}`, {
       method: RequestMethods.GET,
       options: {
         auth: true,

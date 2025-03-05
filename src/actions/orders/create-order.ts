@@ -1,16 +1,14 @@
 "use server";
 
-import { Food } from "@/types/food";
 import { client, ErrorResponse } from "../_utils/fetcher";
 import { RequestMethods } from "../_utils/request-methods";
+import { Order } from "@/types/order";
 
-export async function fetchFoods(): Promise<Food[]> {
+export async function createOrder(data: Order): Promise<Order | null> {
   try {
-    const response = await client("/foods", {
-      method: RequestMethods.GET,
-      options: {
-        auth: true,
-      },
+    const response = await client("/orders", {
+      method: RequestMethods.POST,
+      body: data,
     });
 
     return response;
@@ -18,3 +16,4 @@ export async function fetchFoods(): Promise<Food[]> {
     throw new Error((error as ErrorResponse).message);
   }
 }
+

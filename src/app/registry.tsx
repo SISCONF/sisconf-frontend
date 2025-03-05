@@ -6,7 +6,7 @@ import { AuthProvider } from "@/hooks/useAuth";
 import { Toaster } from "@/components/ui/toaster";
 import { ThemeProvider } from "@/components/theme";
 import NextTopLoader from "nextjs-toploader";
-import { GroceryBagProvider } from "@/contexts/grocery-bag-context";
+import { GroceryBagProvider } from "@/hooks/grocery-bag-context";
 
 interface RegistryProps {
   children: ReactNode;

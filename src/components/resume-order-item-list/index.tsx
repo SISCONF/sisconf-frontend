@@ -1,13 +1,16 @@
+"use client"
+
 import Image from "next/image";
 import StatusTag from "../status-tag";
 import { X } from "lucide-react";
-import Quantity from "../amount";
-import { OrderItem } from "@/types/order";
 import { formatPrice } from "@/lib/utils";
 import { Typography } from "../typography";
+import Amount from "../amount";
+import { useState } from "react";
+import { Order } from "@/types/order";
 
 export interface ResumeOrderItemList extends React.HtmlHTMLAttributes<HTMLDivElement> {
-    order: OrderItem;
+    order: Order;
     onRemove: (id:number) => void;
     userType: "customer" | "entrepreneur"
 }
@@ -19,7 +22,9 @@ export function ResumeOrderItemList ({
     onRemove,
     ...props
 }: ResumeOrderItemList) {
-    const { id, name, description, image, price, status } = order;
+    const { id, foods, totalPrice, foodsQuantities, status } = order;
+
+    const [quantity, setQuantity] = useState(foodsQuantities[0].quantity);
 
     return (
         <>
@@ -27,23 +32,23 @@ export function ResumeOrderItemList ({
                 <div className="flex items-center flex-1 gap-4 w-full">
                     <Image 
                         alt="Food image"
-                        src={image}
+                        src={foods[0].imageUrl}
                         width={85}
                         height={91}
                     />
 
                     <div className="flex flex-col gap-1">
-                        <span>{name}</span>
-                        <span>{description}</span>
+                        <span>{foods[0].name}</span>
+                        <span>{foods[0].category}</span>
                     </div>
                 </div>
 
                 {
-                    userType === "customer" ? <Quantity /> : <Typography variant={"body1"}>1</Typography> 
+                    userType === "customer" ? <Amount updateAmount={setQuantity} initialAmount={quantity} /> : <Typography variant={"body1"}>1</Typography> 
                 }
 
 
-                <span>{formatPrice(price)}</span>
+                <span>{formatPrice(totalPrice)}</span>
 
                 { userType === "customer" && 
                     (

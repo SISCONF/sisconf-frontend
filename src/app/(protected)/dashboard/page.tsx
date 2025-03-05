@@ -1,4 +1,4 @@
-"use client"
+"use client";
 
 import { AppSidebar } from "@/app/(protected)/dashboard/_components/app-sidebar";
 import EntrepreneurOrders from "@/components/entrepreneur-orders";
@@ -27,7 +27,6 @@ import { SIDE_BAR_NAV_ITEMS } from "./_components/const";
 import Link from "next/link";
 import { useQuery } from "@tanstack/react-query";
 import { fetchOrders } from "@/actions/orders/fetch-orders";
-
 
 const ordersGroup: OrdersGroup[] = [
   {
@@ -87,8 +86,9 @@ const orders: EntrepreneurOrder[] = [
 ];
 
 export default function Page() {
-  const [selectedOrdersGroup, setSelectedOrdersGroup] = useState<OrdersGroup | null>(null);
-  const [selectedNavItem, setSelectedNavItem] = useState("pedidos");
+  const [selectedOrdersGroup, setSelectedOrdersGroup] =
+    useState<OrdersGroup | null>(null);
+  const [selectedNavItem, setSelectedNavItem] = useState("Pedidos");
 
   const { 
     data
@@ -99,7 +99,7 @@ export default function Page() {
 
   const handleNavigation = (item: string) => {
     setSelectedNavItem(item);
-  }
+  };
 
   return (
     <SidebarProvider>

@@ -8,8 +8,8 @@ export interface Person {
   cpf: string;
   email: string;
   phone: string;
-  password: string;
-  password2: string;
+  password?: string;
+  password2?: string;
   keycloakId?: string | undefined;
   address: Address;
 }

@@ -1,7 +1,13 @@
 import { Person } from "./person";
 
+export enum UserCategory {
+  Marketer = "MARKETER",
+  Entrepreneur = "ENTREPRENEUR",
+  Others = "OTHERS",
+}
+
 export interface User {
-  category: string;
-  id: number;
+  category: UserCategory;
+  id?: number;
   person: Person;
 }
