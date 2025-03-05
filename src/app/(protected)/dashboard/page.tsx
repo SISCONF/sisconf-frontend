@@ -13,18 +13,14 @@ import {
 } from "@/components/ui/breadcrumb";
 import { Separator } from "@/components/ui/separator";
 import {
-  SidebarContent,
   SidebarInset,
-  SidebarMenuItem,
   SidebarProvider,
   SidebarTrigger,
 } from "@/components/ui/sidebar";
 import StockContent from "./_components/stock-content";
 import { OrdersGroup } from "@/types/orders-group";
-import { useEffect, useState } from "react";
+import { useState } from "react";
 import { EntrepreneurOrder } from "@/types/entrepreneur-orders";
-import { SIDE_BAR_NAV_ITEMS } from "./_components/const";
-import Link from "next/link";
 import { useQuery } from "@tanstack/react-query";
 import { fetchOrders } from "@/actions/orders/fetch-orders";
 
