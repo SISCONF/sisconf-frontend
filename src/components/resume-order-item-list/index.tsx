@@ -8,9 +8,11 @@ import { formatPrice } from "@/lib/utils";
 import { Typography } from "../typography";
 import Amount from "../amount";
 import { useState } from "react";
+import { GroceryBagItem } from "@/types/grocery-bag";
+import { FoodCategory } from "@/types/food";
 
 export interface ResumeOrderItemList extends React.HtmlHTMLAttributes<HTMLDivElement> {
-    order: OrderItem;
+    order: GroceryBagItem;
     onRemove: (id:number) => void;
     userType: "customer" | "entrepreneur"
 }
@@ -22,7 +24,13 @@ export function ResumeOrderItemList ({
     onRemove,
     ...props
 }: ResumeOrderItemList) {
-    const { id, name, description, image, price, status, amount } = order;
+    const { food, amount } = order;
+    const foodCategoryLabels: Record<FoodCategory, string> = {
+        [FoodCategory.Fruit]: "Fruta",
+        [FoodCategory.Vegetable]: "Vegetal",
+        [FoodCategory.Others]: "Outros",
+
+    }
 
     const [quantity, setQuantity] = useState(amount);
 
@@ -32,30 +40,32 @@ export function ResumeOrderItemList ({
                 <div className="flex items-center flex-1 gap-4 w-full">
                     <Image 
                         alt="Food image"
-                        src={image}
+                        src={food.imageUrl}
                         width={85}
                         height={91}
                     />
 
                     <div className="flex flex-col gap-1">
-                        <span>{name}</span>
-                        <span>{description}</span>
+                        <span>{food.name}</span>
+                        <span>{foodCategoryLabels[food.category]}</span>
                     </div>
                 </div>
 
                 {
-                    userType === "customer" ? <Amount updateAmount={setQuantity} initialAmount={quantity} /> : <Typography variant={"body1"}>1</Typography> 
+                    userType === "customer" 
+                    ? 
+                        <Amount updateAmount={setQuantity} initialAmount={quantity} /> 
+                    : 
+                        <Typography variant={"body1"}>{quantity}</Typography> 
                 }
 
 
-                <span>{formatPrice(price)}</span>
+                <span>{formatPrice(food.unitPrice)}</span>
 
                 { userType === "customer" && 
                     (
-                        <>
-                            <StatusTag text={status} status={status} />
-                            
-                            <button onClick={() => onRemove(id)} className="">
+                        <>                            
+                            <button onClick={() => onRemove(food.id)} className="">
                                 <X className="absolute top-0 right-0" />        
                             </button>
                         </>
