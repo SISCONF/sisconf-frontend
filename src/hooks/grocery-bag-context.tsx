@@ -30,17 +30,21 @@ export const GroceryBagProvider = ({ children }: { children: ReactNode }) => {
     setUserGroceryBag((prev) => {
       const existingBag = prev[userId] || [];
 
-      const existingFood = existingBag.find(
+      const existingFoodIndex = existingBag.findIndex(
         (item) => item.food.id === foodItem.food.id
       );
 
-      const updatedBag = existingFood
-        ? existingBag.map((item) =>
-            item.food.id === foodItem.food.id
+      let updatedBag;
+
+      if (existingFoodIndex !== -1) {
+        updatedBag = existingBag.map((item, index) =>
+          index === existingFoodIndex
               ? { ...item, amount: item.amount + foodItem.amount }
               : item
-          )
-        : [...existingBag, foodItem];
+        )
+      } else {
+        updatedBag = [...existingBag, foodItem]
+      }
 
       return { ...prev, [userId]: updatedBag };
     });
