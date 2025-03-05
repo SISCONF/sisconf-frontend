@@ -121,6 +121,7 @@ export default function Page() {
         ) : (
           <EntrepreneurOrders
             orders={orders ?? []}
+            selectedOrders={selectedOrders}
             ordersGroup={!isLoading && ordersGroup ? ordersGroup : []}
             setSelectedOrdersGroup={setSelectedOrdersGroup}
             handleOrdersSelection={handleOrdersSelection}

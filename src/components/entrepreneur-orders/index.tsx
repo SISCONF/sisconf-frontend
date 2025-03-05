@@ -34,6 +34,7 @@ export interface EntrepreneurOrdersProps {
   handleOrdersSelection: (orderId: number) => void;
   handleAllOrdersSelection: (ordersId: number[]) => void;
   handleOrdersGrouping: () => void;
+  selectedOrders: number[];
   refetchProps: {
     refetchOrders: (
       options?: RefetchOptions
@@ -52,6 +53,7 @@ export default function EntrepreneurOrders({
   handleAllOrdersSelection,
   handleOrdersGrouping,
   refetchProps,
+  selectedOrders,
 }: EntrepreneurOrdersProps) {
   const [open, setOpen] = useState(false);
   const [activeTab, setActiveTab] = useState<{
@@ -161,8 +163,9 @@ export default function EntrepreneurOrders({
           />
 
           <button
-            className="flex items-center gap-2 bg-[#237D31] text-white text-[14px] rounded-xl p-2 h-11"
+            className="flex items-center gap-2 bg-[#237D31] disabled:bg-gray-400 disabled:cursor-not-allowed text-white text-[14px] rounded-xl p-2 h-11"
             onClick={() => setOpen(true)}
+            disabled={selectedOrders.length < 2}
           >
             <Package size={24} />
             Agrupar pedidos
