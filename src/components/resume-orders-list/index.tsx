@@ -3,6 +3,7 @@ import { useAuth } from "@/hooks/useAuth";
 import * as React from "react";
 import { AlertDialogComponent } from "../alert-dialog";
 import { useState } from "react";
+import { useRouter } from "next/navigation";
 
 export interface ResumeOrdersListProps extends React.HtmlHTMLAttributes<HTMLDivElement> {
   children: React.ReactNode
@@ -21,6 +22,8 @@ export default function ResumeOrdersList ({
   const { groceryBag, removeFromBag, clearBag } = useGroceryBag(
     isAuthenticated && user && user.id ? user.id : null
   )
+
+  const { push } = useRouter()
 
   const [open, setOpen] = useState(false)
 
@@ -49,9 +52,12 @@ export default function ResumeOrdersList ({
                     >
                       Esvaziar sacola
                     </button>
-                    <a href='/products' className='text-green-800 p-2 underline'>
+                    <button 
+                      className='text-green-800 p-2 underline'
+                      onClick={() => push("/products")}  
+                    >
                       Adicionar mais produtos
-                    </a>
+                    </button>
                   </>
                 ) : (
                   <button 
