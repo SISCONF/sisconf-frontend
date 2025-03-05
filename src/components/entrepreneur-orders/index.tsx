@@ -190,10 +190,7 @@ export default function EntrepreneurOrders({
         )}
 
         <AlertDialogComponent
-          action={() => {
-            handleOrdersGrouping();
-            refetchProps.refetchOrdersGroup();
-          }}
+          action={handleOrdersGrouping}
           open={open}
           setOpen={setOpen}
           description="Tem certeza que quer agrupar estes grupos?"

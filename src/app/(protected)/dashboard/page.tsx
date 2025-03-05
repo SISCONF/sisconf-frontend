@@ -40,6 +40,10 @@ export default function Page() {
     queryFn: () => fetchOrders(),
   });
 
+  orders?.sort((orderA, orderB) => {
+    return orderA.id < orderB.id ? -1 : 1;
+  });
+
   const {
     data: ordersGroup,
     refetch: refetchOrdersGroup,
@@ -48,12 +52,11 @@ export default function Page() {
   } = useQuery({
     queryKey: ["ordersGroup"],
     queryFn: () => fetchOrdersGroup(),
-    enabled: false,
   });
 
   const mutation = useMutation({
     mutationFn: createOrdersGroup,
-    onSuccess: (data) => console.log("Deu certo!", data),
+    onSuccess: (data) => refetchOrdersGroup(),
     onError: (error) => console.log("Erro ao agrupar pedidos", error),
   });
 
@@ -120,7 +123,7 @@ export default function Page() {
           />
         ) : (
           <EntrepreneurOrders
-            orders={orders ?? []}
+            orders={orders ? orders : []}
             selectedOrders={selectedOrders}
             ordersGroup={!isLoading && ordersGroup ? ordersGroup : []}
             setSelectedOrdersGroup={setSelectedOrdersGroup}
