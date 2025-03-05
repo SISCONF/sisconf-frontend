@@ -19,75 +19,19 @@ import {
 } from "@/components/ui/sidebar";
 import StockContent from "./_components/stock-content";
 import { OrdersGroup } from "@/types/orders-group";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { EntrepreneurOrder } from "@/types/entrepreneur-orders";
 import { useQuery } from "@tanstack/react-query";
 import { fetchOrders } from "@/actions/orders/fetch-orders";
 import { fetchOrdersGroup } from "@/actions/orders/fetch-orders-group";
 
-// const ordersGroup: OrdersGroup[] = [
-//   {
-//     id: 1,
-//     date: "2023-01-01",
-//     sheet: "Sheet1",
-//     total: 100,
-//     status: "Entregue",
-//     items: "Item1, Item2",
-//   },
-//   {
-//     id: 2,
-//     date: "2023-01-02",
-//     sheet: "Sheet2",
-//     total: 200,
-//     status: "Recebido",
-//     items: "Item3, Item4",
-//   },
-//   {
-//     id: 3,
-//     date: "2023-01-03",
-//     sheet: "Sheet3",
-//     total: 300,
-//     status: "Fechado",
-//     items: "Item5, Item6",
-//   },
-// ];
-
-const orders: EntrepreneurOrder[] = [
-  {
-    id: "1",
-    orderId: 101,
-    date: "2023-01-01",
-    client: "Client1",
-    status: "Pending",
-    amount: 150,
-    items: 2,
-  },
-  {
-    id: "2",
-    orderId: 102,
-    date: "2023-01-02",
-    client: "Client2",
-    status: "Completed",
-    amount: 250,
-    items: 3,
-  },
-  {
-    id: "3",
-    orderId: 103,
-    date: "2023-01-03",
-    client: "Client3",
-    status: "Shipped",
-    amount: 350,
-    items: 4,
-  },
-];
-
 export default function Page() {
   const [selectedOrdersGroup, setSelectedOrdersGroup] =
     useState<OrdersGroup | null>(null);
   const [selectedNavItem, setSelectedNavItem] = useState("Pedidos");
+  const [selectedOrders, setSelectedOrders] = useState<number[]>([]);
 
-  const { data } = useQuery({
+  const { data: orders } = useQuery({
     queryKey: ["orders"],
     queryFn: () => fetchOrders(),
   });
@@ -101,9 +45,30 @@ export default function Page() {
     queryFn: () => fetchOrdersGroup(),
   });
 
+  const handleOrdersSelection = (orderId: number) => {
+    setSelectedOrders((prev) => {
+      if (prev.includes(orderId)) {
+        return prev.filter((selectedOrderId) => selectedOrderId !== orderId);
+      }
+      return [...prev, orderId];
+    });
+  };
+
+  const handleAllOrdersSelection = (ordersIds: number[]) => {
+    if (ordersIds.length > 0) {
+      setSelectedOrders(ordersIds);
+      return;
+    }
+    setSelectedOrders([]);
+  };
+
   const handleNavigation = (item: string) => {
     setSelectedNavItem(item);
   };
+
+  useEffect(() => {
+    console.log("Q q é isso????", selectedOrders);
+  }, [selectedOrders]);
 
   return (
     <SidebarProvider>
@@ -137,9 +102,11 @@ export default function Page() {
           />
         ) : (
           <EntrepreneurOrders
-            orders={data ?? []}
+            orders={orders ?? []}
             ordersGroup={!isLoading && ordersGroup ? ordersGroup : []}
             setSelectedOrdersGroup={setSelectedOrdersGroup}
+            handleOrdersSelection={handleOrdersSelection}
+            handleAllOrdersSelection={handleAllOrdersSelection}
           />
         )}
       </SidebarInset>

@@ -8,7 +8,15 @@ import { Order, OrderStatus } from "@/types/order";
 import { Food } from "@/types/food";
 import { formatDate } from "@/lib/utils";
 
-export const columns: ColumnDef<Order>[] = [
+interface ColumnsProps {
+  handleOrdersSelection: (orderId: number) => void;
+  handleAllOrdersSelection: (ordersId: number[]) => void;
+}
+
+export const columns = ({
+  handleOrdersSelection,
+  handleAllOrdersSelection,
+}: ColumnsProps): ColumnDef<Order>[] => [
   {
     id: "select",
     header: ({ table }) => (
@@ -17,14 +25,26 @@ export const columns: ColumnDef<Order>[] = [
           table.getIsAllPageRowsSelected() ||
           (table.getIsSomePageRowsSelected() && "indeterminate")
         }
-        onCheckedChange={(value) => table.toggleAllPageRowsSelected(!!value)}
+        onCheckedChange={(value) => {
+          table.toggleAllPageRowsSelected(!!value);
+          const selectedOrdersIds = value
+            ? table
+                .getRowModel()
+                .rows.map((row) => parseInt(row.getValue("id")))
+            : [];
+          handleAllOrdersSelection(selectedOrdersIds);
+        }}
         aria-label="Select all"
       />
     ),
     cell: ({ row }) => (
       <Checkbox
         checked={row.getIsSelected()}
-        onCheckedChange={(value) => row.toggleSelected(!!value)}
+        onCheckedChange={(value) => {
+          row.toggleSelected(!!value);
+          const orderId: number = parseInt(row.getValue("id"));
+          handleOrdersSelection(orderId);
+        }}
         aria-label="Select row"
       />
     ),

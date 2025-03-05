@@ -33,12 +33,16 @@ export interface EntrepreneurOrdersProps {
   orders: Order[];
   ordersGroup: OrdersGroup[];
   setSelectedOrdersGroup: Dispatch<SetStateAction<OrdersGroup | null>>;
+  handleOrdersSelection: (orderId: number) => void;
+  handleAllOrdersSelection: (ordersId: number[]) => void;
 }
 
 export default function EntrepreneurOrders({
   orders,
   ordersGroup,
   setSelectedOrdersGroup,
+  handleOrdersSelection,
+  handleAllOrdersSelection,
 }: EntrepreneurOrdersProps) {
   const [open, setOpen] = useState(false);
   const [activeTab, setActiveTab] = useState<{
@@ -137,7 +141,7 @@ export default function EntrepreneurOrders({
           />
 
           <button
-            className="flex items-center gap-2 bg-[#237D31] text-white text-[14px] rounded p-2 h-11"
+            className="flex items-center gap-2 bg-[#237D31] text-white text-[14px] rounded-xl p-2 h-11"
             onClick={() => setOpen(true)}
           >
             <Package size={24} />
@@ -148,7 +152,10 @@ export default function EntrepreneurOrders({
         {activeTab.name === "orders" ? (
           <DataTable
             className="mt-4 w-full text-base"
-            columns={columns}
+            columns={columns({
+              handleOrdersSelection,
+              handleAllOrdersSelection,
+            })}
             data={orders}
           />
         ) : (
