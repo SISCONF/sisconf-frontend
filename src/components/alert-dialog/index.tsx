@@ -8,44 +8,40 @@ import {
   AlertDialogHeader,
   AlertDialogTitle,
 } from "@/components/ui/alert-dialog";
-import { OrdersGroup } from "@/types/orders-group";
-import { QueryObserverBaseResult, RefetchOptions } from "@tanstack/react-query";
 
 interface AlertDialogProps {
   open: boolean;
   setOpen: (open: boolean) => void;
-  handleSubmit: () => void;
-  handleRefresh: (
-    options?: RefetchOptions
-  ) => Promise<QueryObserverBaseResult<OrdersGroup[], Error>>;
+  title: string;
+  description: string;
+  actionButtonText: string;
+  action: () => void;
 }
 
 export function AlertDialogComponent({
   open,
   setOpen,
-  handleSubmit,
-  handleRefresh,
+  title,
+  description,
+  actionButtonText,
+  action,
 }: AlertDialogProps) {
   return (
     <AlertDialog open={open} onOpenChange={setOpen}>
       <AlertDialogContent>
         <AlertDialogHeader>
-          <AlertDialogTitle>
-            Deseja salvar esse grupo de pedidos?
-          </AlertDialogTitle>
-          <AlertDialogDescription>
-            Um novo grupo de pedidos será criado
-          </AlertDialogDescription>
+          <AlertDialogTitle>{title}</AlertDialogTitle>
+          <AlertDialogDescription>{description}</AlertDialogDescription>
         </AlertDialogHeader>
         <AlertDialogFooter>
           <AlertDialogCancel className="bg-[#A1A1A1] text-white">
             Cancelar
           </AlertDialogCancel>
           <AlertDialogAction
-            onClick={handleSubmit}
+            onClick={action}
             className="bg-[#237D31] text-white"
           >
-            Agrupar
+            {actionButtonText}
           </AlertDialogAction>
         </AlertDialogFooter>
       </AlertDialogContent>

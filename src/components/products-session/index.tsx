@@ -15,6 +15,7 @@ import { ChangeEvent, useMemo, useState } from "react";
 import { useGroceryBag } from "@/hooks/grocery-bag-context";
 import { GroceryBagItem } from "@/types/grocery-bag";
 import { useAuth } from "@/hooks/useAuth";
+import { toast } from "@/hooks/use-toast";
 
 export default function ProductsSession() {
   const {
@@ -55,6 +56,17 @@ export default function ProductsSession() {
     setSearchText(e.target.value);
   };
 
+  const handleAddToBag = (foodItem: GroceryBagItem) => {
+    const { food, amount } = foodItem
+    addToBag({ food, amount: amount })
+    toast({
+      duration: 5000,
+      title: "Item adicionado!",
+      description: "Um novo item foi adicionado à sua sacola.",
+      variant: "default"
+    });
+  }
+
   return (
     <div className="w-[860px]">
       <section>
@@ -73,7 +85,7 @@ export default function ProductsSession() {
                       updateAmount(food.id, amount),
                     initialAmount: amount,
                   }}
-                  handleAddToBag={() => addToBag({ food, amount: amount })}
+                  handleAddToBag={() => handleAddToBag({ food, amount: amount })}
                   name={food.name}
                   price={food.unitPrice}
                   key={food.id}

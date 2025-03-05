@@ -8,6 +8,9 @@ export async function fetchOrders(): Promise<Order[]> {
   try {
     const response = await client("/orders", {
       method: RequestMethods.GET,
+      options: {
+        auth: true,
+      },
     });
 
     return response;
