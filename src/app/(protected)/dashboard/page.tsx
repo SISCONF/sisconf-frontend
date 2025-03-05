@@ -86,7 +86,7 @@ const orders: EntrepreneurOrder[] = [
 export default function Page() {
   const [selectedOrdersGroup, setSelectedOrdersGroup] =
     useState<OrdersGroup | null>(null);
-  const [selectedNavItem, setSelectedNavItem] = useState("pedidos");
+  const [selectedNavItem, setSelectedNavItem] = useState("Pedidos");
 
   const handleNavigation = (item: string) => {
     setSelectedNavItem(item);
@@ -115,18 +115,9 @@ export default function Page() {
             </Breadcrumb>
           </div>
         </header>
-        {/* <div className="flex flex-1 flex-col gap-4 p-4 pt-0">
-          <div className="grid auto-rows-min gap-4 md:grid-cols-3">
-            <div className="aspect-video rounded-xl bg-muted/50" />
-            <div className="aspect-video rounded-xl bg-muted/50" />
-            <div className="aspect-video rounded-xl bg-muted/50" />
-          </div>
-          <div className="min-h-[100vh] flex-1 rounded-xl bg-muted/50 md:min-h-min" />
-        </div> */}
-        <StockContent />
-
-        {selectedNavItem === "Estoque" && <StockContent />}
-        {selectedNavItem === "Pedidos" && selectedOrdersGroup ? (
+        {selectedNavItem === "Estoque" ? (
+          <StockContent />
+        ) : selectedOrdersGroup ? (
           <OrdersGroupDetails
             selectedOrdersGroup={selectedOrdersGroup}
             setSelectedOrdersGroup={setSelectedOrdersGroup}
