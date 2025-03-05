@@ -5,7 +5,9 @@ import { ResumeOrderCard } from '@/components/resume-order-card';
 import { ResumeOrderItemList } from '@/components/resume-order-item-list';
 import ResumeOrdersList from '@/components/resume-orders-list';
 import { useGroceryBag } from '@/hooks/grocery-bag-context';
+import { toast } from '@/hooks/use-toast';
 import { useAuth } from '@/hooks/useAuth';
+import { Order } from '@/types/order';
 import { useMutation } from '@tanstack/react-query';
 
 export default function ProductsSummary () {
@@ -24,26 +26,40 @@ export default function ProductsSummary () {
 
   const mutation = useMutation({
     mutationFn: createOrder,
-    onSuccess: (data) => {
-      console.log("Pedido criado com sucesso!", data);
+    onSuccess: () => {
+      toast({
+        duration: 5000,
+        title: "Pedido realizado com sucesso",
+        description: "Você será redirecionado para a página de pedidos",
+        variant: "default",
+      })
+
+      clearBag();
+
+      setTimeout(() => {
+        // router.push("/orders");
+      }, 2000);
     },
     onError: (error) => {
-      console.error("Erro ao criar o pedido:", error);
+      toast({
+        duration: 5000,
+        title: "Erro ao finalizar pedido",
+        description: error?.message || "Ocorreu um erro ao tentar criar pedido",
+        variant: "destructive",
+      });
     },
   });
   
   const handleSubmit = () => {
-    // const ordersData: Order = {
-    //   foodsQuantities: orders.map((order) => ({
-    //     foodId: order.id,
-    //     quantity: order.amount,
-    //     quantityType: "KG"
-    //   }))
-    // }
+    const ordersData: Order = {
+      foodsQuantities: groceryBag.map((order) => ({
+        foodId: order.food.id,
+        quantity: order.amount,
+        quantityType: "KG"
+      }))
+    }
 
-    // console.log("orders data: ", JSON.stringify(ordersData))
-    // mutation.mutate(ordersData);
-    clearBag();
+    mutation.mutate(ordersData);
   };
 
 
