@@ -4,28 +4,24 @@ import { useRouter } from "next/navigation";
 import { Button } from "../ui/button";
 import { Typography } from "../typography";
 
-interface PageTitleProps {
+interface PageTitleProps extends React.ButtonHTMLAttributes<HTMLButtonElement> {
   icon?: React.ReactNode;
   text: string;
 }
 
-export function PageTitle({ icon, text }: PageTitleProps) {
-  const router = useRouter();
-
-  return (
-    <Button
-      onClick={() => router.back()}
-      className="flex items-center bg-transparent hover:bg-transparent gap-2 text-[#237D31] mb-12"
-    >
-      {icon}
-
-      <Typography
-        variant={"h2"}
-        textColor={"primary"}
-        className="scroll-m-20 text-2xl font-semibold tracking-tight first:mt-0"
-      >
-        {text}
-      </Typography>
-    </Button>
-  );
+export default function PageTitle({  
+    icon,
+    text,
+    onClick
+}: PageTitleProps) {
+    
+    return (
+        <button onClick={onClick} className="flex items-center gap-2 text-[#237D31] mb-12">
+            {icon}
+        
+            <h2 className="scroll-m-20 text-2xl font-semibold tracking-tight first:mt-0">
+                {text}
+            </h2>
+        </button>
+    )
 }

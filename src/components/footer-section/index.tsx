@@ -12,14 +12,17 @@ export default function FooterSection({
 }: FooterSectionProps) {
   return (
     <div className="flex flex-col gap-[1rem]">
-      <Typography variant="h3" className="font-bold text-[1.125rem]">
+      <Typography
+        variant="h3"
+        className="font-bold text-[1.125rem] dark:text-brand-3"
+      >
         {title}
       </Typography>
       {sectionList.map((sectionItem) => (
         <Link
           key={sectionItem.text}
           href={sectionItem.link}
-          className="text-gray-500"
+          className="text-gray-500 dark:text-white"
         >
           {sectionItem.text}
         </Link>

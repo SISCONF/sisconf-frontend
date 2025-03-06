@@ -56,7 +56,7 @@ export const columns: ColumnDef<EntrepreneurOrder>[] = [
     cell: ({ row }) => {
         const amount = parseFloat(row.getValue("amount"))
    
-        return <div className="text-right font-medium">{formatPrice(amount)}</div>
+        return <div className="font-medium">{formatPrice(amount)}</div>
     },
   },
   {

@@ -2,7 +2,7 @@ import * as React from 'react';
 
 export interface StatusTagProps {
     text: string 
-    status: "Aguardando" | "Aprovado"
+    status: "Aguardando" | "Aprovado" | "Fechado" | "Recebido" | "Entregue"
 }
 
 export default function StatusTag ({
@@ -11,7 +11,10 @@ export default function StatusTag ({
 }: StatusTagProps) {
   const statusStyles = {
     Aguardando: "text-[#86640C] bg-[#F3DDA7]",
-    Aprovado: "text-[#237D31] bg-[#F0F4EA]"
+    Aprovado: "text-[#237D31] bg-[#F0F4EA]",
+    Fechado: "text-[#FF3709] bg-[#FFD9D0]",
+    Recebido: "text-[#86640C] bg-[#F3DDA7]",
+    Entregue: "text-[#237D31] bg-[#F0F4EA]"
   }
 
   return (

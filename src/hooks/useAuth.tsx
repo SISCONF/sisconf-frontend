@@ -4,9 +4,12 @@ import { createContext, useContext, useEffect, useState } from "react";
 import { deleteCookie, getCookie } from "cookies-next";
 import { User } from "@/types/user";
 import { useRouter } from "next/navigation";
+import { fetchCustomerMe } from "@/actions/customer/fetch-customer-me";
+import { fetchEntrepreneurMe } from "@/actions/entrepreneur/fetch-entrepreneur-me";
+import { Entrepreneur } from "@/types/entrepreneur";
 
 interface AuthContextType {
-  user: User | null;
+  user: User | Entrepreneur | null;
   isAuthenticated: boolean;
   isLoading: boolean;
   setUser: (user: User | null) => void;
@@ -18,7 +21,7 @@ const AuthContext = createContext<AuthContextType | undefined>(undefined);
 
 export const AuthProvider = ({ children }: { children: React.ReactNode }) => {
   const [isAuthenticated, setIsAuthenticated] = useState(false);
-  const [user, setUser] = useState<User | null>(null);
+  const [user, setUser] = useState<User | Entrepreneur | null>(null);
   const [isLoading, setIsLoading] = useState(true);
   const token = getCookie("access_token");
   const router = useRouter();
@@ -32,9 +35,28 @@ export const AuthProvider = ({ children }: { children: React.ReactNode }) => {
   };
 
   useEffect(() => {
-    if (token) {
-      setIsAuthenticated(true);
-    }
+    const loadUser = async () => {
+      try {
+        setIsLoading(true);
+        if (token) {
+          const userData = await fetchCustomerMe().catch((err) =>
+            fetchEntrepreneurMe()
+          );
+          setUser(userData);
+          setIsAuthenticated(true);
+        } else {
+          setUser(null);
+          setIsAuthenticated(false);
+        }
+      } catch (error) {
+        setUser(null);
+        setIsAuthenticated(false);
+      } finally {
+        setIsLoading(false);
+      }
+    };
+
+    loadUser();
   }, [token]);
 
   return (

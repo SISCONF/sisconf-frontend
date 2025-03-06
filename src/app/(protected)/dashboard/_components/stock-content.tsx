@@ -5,8 +5,12 @@ import { DataTable } from "@/components/ui/data-table";
 import { columns } from "./columns";
 import { StockFood } from "./columns";
 import { Button } from "@/components/ui/button";
-import { Trash2Icon } from "lucide-react";
-import { useState, useEffect } from "react";
+import { Trash2Icon, CirclePlusIcon, RefreshCcwIcon } from "lucide-react";
+import { useMemo, useState } from "react";
+import { CustomDialog } from "@/components/custom-dialog";
+import { fetchStock } from "@/actions/stock/fetch-stock";
+import { useQuery } from "@tanstack/react-query";
+import { useAuth } from "@/hooks/useAuth";
 
 export type StockFoodInfo = {
   foodId: number;
@@ -35,6 +39,19 @@ const dummyData: StockFood[] = [
 ];
 
 export default function StockContent() {
+  const { user, isAuthenticated } = useAuth();
+  const userId = useMemo(() => user?.id, [user]);
+
+  const {
+    data: stock,
+    isLoading,
+    error,
+  } = useQuery({
+    queryKey: ["stock"],
+    queryFn: () => fetchStock(userId!),
+    enabled: Boolean(userId),
+  });
+
   const [foodsToActOn, setFoodsToActOn] = useState<StockFoodInfo[]>([]);
   const [foods, setFoods] = useState<StockFood[]>(dummyData);
 
@@ -68,6 +85,7 @@ export default function StockContent() {
           disabled={foodsToActOn.length === 0}
           className="bg-green-700 hover:bg-green-900 disabled:bg-gray-500 disabled:cursor-not-allowed"
         >
+          <RefreshCcwIcon />
           Atualizar quantidade
         </Button>
         <Button
@@ -75,7 +93,19 @@ export default function StockContent() {
           className="bg-red-500 hover:bg-red-700 disabled:bg-gray-500 disabled:cursor-not-allowed"
         >
           <Trash2Icon />
+          Deletar do estoque
         </Button>
+        <CustomDialog
+          triggeringComponent={
+            <Button className="bg-green-700 hover:bg-green-900 ml-auto">
+              <CirclePlusIcon />
+              Adicionar comida ao estoque
+            </Button>
+          }
+          title="Adicionar Comidas ao Estoque"
+          description="Adicione, abaixo, as comidas que você quer que sejam adicionadas ao estoque"
+          children={<div>Hello World</div>}
+        />
       </div>
       <DataTable
         data={foods}

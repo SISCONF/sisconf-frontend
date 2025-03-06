@@ -110,7 +110,7 @@ const socialMediaLinks = [
 
 export function Footer() {
   return (
-    <footer className="flex flex-col w-full py-[4.25rem] px-[4.5rem] gap-[2rem]">
+    <footer className="container flex flex-col w-full py-[4.25rem] px-[4.5rem] gap-[2rem]">
       <div className="flex justify-between">
         {linksSection.map((data) => (
           <FooterSection
@@ -121,15 +121,15 @@ export function Footer() {
         ))}
       </div>
       <div className="flex flex-col items-center gap-[1rem]">
-        <Typography
-          variant="h3"
-          fontWeight="extrabold"
-          className="text-[1.5rem]"
-        >
-          RJ Frutas<span className="text-[#237D31]">&amp;</span>Verduras
-        </Typography>
+        <Image
+          src={"./assets/Logo-RJ.svg"}
+          alt="Logo da empresa"
+          width={54}
+          height={54}
+          priority
+        />
         <span className="text-gray-500">
-          &copy; 2025 RJ Frutas&Verduras. Todos os direitos reservados
+          &copy; 2025 RJ Frutas e Legumes. Todos os direitos reservados
         </span>
         <div className="flex gap-[1rem]">
           {socialMediaLinks.map((socialMedia) => (

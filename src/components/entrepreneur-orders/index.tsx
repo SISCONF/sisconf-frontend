@@ -8,8 +8,12 @@ import { columns } from '../ui/columns';
 import { EntrepreneurOrder } from '@/types/entrepreneur-orders';
 import { Package } from 'lucide-react';
 import { AlertDialogComponent } from '../alert-dialog';
-import { useState } from 'react';
+import React, { Dispatch, SetStateAction, useState } from 'react';
 import { ComponentTabs } from '../tabs';
+import { OrdersGroup } from '@/types/orders-group';
+import { ordersGroupColumns } from '../ui/orders-group-columns';
+
+type TabsProps = {}
 
 export const TABS_LIST = [
     {
@@ -26,14 +30,17 @@ export const TABS_LIST = [
 
 export interface EntrepreneurOrdersProps {
     orders: EntrepreneurOrder[]
+    ordersGroup: OrdersGroup[]
+    setSelectedOrdersGroup: Dispatch<SetStateAction<OrdersGroup | null>>
 }
 
 export default function EntrepreneurOrders ({
-    orders
-
+    orders,
+    ordersGroup, 
+    setSelectedOrdersGroup
 }: EntrepreneurOrdersProps) {
     const [open, setOpen] = useState(false);
-    const [activeTab, setActiveTab] = useState(TABS_LIST[0]);
+    const [activeTab, setActiveTab] = useState<{ id: number; name: string; label: string }>(TABS_LIST[0]);
 
     const handleTabChange = (id: number) => {
         const selectedTab = TABS_LIST.find((tab) => tab.id === id);
@@ -102,7 +109,10 @@ export default function EntrepreneurOrders ({
                     <ComponentTabs 
                         tabList={TABS_LIST} 
                         defaultValue="orders" 
-                        onTabChange={handleTabChange} 
+                        onTabChange={handleTabChange}
+                        width='140px'
+                        height='32px' 
+                        verticalPadding='8px'
                     />
 
                     <button 
@@ -114,18 +124,30 @@ export default function EntrepreneurOrders ({
                     </button>
                 </div>
 
-                
                 {
-                    activeTab.name === 'orders' && (
+                    activeTab.name === "orders" ? (
                         <DataTable 
-                            className='mt-4 w-full'
-                            columns={columns} data={orders} 
+                            className='mt-4 w-full text-base'
+                            columns={columns} 
+                            data={orders} 
+                        />
+
+                    ) : (
+                        <DataTable 
+                            className='mt-4 w-full text-base'
+                            columns={ordersGroupColumns({setSelectedOrdersGroup})} 
+                            data={ordersGroup} 
                         />
                     )
                 }
 
-
-                <AlertDialogComponent open={open} setOpen={setOpen} />
+                <AlertDialogComponent 
+                    open={open} 
+                    setOpen={setOpen}
+                    title='Deseja salvar esse grupo de pedidos?'
+                    description='Um novo grupo de pedidos será criado' 
+                    actionButtonText='Agrupar'
+                />
             </div>
 
         </div>
