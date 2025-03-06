@@ -10,7 +10,7 @@ import { Button } from "../ui/button";
 import { Typography } from "../typography";
 
 const NAV_DROPDOWN_OPTIONS = [
-  { name: "Meu Perfil", path: "/perfil" },
+  { name: "Meu Perfil", path: "/profile" },
   { name: "Meus Pedidos", path: "/" },
   { name: "Configurações", path: "/" },
 ];

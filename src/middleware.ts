@@ -1,38 +1,35 @@
 import { NextRequest, NextResponse } from "next/server";
-import {
-  PUBLIC_ROUTES,
-  REDIRECT_WHEN_NOT_AUTHENTICATED_ROUTE,
-} from "./const/routes";
+import { ROUTES, PROTECTED_ROUTES } from "./const/routes";
 
-// This function can be marked async if using await inside
+function redirect(req: NextRequest, url: string) {
+  return NextResponse.redirect(new URL(url, req.url));
+}
+
+function extractCookies(req: NextRequest) {
+  return {
+    accessToken: req.cookies.get("access_token")?.value,
+    refreshToken: req.cookies.get("refresh_token")?.value,
+    userCategory: req.cookies.get("user_category")?.value,
+  };
+}
+
 export function middleware(request: NextRequest) {
-  const path = request.nextUrl.pathname;
-  const publicRoute = PUBLIC_ROUTES.find((route) => route.path === path);
-  const authToken = request.cookies.get("access_token");
+  const { pathname } = request.nextUrl;
+  const { accessToken, userCategory } = extractCookies(request);
 
-  if (!authToken && publicRoute) {
-    return NextResponse.next();
+  const isProtectedRoute = PROTECTED_ROUTES.includes(pathname);
+  const isPublicRoute = !isProtectedRoute;
+
+  if (isPublicRoute && accessToken && userCategory === "ENTREPRENEUR") {
+    return redirect(request, ROUTES.dashboard);
   }
 
-  if (!authToken && !publicRoute) {
-    const redirectUrl = request.nextUrl.clone();
-    redirectUrl.pathname = REDIRECT_WHEN_NOT_AUTHENTICATED_ROUTE;
-
-    return NextResponse.redirect(redirectUrl);
+  if (isProtectedRoute && !accessToken) {
+    return redirect(request, ROUTES.login);
   }
 
-  if (
-    authToken &&
-    publicRoute &&
-    publicRoute.whenAuthenticated === "redirect"
-  ) {
-    const redirectUrl = request.nextUrl.clone();
-    redirectUrl.pathname = "/";
-    return NextResponse.redirect(redirectUrl);
-  }
-
-  if (authToken && !publicRoute) {
-    return NextResponse.next();
+  if (pathname === ROUTES.dashboard && userCategory !== "ENTREPRENEUR") {
+    return redirect(request, ROUTES.login);
   }
 
   return NextResponse.next();

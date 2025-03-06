@@ -11,13 +11,11 @@ import { putCustomer } from "@/actions/customer/put-customer";
 import { toast } from "@/hooks/use-toast";
 import { Customer } from "@/types/customer";
 import { CustomerCategory } from "@/types/customer-category";
+import { useAuth } from "@/hooks/useAuth";
 
-interface ProfileFormProps {
-  initialData?: User;
-}
-
-export const ProfileForm = ({ initialData }: ProfileFormProps) => {
+export const ProfileForm = () => {
   const defaultUser: User = {
+    id: 0,
     category: UserCategory.Marketer,
     person: {
       firstName: "",
@@ -36,9 +34,14 @@ export const ProfileForm = ({ initialData }: ProfileFormProps) => {
     },
   };
 
+  const { user } = useAuth();
   const [isEditing, setIsEditing] = useState(false);
   const [isLoading, setIsLoading] = useState(false);
-  const [profile, setProfile] = useState<User>(initialData || defaultUser);
+  const [profile, setProfile] = useState<User>(user || defaultUser);
+
+  if (!user) {
+    return <div>Usuário não autenticado</div>;
+  }
 
   const handleInputChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const { name, value } = e.target;
@@ -69,7 +72,7 @@ export const ProfileForm = ({ initialData }: ProfileFormProps) => {
   };
 
   const handleSave = async () => {
-    if (!initialData?.id) {
+    if (user?.id) {
       toast({
         title: "Erro",
         description: "ID do usuário não encontrado",
@@ -81,6 +84,7 @@ export const ProfileForm = ({ initialData }: ProfileFormProps) => {
     try {
       setIsLoading(true);
       const customerData: Customer = {
+        id: profile.id,
         category: CustomerCategory.Marketer,
         person: {
           firstName: profile.person.firstName,
@@ -99,7 +103,7 @@ export const ProfileForm = ({ initialData }: ProfileFormProps) => {
         },
       };
 
-      await putCustomer(initialData.id, customerData);
+      await putCustomer(user.id, customerData);
 
       toast({
         title: "Perfil atualizado",
@@ -123,7 +127,7 @@ export const ProfileForm = ({ initialData }: ProfileFormProps) => {
     <div className="container mx-auto py-8">
       <Card className="w-full mx-auto bg-background shadow-md dark:border-white">
         <ProfileHeader
-          profile={profile}
+          profile={user}
           isEditing={isEditing}
           onEditToggle={() => setIsEditing(!isEditing)}
           handleSave={handleSave}

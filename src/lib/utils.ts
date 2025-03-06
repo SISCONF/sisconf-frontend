@@ -31,3 +31,7 @@ export const formatFoodName = (foods: Food[]): string => {
     )
     .join(", ");
 };
+
+export const formatAvatarFallback = (firstName: string, lastName: string) => {
+  return `${firstName[0]}${lastName[0]}`;
+};
