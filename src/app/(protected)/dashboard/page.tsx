@@ -13,80 +13,110 @@ import {
 } from "@/components/ui/breadcrumb";
 import { Separator } from "@/components/ui/separator";
 import {
-  SidebarContent,
   SidebarInset,
-  SidebarMenuItem,
   SidebarProvider,
   SidebarTrigger,
 } from "@/components/ui/sidebar";
 import StockContent from "./_components/stock-content";
-import { OrdersGroup } from "@/types/orders-group";
-import { useEffect, useState } from "react";
-import { EntrepreneurOrder } from "@/types/entrepreneur-orders";
-import { SIDE_BAR_NAV_ITEMS } from "./_components/const";
-import Link from "next/link";
-
-const ordersGroup: OrdersGroup[] = [
-  {
-    id: 1,
-    date: "2023-01-01",
-    sheet: "Sheet1",
-    total: 100,
-    status: "Entregue",
-    items: "Item1, Item2",
-  },
-  {
-    id: 2,
-    date: "2023-01-02",
-    sheet: "Sheet2",
-    total: 200,
-    status: "Recebido",
-    items: "Item3, Item4",
-  },
-  {
-    id: 3,
-    date: "2023-01-03",
-    sheet: "Sheet3",
-    total: 300,
-    status: "Fechado",
-    items: "Item5, Item6",
-  },
-];
-
-const orders: EntrepreneurOrder[] = [
-  {
-    id: "1",
-    orderId: 101,
-    date: "2023-01-01",
-    client: "Client1",
-    status: "Pending",
-    amount: 150,
-    items: 2,
-  },
-  {
-    id: "2",
-    orderId: 102,
-    date: "2023-01-02",
-    client: "Client2",
-    status: "Completed",
-    amount: 250,
-    items: 3,
-  },
-  {
-    id: "3",
-    orderId: 103,
-    date: "2023-01-03",
-    client: "Client3",
-    status: "Shipped",
-    amount: 350,
-    items: 4,
-  },
-];
+import {
+  OrdersGroup,
+  OrdersGroupCreation,
+  OrdersGroupStatus,
+} from "@/types/orders-group";
+import { useMemo, useState } from "react";
+import { useQuery, useMutation } from "@tanstack/react-query";
+import { fetchOrders } from "@/actions/orders/fetch-orders";
+import { fetchOrdersGroup } from "@/actions/orders/fetch-orders-group";
+import { createOrdersGroup } from "@/actions/orders-group/create-orders-group";
+import { Order } from "@/types/order";
+import { useToast } from "@/hooks/use-toast";
 
 export default function Page() {
   const [selectedOrdersGroup, setSelectedOrdersGroup] =
     useState<OrdersGroup | null>(null);
-  const [selectedNavItem, setSelectedNavItem] = useState("pedidos");
+  const [selectedNavItem, setSelectedNavItem] = useState("Pedidos");
+  const [selectedOrders, setSelectedOrders] = useState<number[]>([]);
+  const { toast } = useToast();
+
+  const { data: orders, refetch: refetchOrders } = useQuery({
+    queryKey: ["orders"],
+    queryFn: () => fetchOrders(),
+  });
+
+  orders?.sort((orderA, orderB) => {
+    return orderA.id < orderB.id ? -1 : 1;
+  });
+
+  const {
+    data: ordersGroup,
+    refetch: refetchOrdersGroup,
+    isLoading,
+    error,
+  } = useQuery({
+    queryKey: ["ordersGroup"],
+    queryFn: () => fetchOrdersGroup(),
+  });
+
+  const filteredOrders: Order[] | undefined = useMemo(() => {
+    if (!ordersGroup || !orders) return orders;
+
+    const ordersIds = new Set(
+      ordersGroup.flatMap((orderGroup) =>
+        orderGroup.orders.map((order) => order.id)
+      )
+    );
+
+    return orders.filter((order) => !ordersIds.has(order.id));
+  }, [ordersGroup, orders]);
+
+  const mutation = useMutation({
+    mutationFn: createOrdersGroup,
+    onSuccess: (data) => {
+      toast({
+        duration: 5000,
+        title: "Pedidos Agrupados",
+        description: "Seus pedidos foram agrupados com sucesso!",
+        variant: "default",
+      });
+      handleAllOrdersSelection([]);
+      refetchOrdersGroup();
+    },
+    onError: (error) => {
+      toast({
+        duration: 5000,
+        title: "Erro ao Agrupar Pedidos",
+        description: error.message || "Erro desconhecido",
+        variant: "destructive",
+      });
+    },
+  });
+
+  const handleOrdersGrouping = () => {
+    const ordersGroupData: OrdersGroupCreation = {
+      ordersIds: selectedOrders,
+      currentStatus: OrdersGroupStatus.Recebido,
+      docUrl: "",
+    };
+
+    mutation.mutate(ordersGroupData);
+  };
+
+  const handleOrdersSelection = (orderId: number) => {
+    setSelectedOrders((prev) => {
+      if (prev.includes(orderId)) {
+        return prev.filter((selectedOrderId) => selectedOrderId !== orderId);
+      }
+      return [...prev, orderId];
+    });
+  };
+
+  const handleAllOrdersSelection = (ordersIds: number[]) => {
+    if (ordersIds.length > 0) {
+      setSelectedOrders(ordersIds);
+      return;
+    }
+    setSelectedOrders([]);
+  };
 
   const handleNavigation = (item: string) => {
     setSelectedNavItem(item);
@@ -115,27 +145,23 @@ export default function Page() {
             </Breadcrumb>
           </div>
         </header>
-        {/* <div className="flex flex-1 flex-col gap-4 p-4 pt-0">
-          <div className="grid auto-rows-min gap-4 md:grid-cols-3">
-            <div className="aspect-video rounded-xl bg-muted/50" />
-            <div className="aspect-video rounded-xl bg-muted/50" />
-            <div className="aspect-video rounded-xl bg-muted/50" />
-          </div>
-          <div className="min-h-[100vh] flex-1 rounded-xl bg-muted/50 md:min-h-min" />
-        </div> */}
-        <StockContent />
-
-        {selectedNavItem === "Estoque" && <StockContent />}
-        {selectedNavItem === "Pedidos" && selectedOrdersGroup ? (
+        {selectedNavItem === "Estoque" ? (
+          <StockContent />
+        ) : selectedOrdersGroup ? (
           <OrdersGroupDetails
             selectedOrdersGroup={selectedOrdersGroup}
             setSelectedOrdersGroup={setSelectedOrdersGroup}
           />
         ) : (
           <EntrepreneurOrders
-            orders={orders}
-            ordersGroup={ordersGroup}
+            orders={filteredOrders ? filteredOrders : []}
+            selectedOrders={selectedOrders}
+            ordersGroup={!isLoading && ordersGroup ? ordersGroup : []}
             setSelectedOrdersGroup={setSelectedOrdersGroup}
+            handleOrdersSelection={handleOrdersSelection}
+            handleAllOrdersSelection={handleAllOrdersSelection}
+            handleOrdersGrouping={handleOrdersGrouping}
+            refetchProps={{ refetchOrders, refetchOrdersGroup }}
           />
         )}
       </SidebarInset>

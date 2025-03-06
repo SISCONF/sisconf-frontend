@@ -1,4 +1,4 @@
-import { OrderItem } from "@/types/order-item";
+import { OrderItem } from "@/types/order";
 
 export const ORDERS_LIST: OrderItem[] = [
   {
