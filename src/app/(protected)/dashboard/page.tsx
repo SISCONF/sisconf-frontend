@@ -23,7 +23,7 @@ import {
   OrdersGroupCreation,
   OrdersGroupStatus,
 } from "@/types/orders-group";
-import { useMemo, useState } from "react";
+import { useEffect, useMemo, useState } from "react";
 import { useQuery, useMutation } from "@tanstack/react-query";
 import { fetchOrders } from "@/actions/orders/fetch-orders";
 import { fetchOrdersGroup } from "@/actions/orders/fetch-orders-group";
@@ -68,6 +68,11 @@ export default function Page() {
 
     return orders.filter((order) => !ordersIds.has(order.id));
   }, [ordersGroup, orders]);
+
+  useEffect(() => {
+    if (selectedNavItem === "Pedidos") document.title = "Meus Pedidos";
+    if (selectedNavItem === "Estoque") document.title = "Estoque";
+  }, [selectedNavItem]);
 
   const mutation = useMutation({
     mutationFn: createOrdersGroup,
