@@ -9,11 +9,13 @@ import { Food } from "@/types/food";
 import { formatDate, formatFoodName } from "@/lib/utils";
 
 interface ColumnsProps {
+  selectedOrders: number[];
   handleOrdersSelection: (orderId: number) => void;
   handleAllOrdersSelection: (ordersId: number[]) => void;
 }
 
 export const columns = ({
+  selectedOrders,
   handleOrdersSelection,
   handleAllOrdersSelection,
 }: ColumnsProps): ColumnDef<Order>[] => [
@@ -39,11 +41,10 @@ export const columns = ({
     ),
     cell: ({ row }) => (
       <Checkbox
-        checked={row.getIsSelected()}
+        checked={selectedOrders.includes(parseInt(row.getValue("id")))}
         onCheckedChange={(value) => {
-          row.toggleSelected(!!value);
           const orderId: number = parseInt(row.getValue("id"));
-          value ?? handleOrdersSelection(orderId);
+          handleOrdersSelection(orderId);
         }}
         aria-label="Select row"
       />

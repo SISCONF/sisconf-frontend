@@ -177,6 +177,7 @@ export default function EntrepreneurOrders({
           <DataTable
             className="mt-4 w-full text-base"
             columns={columns({
+              selectedOrders,
               handleOrdersSelection,
               handleAllOrdersSelection,
             })}
