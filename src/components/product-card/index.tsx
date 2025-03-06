@@ -44,6 +44,7 @@ export default function ProductCard({
           </span>
           <div className="flex items-center justify-between">
             <button
+              id="add-to-shopping-bag-button"
               onClick={handleAddToBag}
               className="py-[0.3125rem] px-[0.475rem] rounded-lg flex items-center gap-[0.25rem] bg-[#237D31] text-white"
             >

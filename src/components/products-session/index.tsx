@@ -77,7 +77,7 @@ export default function ProductsSession() {
           <span>Ocorreu um erro.</span>
         ) : (
           filteredFoods && (
-            <div className="my-[1rem] flex flex-wrap gap-[4.2rem] h-[800px] overflow-y-auto">
+            <div id="foods-list-container" className="my-[1rem] flex flex-wrap gap-[4.2rem] h-[800px] overflow-y-auto">
               {filteredFoods.map(({ food, amount }) => (
                 <ProductCard
                   amountProps={{
