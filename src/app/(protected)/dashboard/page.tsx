@@ -23,11 +23,12 @@ import {
   OrdersGroupCreation,
   OrdersGroupStatus,
 } from "@/types/orders-group";
-import { useState } from "react";
+import { useMemo, useState } from "react";
 import { useQuery, useMutation } from "@tanstack/react-query";
 import { fetchOrders } from "@/actions/orders/fetch-orders";
 import { fetchOrdersGroup } from "@/actions/orders/fetch-orders-group";
 import { createOrdersGroup } from "@/actions/orders-group/create-orders-group";
+import { Order, OrderStatus } from "@/types/order";
 
 export default function Page() {
   const [selectedOrdersGroup, setSelectedOrdersGroup] =
@@ -40,9 +41,9 @@ export default function Page() {
     queryFn: () => fetchOrders(),
   });
 
-  orders?.sort((orderA, orderB) => {
-    return orderA.id < orderB.id ? -1 : 1;
-  });
+  // orders?.sort((orderA, orderB) => {
+  //   return orderA.id < orderB.id ? -1 : 1;
+  // });
 
   const {
     data: ordersGroup,
@@ -53,6 +54,18 @@ export default function Page() {
     queryKey: ["ordersGroup"],
     queryFn: () => fetchOrdersGroup(),
   });
+
+  const filteredOrders: Order[] | undefined = useMemo(() => {
+    if (!ordersGroup || !orders) return orders;
+
+    const ordersIds = new Set(
+      ordersGroup.flatMap((orderGroup) =>
+        orderGroup.orders.map((order) => order.id)
+      )
+    );
+
+    return orders.filter((order) => !ordersIds.has(order.id));
+  }, [ordersGroup, orders]);
 
   const mutation = useMutation({
     mutationFn: createOrdersGroup,
@@ -123,7 +136,7 @@ export default function Page() {
           />
         ) : (
           <EntrepreneurOrders
-            orders={orders ? orders : []}
+            orders={filteredOrders ? filteredOrders : []}
             selectedOrders={selectedOrders}
             ordersGroup={!isLoading && ordersGroup ? ordersGroup : []}
             setSelectedOrdersGroup={setSelectedOrdersGroup}
