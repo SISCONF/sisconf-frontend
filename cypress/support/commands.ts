@@ -33,12 +33,13 @@ declare global {
       createCustomerUser(): Chainable<void>
       createEntrepreneurUser(): Chainable<Cypress.Response<any>>
       deleteTestUser(testUserId: number, authenticationToken: string, route: string): Chainable<Cypress.Response<any>>
+      deleteCustomerOrders(accessToken: string): Chainable<void>
     }
   }
 }
 
 import { faker } from "@faker-js/faker";
-import { TestUser, TestUserLoginData } from "../types/users";
+import { TestUserLoginData } from "../types/users";
 
 Cypress.Commands.add("createEntrepreneurUser", () => {
     let authenticationToken = "";
@@ -119,6 +120,7 @@ Cypress.Commands.add("createCustomerUser", () => {
                     Authorization: `Bearer ${authenticationToken}`
                 }
             }).then(response => {
+                cy.deleteCustomerOrders(authenticationToken);
                 cy.deleteTestUser(
                     response.body.id,
                     authenticationToken,
@@ -184,3 +186,26 @@ Cypress.Commands.add(
         }
     }).then(response => response);
 });
+
+Cypress.Commands.add(
+    "deleteCustomerOrders",
+    (accessToken: string) => {
+        cy.request({
+            method: "GET",
+            url: "/api/orders",
+            headers: {
+                Authorization: `Bearer ${accessToken}`
+            }
+        }).then(response => {
+            for(const order of response.body) {
+                cy.request({
+                    method: "DELETE",
+                    url: `/api/orders/${order.id}`,
+                    headers: {
+                        Authorization: `Bearer ${accessToken}`
+                    }
+                });
+            }
+        });
+    }
+);

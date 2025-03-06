@@ -66,7 +66,7 @@ export function ResumeOrderItemList ({
                     (
                         <>                            
                             <button onClick={() => onRemove(food.id)} className="">
-                                <X className="absolute top-0 right-0" />        
+                                <X className="absolute top-0 right-0 remove-product-button" />        
                             </button>
                         </>
                     ) 

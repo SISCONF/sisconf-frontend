@@ -75,6 +75,48 @@ describe("products summary/order feature", () => {
         cy.get("p").contains("Nenhum item na sacola.").should("be.visible");
     });
 
+    it("should be able to cancel empty bag action", () => {
+        cy.visit(`${baseNextUrl}/products`);
+        cy.get("button[id='add-to-shopping-bag-button']").first().click();
+        cy.get("button[id='add-to-shopping-bag-button']").eq(2).click();
+        cy.get("a[href='/products-summary']").click();
+        cy.get("button").contains("Esvaziar sacola").click();
+        cy.get("div > div:nth-of-type(2) > button:nth-of-type(1)").contains("Cancelar").click();
+        cy.get("p").contains("Nenhum item na sacola.").should("not.exist");
+    });
+
+    it("should be able to remove product from shopping bag", () => {
+        cy.visit(`${baseNextUrl}/products`);
+        cy.get("button[id='add-to-shopping-bag-button']").first().click();
+        cy.get("button[id='add-to-shopping-bag-button']").eq(2).click();
+        cy.get("a[href='/products-summary']").click();
+        cy.get("svg.remove-product-button").first().should("be.visible").click();
+        cy.get("div[id='resume-orders-list-container']").should("have.length", 1);
+    });
+
+    it("should not be able to finish order when no products in shopping bag", () => {
+        cy.visit(`${baseNextUrl}/products-summary`);
+        cy.get("button").contains("Finalizar pedido").should("be.disabled");
+        cy.get(".fixed").contains("Pedido realizado com sucesso").should("not.exist");
+    });
+
+    it("should be able to place order when multiple products", () => {
+        cy.visit(`${baseNextUrl}/products`);
+        cy.get("button[id='add-to-shopping-bag-button']").first().click();
+        cy.get("button[id='add-to-shopping-bag-button']").eq(2).click();
+        cy.get("a[href='/products-summary']").click();
+        cy.get("button").contains("Finalizar pedido").click();
+        cy.get(".fixed").contains("Pedido realizado com sucesso").should("exist");
+    });
+
+    it("should be able to place order when only one product", () => {
+        cy.visit(`${baseNextUrl}/products`);
+        cy.get("button[id='add-to-shopping-bag-button']").first().click();
+        cy.get("a[href='/products-summary']").click();
+        cy.get("button").contains("Finalizar pedido").click();
+        cy.get(".fixed").contains("Pedido realizado com sucesso").should("exist");
+    });
+
     it("should be able to return to products browsing page through add more products link", () => {
         cy.visit(`${baseNextUrl}/products`);
         cy.get("button[id='add-to-shopping-bag-button']").first().click();
@@ -89,7 +131,9 @@ describe("products summary/order feature", () => {
         .then(testUser => {
             cy.getCookie("access_token").then(cookie => {
                 if (cookie && cookie.value) {
-                    cy.deleteTestUser(testUser.id, cookie.value, "customers");
+                    cy.deleteCustomerOrders(cookie.value).then(() => {
+                        cy.deleteTestUser(testUser.id, cookie.value, "customers");
+                    });
                 } else {
                     cy.log("Access token not found");
                 }
