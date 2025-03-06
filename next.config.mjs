@@ -1,6 +1,9 @@
 /** @type {import('next').NextConfig} */
 
 const nextConfig = {
+  assetPrefix: process.env.NEXT_PUBLIC_IMAGES_HOST
+    ? `https://${process.env.NEXT_PUBLIC_IMAGES_HOST}/`
+    : undefined,
   logging: {
     fetches: {
       fullUrl: true,
@@ -12,7 +15,10 @@ const nextConfig = {
         hostname: "localhost",
       },
       {
-        hostname: process.env.IMAGES_HOST || "",
+        hostname: process.env.IMAGES_HOST || "localhost",
+      },
+      {
+        hostname: "sisconf-foods-images-bucket.s3.us-east-2.amazonaws.com",
       },
     ],
   },
