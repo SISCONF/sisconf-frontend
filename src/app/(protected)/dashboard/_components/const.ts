@@ -13,7 +13,7 @@ export const SIDE_BAR_USER = {
 
 export const SIDE_BAR_TEAM = {
   name: "RJ Frutas e Verduras",
-  logo: GalleryVerticalEnd,
+  logo: "./assets/Logo-RJ.svg",
   plan: "Empresa",
 };
 

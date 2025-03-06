@@ -1,4 +1,4 @@
-"use client"
+"use client";
 
 import { AppSidebar } from "@/app/(protected)/dashboard/_components/app-sidebar";
 import EntrepreneurOrders from "@/components/entrepreneur-orders";
@@ -25,7 +25,6 @@ import { useEffect, useState } from "react";
 import { EntrepreneurOrder } from "@/types/entrepreneur-orders";
 import { SIDE_BAR_NAV_ITEMS } from "./_components/const";
 import Link from "next/link";
-
 
 const ordersGroup: OrdersGroup[] = [
   {
@@ -85,12 +84,13 @@ const orders: EntrepreneurOrder[] = [
 ];
 
 export default function Page() {
-  const [selectedOrdersGroup, setSelectedOrdersGroup] = useState<OrdersGroup | null>(null);
+  const [selectedOrdersGroup, setSelectedOrdersGroup] =
+    useState<OrdersGroup | null>(null);
   const [selectedNavItem, setSelectedNavItem] = useState("pedidos");
 
   const handleNavigation = (item: string) => {
     setSelectedNavItem(item);
-  }
+  };
 
   return (
     <SidebarProvider>
@@ -100,19 +100,6 @@ export default function Page() {
           <div className="flex items-center gap-2 px-4">
             <SidebarTrigger className="-ml-1" />
             <Separator orientation="vertical" className="mr-2 h-4" />
-            <Breadcrumb>
-              <BreadcrumbList>
-                <BreadcrumbItem className="hidden md:block">
-                  <BreadcrumbLink href="#">
-                    Building Your Application
-                  </BreadcrumbLink>
-                </BreadcrumbItem>
-                <BreadcrumbSeparator className="hidden md:block" />
-                <BreadcrumbItem>
-                  <BreadcrumbPage>Data Fetching</BreadcrumbPage>
-                </BreadcrumbItem>
-              </BreadcrumbList>
-            </Breadcrumb>
           </div>
         </header>
         {/* <div className="flex flex-1 flex-col gap-4 p-4 pt-0">
@@ -126,21 +113,18 @@ export default function Page() {
         {/* <StockContent /> */}
 
         {selectedNavItem === "Estoque" && <StockContent />}
-        {selectedNavItem === "Pedidos" && 
-            selectedOrdersGroup ? (
-              <OrdersGroupDetails 
-                selectedOrdersGroup={selectedOrdersGroup}
-                setSelectedOrdersGroup={setSelectedOrdersGroup}
-              />
-            ) : (
-              <EntrepreneurOrders 
-                orders={orders} 
-                ordersGroup={ordersGroup}
-                setSelectedOrdersGroup={setSelectedOrdersGroup}
-              />
-            )
-        }
-
+        {selectedNavItem === "Pedidos" && selectedOrdersGroup ? (
+          <OrdersGroupDetails
+            selectedOrdersGroup={selectedOrdersGroup}
+            setSelectedOrdersGroup={setSelectedOrdersGroup}
+          />
+        ) : (
+          <EntrepreneurOrders
+            orders={orders}
+            ordersGroup={ordersGroup}
+            setSelectedOrdersGroup={setSelectedOrdersGroup}
+          />
+        )}
       </SidebarInset>
     </SidebarProvider>
   );

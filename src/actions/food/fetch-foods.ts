@@ -8,6 +8,9 @@ export async function fetchFoods(): Promise<Food[]> {
   try {
     const response = await client("/foods", {
       method: RequestMethods.GET,
+      options: {
+        auth: true,
+      },
     });
 
     return response;
