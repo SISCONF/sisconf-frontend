@@ -122,8 +122,6 @@ export default function Page() {
     setSelectedNavItem(item);
   };
 
-  console.log(selectedOrders);
-
   return (
     <SidebarProvider>
       <AppSidebar onNavigation={handleNavigation} />
