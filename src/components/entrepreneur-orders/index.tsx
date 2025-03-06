@@ -13,6 +13,7 @@ import { OrdersGroup } from "@/types/orders-group";
 import { ordersGroupColumns } from "../ui/orders-group-columns";
 import { Order } from "@/types/order";
 import { QueryObserverBaseResult, RefetchOptions } from "@tanstack/react-query";
+import { Table } from "@tanstack/react-table";
 
 export const TABS_LIST = [
   {

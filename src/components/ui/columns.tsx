@@ -1,12 +1,12 @@
 "use client";
 
 import { formatPrice, cn } from "@/lib/utils";
-import { ColumnDef } from "@tanstack/react-table";
+import { ColumnDef, Table } from "@tanstack/react-table";
 import StatusTag, { StatusTagProps } from "../status-tag";
 import { Checkbox } from "@/components/ui/checkbox";
 import { Order, OrderStatus } from "@/types/order";
 import { Food } from "@/types/food";
-import { formatDate } from "@/lib/utils";
+import { formatDate, formatFoodName } from "@/lib/utils";
 
 interface ColumnsProps {
   handleOrdersSelection: (orderId: number) => void;
@@ -43,7 +43,7 @@ export const columns = ({
         onCheckedChange={(value) => {
           row.toggleSelected(!!value);
           const orderId: number = parseInt(row.getValue("id"));
-          handleOrdersSelection(orderId);
+          value ?? handleOrdersSelection(orderId);
         }}
         aria-label="Select row"
       />
@@ -89,27 +89,9 @@ export const columns = ({
     header: "Itens",
     cell: ({ row }) => {
       const foods: Food[] = row.getValue("foods");
-      const foodNames: string = foods
-        .map(
-          (food) =>
-            food.name
-              .toLowerCase()
-              .replace(/\b\w/g, (char) => char.toUpperCase()) // Capitaliza cada palavra
-        )
-        .join(", ");
+      const foodNames: string = formatFoodName(foods);
 
       return <div className="truncate max-w-[300px]">{foodNames}</div>;
     },
   },
-  // {
-  //   accessorKey: "actions",
-  //   header: "Ações",
-  //   cell: ({ row }) => {
-  //       return (
-  //           <button className="bg-[#F0F4EA] text-[#237D31] p-1 rounded-[8px]">
-  //               <Eye size={20} />
-  //           </button>
-  //       )
-  //   },
-  // }
 ];

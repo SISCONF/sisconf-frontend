@@ -78,6 +78,7 @@ export default function Page() {
         description: "Seus pedidos foram agrupados com sucesso!",
         variant: "default",
       });
+      handleAllOrdersSelection([]);
       refetchOrdersGroup();
     },
     onError: (error) => {
@@ -120,6 +121,8 @@ export default function Page() {
   const handleNavigation = (item: string) => {
     setSelectedNavItem(item);
   };
+
+  console.log(selectedOrders);
 
   return (
     <SidebarProvider>

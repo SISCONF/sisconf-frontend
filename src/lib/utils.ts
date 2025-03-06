@@ -1,3 +1,4 @@
+import { Food } from "@/types/food";
 import { clsx, type ClassValue } from "clsx";
 import { twMerge } from "tailwind-merge";
 
@@ -20,4 +21,13 @@ export const formatDate = (date: string) => {
     month: "2-digit",
     year: "numeric",
   });
+};
+
+export const formatFoodName = (foods: Food[]): string => {
+  return foods
+    .map(
+      (food) =>
+        food.name.toLowerCase().replace(/\b\w/g, (char) => char.toUpperCase()) // Capitaliza cada palavra
+    )
+    .join(", ");
 };

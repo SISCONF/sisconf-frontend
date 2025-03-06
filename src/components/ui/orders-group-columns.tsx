@@ -5,7 +5,7 @@ import { Order } from "@/types/order";
 import { ColumnDef } from "@tanstack/react-table";
 import { Eye } from "lucide-react";
 import StatusTag, { StatusTagProps } from "../status-tag";
-import { formatDate, formatPrice } from "@/lib/utils";
+import { formatDate, formatPrice, formatFoodName } from "@/lib/utils";
 import { Dispatch, SetStateAction } from "react";
 
 type OrdersGroupColumnsProps = {
@@ -68,10 +68,10 @@ export const ordersGroupColumns = ({
     header: "Itens",
     cell: ({ row }) => {
       const orders: Order[] = row.getValue("orders");
-      const ordersFoodsNames: string[] = orders
+      const ordersFoodsNames: string = orders
         .map((order) => order.foods)
-        .map((foodsList) => foodsList.map((foodItem) => foodItem.name))
-        .map((foodName) => foodName.join(", "));
+        .map((foodsList) => formatFoodName(foodsList))
+        .join(", ");
       return <span>{ordersFoodsNames}</span>;
     },
   },
