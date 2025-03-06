@@ -28,22 +28,24 @@ import { useQuery, useMutation } from "@tanstack/react-query";
 import { fetchOrders } from "@/actions/orders/fetch-orders";
 import { fetchOrdersGroup } from "@/actions/orders/fetch-orders-group";
 import { createOrdersGroup } from "@/actions/orders-group/create-orders-group";
-import { Order, OrderStatus } from "@/types/order";
+import { Order } from "@/types/order";
+import { useToast } from "@/hooks/use-toast";
 
 export default function Page() {
   const [selectedOrdersGroup, setSelectedOrdersGroup] =
     useState<OrdersGroup | null>(null);
   const [selectedNavItem, setSelectedNavItem] = useState("Pedidos");
   const [selectedOrders, setSelectedOrders] = useState<number[]>([]);
+  const { toast } = useToast();
 
   const { data: orders, refetch: refetchOrders } = useQuery({
     queryKey: ["orders"],
     queryFn: () => fetchOrders(),
   });
 
-  // orders?.sort((orderA, orderB) => {
-  //   return orderA.id < orderB.id ? -1 : 1;
-  // });
+  orders?.sort((orderA, orderB) => {
+    return orderA.id < orderB.id ? -1 : 1;
+  });
 
   const {
     data: ordersGroup,
@@ -69,8 +71,23 @@ export default function Page() {
 
   const mutation = useMutation({
     mutationFn: createOrdersGroup,
-    onSuccess: (data) => refetchOrdersGroup(),
-    onError: (error) => console.log("Erro ao agrupar pedidos", error),
+    onSuccess: (data) => {
+      toast({
+        duration: 5000,
+        title: "Pedidos Agrupados",
+        description: "Seus pedidos foram agrupados com sucesso!",
+        variant: "default",
+      });
+      refetchOrdersGroup();
+    },
+    onError: (error) => {
+      toast({
+        duration: 5000,
+        title: "Erro ao Agrupar Pedidos",
+        description: error.message || "Erro desconhecido",
+        variant: "destructive",
+      });
+    },
   });
 
   const handleOrdersGrouping = () => {
