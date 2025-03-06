@@ -38,7 +38,7 @@ interface NavMainProps {
 export function NavMain({ navMainItems, onNavClick }: NavMainProps) {
   return (
     <SidebarGroup>
-      <SidebarGroupLabel>Platform</SidebarGroupLabel>
+      <SidebarGroupLabel>Recursos</SidebarGroupLabel>
       <SidebarMenu>
         {navMainItems.map((navItem) => (
           <Collapsible
@@ -49,11 +49,12 @@ export function NavMain({ navMainItems, onNavClick }: NavMainProps) {
           >
             <SidebarMenuItem>
               <CollapsibleTrigger asChild>
-                <SidebarMenuButton tooltip={navItem.title}
+                <SidebarMenuButton
+                  tooltip={navItem.title}
                   onClick={() => onNavClick(navItem.title)}
                 >
                   {navItem.icon && <navItem.icon />}
-                    <span>{navItem.title}</span>
+                  <span>{navItem.title}</span>
                   {navItem.items && (
                     <ChevronRight className="ml-auto transition-transform duration-200 group-data-[state=open]/collapsible:rotate-90" />
                   )}

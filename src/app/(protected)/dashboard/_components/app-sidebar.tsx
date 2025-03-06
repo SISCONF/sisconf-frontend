@@ -11,12 +11,30 @@ import {
   SidebarRail,
 } from "@/components/ui/sidebar";
 import { SIDE_BAR_NAV_ITEMS, SIDE_BAR_TEAM, SIDE_BAR_USER } from "./const";
+import { useAuth } from "@/hooks/useAuth";
+import { formatAvatarFallback } from "@/lib/utils";
+import { useMemo } from "react";
 
 interface AppSidebarProps extends React.ComponentProps<typeof Sidebar> {
   onNavigation: (item: string) => void;
 }
 
 export function AppSidebar({ onNavigation, ...props }: AppSidebarProps) {
+  const { user } = useAuth();
+
+  const sidebarUserObj = useMemo(() => {
+    if (user) {
+      return {
+        name: `${user.person.firstName} ${user.person.lastName}`,
+        email: user.person.email,
+        avatar: formatAvatarFallback(
+          user.person.firstName,
+          user.person.lastName
+        ),
+      };
+    }
+  }, [user]);
+
   return (
     <Sidebar collapsible="icon" {...props}>
       <SidebarHeader>
@@ -26,7 +44,11 @@ export function AppSidebar({ onNavigation, ...props }: AppSidebarProps) {
         <NavMain navMainItems={SIDE_BAR_NAV_ITEMS} onNavClick={onNavigation} />
       </SidebarContent>
       <SidebarFooter>
-        <NavUser user={SIDE_BAR_USER} />
+        {sidebarUserObj ? (
+          <NavUser user={sidebarUserObj} />
+        ) : (
+          <span>Carregando</span>
+        )}
       </SidebarFooter>
       <SidebarRail />
     </Sidebar>
