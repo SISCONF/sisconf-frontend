@@ -22,12 +22,14 @@ import Link from "next/link";
 
 export function NavUser({
   user,
+  handleLogout,
 }: {
   user: {
     name: string;
     email: string;
     avatar: string;
   };
+  handleLogout: () => void;
 }) {
   const { isMobile } = useSidebar();
 
@@ -83,7 +85,10 @@ export function NavUser({
               </DropdownMenuItem>
             </DropdownMenuGroup>
             <DropdownMenuSeparator />
-            <DropdownMenuItem className="hover:cursor-pointer">
+            <DropdownMenuItem
+              className="hover:cursor-pointer"
+              onClick={handleLogout}
+            >
               <LogOut />
               Sair
             </DropdownMenuItem>

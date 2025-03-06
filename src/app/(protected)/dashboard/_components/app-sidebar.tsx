@@ -20,7 +20,7 @@ interface AppSidebarProps extends React.ComponentProps<typeof Sidebar> {
 }
 
 export function AppSidebar({ onNavigation, ...props }: AppSidebarProps) {
-  const { user } = useAuth();
+  const { user, logout } = useAuth();
 
   const sidebarUserObj = useMemo(() => {
     if (user) {
@@ -45,7 +45,7 @@ export function AppSidebar({ onNavigation, ...props }: AppSidebarProps) {
       </SidebarContent>
       <SidebarFooter>
         {sidebarUserObj ? (
-          <NavUser user={sidebarUserObj} />
+          <NavUser user={sidebarUserObj} handleLogout={() => logout()} />
         ) : (
           <span>Carregando</span>
         )}

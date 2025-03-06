@@ -42,7 +42,6 @@ export default function Page() {
     data: ordersGroup,
     refetch: refetchOrdersGroup,
     isLoading,
-    error,
   } = useQuery({
     queryKey: ["ordersGroup"],
     queryFn: () => fetchOrdersGroup(),
