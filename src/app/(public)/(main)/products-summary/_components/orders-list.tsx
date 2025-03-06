@@ -4,41 +4,61 @@ import { createOrder } from '@/actions/orders/create-order';
 import { ResumeOrderCard } from '@/components/resume-order-card';
 import { ResumeOrderItemList } from '@/components/resume-order-item-list';
 import ResumeOrdersList from '@/components/resume-orders-list';
+import { useGroceryBag } from '@/hooks/grocery-bag-context';
+import { toast } from '@/hooks/use-toast';
+import { useAuth } from '@/hooks/useAuth';
 import { Order } from '@/types/order';
-import { OrderItem } from '@/types/order-item';
-import { useMutation, useQuery } from '@tanstack/react-query';
-import { useState } from 'react';
+import { useMutation } from '@tanstack/react-query';
 
 export default function ProductsSummary () {
-
-  const [orders, setOrders] = useState<OrderItem[]>(ordersList);
+  const { user, isAuthenticated } = useAuth()
+  const { groceryBag, removeFromBag, addToBag, clearBag } = useGroceryBag(
+    isAuthenticated && user && user.id ? user.id : null
+  )
 
   const removeOrder = (id: number) => {
-    setOrders(orders.filter((order) => order.id !== id));
+    removeFromBag(id);
   }
 
-  const total = orders.reduce((acc, order) => acc + order.price, 0);
+  const totalPrice = groceryBag.reduce((total, item) => {
+    return total + item.food.unitPrice * item.amount;
+  }, 0);
 
   const mutation = useMutation({
     mutationFn: createOrder,
-    onSuccess: (data) => {
-      console.log("Pedido criado com sucesso!", data);
+    onSuccess: () => {
+      toast({
+        duration: 5000,
+        title: "Pedido realizado com sucesso",
+        description: "Você será redirecionado para a página de pedidos",
+        variant: "default",
+      })
+
+      clearBag();
+
+      setTimeout(() => {
+        // router.push("/orders");
+      }, 2000);
     },
     onError: (error) => {
-      console.error("Erro ao criar o pedido:", error);
+      toast({
+        duration: 5000,
+        title: "Erro ao finalizar pedido",
+        description: error?.message || "Ocorreu um erro ao tentar criar pedido",
+        variant: "destructive",
+      });
     },
   });
   
   const handleSubmit = () => {
     const ordersData: Order = {
-      foodsQuantities: orders.map((order) => ({
-        foodId: order.id,
+      foodsQuantities: groceryBag.map((order) => ({
+        foodId: order.food.id,
         quantity: order.amount,
         quantityType: "KG"
       }))
     }
 
-    console.log("orders data: ", JSON.stringify(ordersData))
     mutation.mutate(ordersData);
   };
 
@@ -51,57 +71,19 @@ export default function ProductsSummary () {
           headerClassName='w-full grid grid-cols-[3fr_1fr_1fr_1fr] text-[#103E13] font-bold'
           userType='customer'
         >
-          {orders.map((order) => (
+          {groceryBag.map((item) => (
             <ResumeOrderItemList 
               className='max-[843px] py-2 relative grid grid-cols-[3fr_1fr_1fr_1fr] place-items-center pr-12 font-medium'
               userType='customer'
-              key={order.id}
-              order={order}
-              onRemove={() => removeOrder(order.id)}
+              key={item.food.id}
+              order={item}
+              onRemove={() => removeOrder(item.food.id)}
             />
           ))}
         </ResumeOrdersList>
-        <ResumeOrderCard onSubmit={handleSubmit} total={total} />
+        <ResumeOrderCard onSubmit={handleSubmit} total={totalPrice} />
       </div>
     </div>
   );
 }
 
-const ordersList: OrderItem[] = [
-  {
-    id: 1,
-    image: "/strawberry.svg",
-    name: "Morango",
-    description: "lorem ipsum dolor siamet",
-    amount: 2,
-    price: 200.00,
-    status: "Aguardando",
-  },
-  {
-    id: 2,
-    image: "/strawberry.svg",
-    name: "Banana",
-    description: "lorem ipsum dolor siamet",
-    amount: 2,
-    price: 200.00,
-    status: "Aprovado",
-  },
-  {
-    id: 3,
-    image: "/strawberry.svg",
-    name: "Maçã",
-    description: "lorem ipsum dolor siamet",
-    amount: 2,
-    price: 150.00,
-    status: "Aprovado",
-  },
-  {
-    id: 4,
-    image: "/strawberry.svg",
-    name: "Laranja",
-    description: "lorem ipsum dolor siamet",
-    amount: 2,
-    price: 250.00,
-    status: "Aguardando",
-  },
-];

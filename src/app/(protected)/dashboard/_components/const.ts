@@ -1,8 +1,8 @@
 import {
   GalleryVerticalEnd,
-  SquareTerminal,
-  DollarSign,
   ChartArea,
+  ReceiptText,
+  Package,
 } from "lucide-react";
 
 export const SIDE_BAR_USER = {
@@ -21,13 +21,13 @@ export const SIDE_BAR_NAV_ITEMS = [
   {
     title: "Pedidos",
     url: "#",
-    icon: SquareTerminal,
+    icon: ReceiptText,
     isActive: true,
   },
   {
     title: "Estoque",
     url: "#",
-    icon: ChartArea,
+    icon: Package,
     isActive: true,
   },
 ];

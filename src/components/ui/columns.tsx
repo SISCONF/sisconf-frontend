@@ -1,78 +1,98 @@
-"use client"
+"use client";
 
-import { formatPrice, cn } from "@/lib/utils"
-import { EntrepreneurOrder } from "@/types/entrepreneur-orders"
-import { ColumnDef } from "@tanstack/react-table"
-import { Eye } from "lucide-react"
-import StatusTag from "../status-tag"
-import { Checkbox } from "@/components/ui/checkbox"
+import { formatPrice, cn } from "@/lib/utils";
+import { ColumnDef, Table } from "@tanstack/react-table";
+import StatusTag, { StatusTagProps } from "../status-tag";
+import { Checkbox } from "@/components/ui/checkbox";
+import { Order, OrderStatus } from "@/types/order";
+import { Food } from "@/types/food";
+import { formatDate, formatFoodName } from "@/lib/utils";
 
-export const columns: ColumnDef<EntrepreneurOrder>[] = [
+interface ColumnsProps {
+  selectedOrders: number[];
+  handleOrdersSelection: (orderId: number) => void;
+  handleAllOrdersSelection: (ordersId: number[]) => void;
+}
+
+export const columns = ({
+  selectedOrders,
+  handleOrdersSelection,
+  handleAllOrdersSelection,
+}: ColumnsProps): ColumnDef<Order>[] => [
   {
-        id: "select",
-        header: ({ table }) => (
-        <Checkbox
-            checked={
-                table.getIsAllPageRowsSelected() ||
-                (table.getIsSomePageRowsSelected() && "indeterminate")
-            }
-            onCheckedChange={(value) => table.toggleAllPageRowsSelected(!!value)}
-            aria-label="Select all"
-        />
-        ),
-        cell: ({ row }) => (
-            <Checkbox
-                checked={row.getIsSelected()}
-                onCheckedChange={(value) => row.toggleSelected(!!value)}
-                aria-label="Select row"
-            />
-        ),
+    id: "select",
+    header: ({ table }) => (
+      <Checkbox
+        checked={
+          table.getIsAllPageRowsSelected() ||
+          (table.getIsSomePageRowsSelected() && "indeterminate")
+        }
+        onCheckedChange={(value) => {
+          table.toggleAllPageRowsSelected(!!value);
+          const selectedOrdersIds = value
+            ? table
+                .getRowModel()
+                .rows.map((row) => parseInt(row.getValue("id")))
+            : [];
+          handleAllOrdersSelection(selectedOrdersIds);
+        }}
+        aria-label="Select all"
+      />
+    ),
+    cell: ({ row }) => (
+      <Checkbox
+        checked={selectedOrders.includes(parseInt(row.getValue("id")))}
+        onCheckedChange={(value) => {
+          const orderId: number = parseInt(row.getValue("id"));
+          handleOrdersSelection(orderId);
+        }}
+        aria-label="Select row"
+      />
+    ),
   },
   {
-    accessorKey: "orderId",
+    accessorKey: "id",
     header: "ID do pedido",
   },
   {
-    accessorKey: "date",
+    accessorKey: "orderDate",
     header: "Data",
-  },
-  {
-    accessorKey: "client",
-    header: "Cliente",
+    cell: ({ row }) => {
+      const orderDate: string = row.getValue("orderDate");
+      return <div>{formatDate(orderDate)}</div>;
+    },
   },
   {
     accessorKey: "status",
     header: "Status",
     cell: ({ row }) => {
-        const statusValue: "Aguardando" | "Aprovado" = row.getValue("status")
+      const statusMap: Record<OrderStatus, StatusTagProps["status"]> = {
+        [OrderStatus.Aguardando]: "Aguardando",
+        [OrderStatus.Aprovado]: "Aprovado",
+      };
+      const statusValue: OrderStatus = row.getValue("status");
+      const statusText = statusMap[statusValue];
 
-
-        return <StatusTag status={statusValue} text={statusValue} />
+      return <StatusTag status={statusText} text={statusText} />;
     },
   },
   {
-    accessorKey: "amount",
+    accessorKey: "totalPrice",
     header: "Total",
     cell: ({ row }) => {
-        const amount = parseFloat(row.getValue("amount"))
-   
-        return <div className="font-medium">{formatPrice(amount)}</div>
-    },
-  },
-  {
-    accessorKey: "items",
-    header: "Itens",
-  },
-  {
-    accessorKey: "actions",
-    header: "Ações",
-    cell: ({ row }) => {
-        return (
-            <button className="bg-[#F0F4EA] text-[#237D31] p-1 rounded-[8px]">
-                <Eye size={20} />
-            </button>
-        )
-    },
-  }
-]
+      const totalPrice = parseFloat(row.getValue("totalPrice"));
 
+      return <div className="font-medium">{formatPrice(totalPrice)}</div>;
+    },
+  },
+  {
+    accessorKey: "foods",
+    header: "Itens",
+    cell: ({ row }) => {
+      const foods: Food[] = row.getValue("foods");
+      const foodNames: string = formatFoodName(foods);
+
+      return <div className="truncate max-w-[300px]">{foodNames}</div>;
+    },
+  },
+];

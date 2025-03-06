@@ -2,11 +2,11 @@
 
 import { client, ErrorResponse } from "../_utils/fetcher";
 import { RequestMethods } from "../_utils/request-methods";
-import { User } from "@/types/user";
+import { OrdersGroup } from "@/types/orders-group";
 
-export async function fetchCustomerMe(): Promise<User> {
+export async function fetchOrdersGroup(): Promise<OrdersGroup[]> {
   try {
-    const response = await client(`/customers/me`, {
+    const response = await client("/orders-group", {
       method: RequestMethods.GET,
       options: {
         auth: true,

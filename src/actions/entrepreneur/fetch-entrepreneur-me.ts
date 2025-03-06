@@ -1,12 +1,12 @@
 "use server";
 
+import { Entrepreneur } from "@/types/entrepreneur";
 import { client, ErrorResponse } from "../_utils/fetcher";
 import { RequestMethods } from "../_utils/request-methods";
-import { User } from "@/types/user";
 
-export async function fetchCustomerMe(): Promise<User> {
+export async function fetchEntrepreneurMe(): Promise<Entrepreneur> {
   try {
-    const response = await client(`/customers/me`, {
+    const response = await client(`/entrepreneurs/me`, {
       method: RequestMethods.GET,
       options: {
         auth: true,
