@@ -1,12 +1,9 @@
-export const PUBLIC_ROUTES = [
-  { path: "/", whenAuthenticated: "" },
-  { path: "/login", whenAuthenticated: "redirect" },
-  { path: "/register", whenAuthenticated: "redirect" },
-] as const;
-
-export const PROTECTED_ROUTES = {
-  DASHBOARD: "/dashboard",
-  PRODUCTS: "/products",
+export const ROUTES = {
+  login: "/login",
+  register: "/register",
+  dashboard: "/dashboard",
+  products: "/products",
+  profile: "/perfil",
 };
 
-export const REDIRECT_WHEN_NOT_AUTHENTICATED_ROUTE = "/login";
+export const PROTECTED_ROUTES = [ROUTES.dashboard, ROUTES.profile];

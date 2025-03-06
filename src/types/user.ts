@@ -8,6 +8,6 @@ export enum UserCategory {
 
 export interface User {
   category: UserCategory;
-  id?: number;
+  id: number;
   person: Person;
 }
