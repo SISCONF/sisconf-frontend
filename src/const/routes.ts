@@ -6,4 +6,8 @@ export const ROUTES = {
   profile: "/perfil",
 };
 
-export const PROTECTED_ROUTES = [ROUTES.dashboard, ROUTES.profile];
+export const PROTECTED_ROUTES = [
+  ROUTES.dashboard,
+  ROUTES.profile,
+  ROUTES.products,
+];

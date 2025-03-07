@@ -7,6 +7,7 @@ import { useRouter } from "next/navigation";
 import { fetchCustomerMe } from "@/actions/customer/fetch-customer-me";
 import { fetchEntrepreneurMe } from "@/actions/entrepreneur/fetch-entrepreneur-me";
 import { Entrepreneur } from "@/types/entrepreneur";
+import { parseJwt } from "@/lib/utils";
 
 interface AuthContextType {
   user: User | Entrepreneur | null;
@@ -25,11 +26,14 @@ export const AuthProvider = ({ children }: { children: React.ReactNode }) => {
   const [isLoading, setIsLoading] = useState(true);
   const router = useRouter();
   const token = getCookie("access_token");
+  const userCategory = getCookie("user_category");
+  const businessName = getCookie("business_name");
 
   const handleLogout = async () => {
     deleteCookie("access_token");
     deleteCookie("refresh_token");
-    deleteCookie("user_category"); // Remove o cookie do tipo de usuário
+    deleteCookie("user_category");
+    deleteCookie("business_name"); // Remove o cookie do tipo de usuário
     setIsAuthenticated(false);
     setUser(null);
     router.push("/");
@@ -44,20 +48,30 @@ export const AuthProvider = ({ children }: { children: React.ReactNode }) => {
         setUser(null);
         setIsAuthenticated(false);
         deleteCookie("user_category");
+        deleteCookie("business_name");
         setIsLoading(false);
         return;
       }
 
       try {
-        const userData = await fetchCustomerMe();
+        const userJwtData: { groups: string[] } = parseJwt(token);
+        const userGroup = userJwtData.groups[0];
+        const userData =
+          userGroup === "Customer"
+            ? await fetchCustomerMe()
+            : await fetchEntrepreneurMe();
 
         if (userData) {
           setUser(userData);
           setIsAuthenticated(true);
 
-          if (userData.category) {
+          if ("category" in userData) {
             setCookie("user_category", userData.category, {
-              path: "/",
+              maxAge: 60 * 60 * 24,
+            });
+          }
+          if ("businessName" in userData) {
+            setCookie("business_name", userData.businessName, {
               maxAge: 60 * 60 * 24,
             });
           }
@@ -67,17 +81,17 @@ export const AuthProvider = ({ children }: { children: React.ReactNode }) => {
           deleteCookie("user_category");
         }
       } catch (error) {
-        console.error("Erro ao carregar usuário:", error);
         setUser(null);
         setIsAuthenticated(false);
         deleteCookie("user_category");
+        deleteCookie("business_name");
       } finally {
         setIsLoading(false);
       }
     };
 
     loadUser();
-  }, [token]);
+  }, [token, userCategory, businessName]);
 
   return (
     <AuthContext.Provider
