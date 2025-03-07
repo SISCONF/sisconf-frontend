@@ -21,6 +21,8 @@ import { fetchOrdersGroup } from "@/actions/orders/fetch-orders-group";
 import { createOrdersGroup } from "@/actions/orders-group/create-orders-group";
 import { Order } from "@/types/order";
 import { useToast } from "@/hooks/use-toast";
+import { useAuth } from "@/hooks/useAuth";
+import { generateSheet } from "@/actions/orders-group/generate-sheet";
 
 export default function Page() {
   const [selectedOrdersGroup, setSelectedOrdersGroup] =
@@ -65,7 +67,9 @@ export default function Page() {
   }, [selectedNavItem]);
 
   const mutation = useMutation({
-    mutationFn: createOrdersGroup,
+    mutationFn: async (orderGroupId: number) => {
+      return generateSheet(orderGroupId);
+    },
     onSuccess: (data) => {
       toast({
         duration: 5000,
@@ -92,8 +96,6 @@ export default function Page() {
       currentStatus: OrdersGroupStatus.Recebido,
       docUrl: "",
     };
-
-    mutation.mutate(ordersGroupData);
   };
 
   const handleOrdersSelection = (orderId: number) => {
