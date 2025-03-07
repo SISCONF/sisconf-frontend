@@ -35,3 +35,12 @@ export const formatFoodName = (foods: Food[]): string => {
 export const formatAvatarFallback = (firstName: string, lastName: string) => {
   return `${firstName[0]}${lastName[0]}`;
 };
+
+export const parseJwt = (token: string) => {
+  if (!token) {
+    return;
+  }
+  const base64Url = token.split(".")[1];
+  const base64 = base64Url.replace("-", "+").replace("_", "/");
+  return JSON.parse(window.atob(base64));
+};

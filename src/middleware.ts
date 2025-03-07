@@ -10,26 +10,35 @@ function extractCookies(req: NextRequest) {
     accessToken: req.cookies.get("access_token")?.value,
     refreshToken: req.cookies.get("refresh_token")?.value,
     userCategory: req.cookies.get("user_category")?.value,
+    businessName: req.cookies.get("business_name")?.value,
   };
 }
 
 export function middleware(request: NextRequest) {
   const { pathname } = request.nextUrl;
-  const { accessToken, userCategory } = extractCookies(request);
+  const { accessToken, userCategory, businessName } = extractCookies(request);
 
   const isProtectedRoute = PROTECTED_ROUTES.includes(pathname);
   const isPublicRoute = !isProtectedRoute;
 
-  if (isPublicRoute && accessToken && userCategory === "ENTREPRENEUR") {
+  if (isPublicRoute && accessToken && businessName) {
     return redirect(request, ROUTES.dashboard);
+  }
+
+  if (isPublicRoute && accessToken && userCategory) {
+    return redirect(request, ROUTES.products);
   }
 
   if (isProtectedRoute && !accessToken) {
     return redirect(request, ROUTES.login);
   }
 
-  if (pathname === ROUTES.dashboard && userCategory !== "ENTREPRENEUR") {
-    return redirect(request, ROUTES.login);
+  if (pathname === ROUTES.dashboard && userCategory) {
+    return redirect(request, ROUTES.products);
+  }
+
+  if (pathname === ROUTES.products && businessName) {
+    return redirect(request, ROUTES.dashboard);
   }
 
   return NextResponse.next();

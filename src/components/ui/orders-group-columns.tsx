@@ -10,85 +10,97 @@ import { Dispatch, SetStateAction } from "react";
 
 type OrdersGroupColumnsProps = {
   setSelectedOrdersGroup: Dispatch<SetStateAction<OrdersGroup | null>>;
+  handleGenerateSheet?: (orderGroupId: number) => void;
 };
 
 export const ordersGroupColumns = ({
   setSelectedOrdersGroup,
-}: OrdersGroupColumnsProps): ColumnDef<OrdersGroup>[] => [
-  {
-    accessorKey: "id",
-    header: "ID do grupo",
-  },
-  {
-    accessorKey: "orderDate",
-    header: "Data",
-    cell: ({ row }) => {
-      const groupOrderDate: string = row.getValue("orderDate");
-      return <span>{formatDate(groupOrderDate)}</span>;
+  handleGenerateSheet
+}: OrdersGroupColumnsProps): ColumnDef<OrdersGroup>[] => {
+  return [
+    {
+      accessorKey: "id",
+      header: "ID do grupo",
     },
-  },
-  {
-    accessorKey: "docUrl",
-    header: "Planilha de pedidos",
-    cell: ({ row }) => {
-      const sheetUrl = row.original.docUrl;
-      return (
-        <a href={sheetUrl} className="text-[#237D31] font-medium">
-          {sheetUrl}
-        </a>
-      );
+    {
+      accessorKey: "orderDate",
+      header: "Data",
+      cell: ({ row }) => {
+        const groupOrderDate: string = row.getValue("orderDate");
+        return <span>{formatDate(groupOrderDate)}</span>;
+      },
     },
-  },
-  {
-    accessorKey: "currentStatus",
-    header: "Status",
-    cell: ({ row }) => {
-      const statusMap: Record<OrdersGroupStatus, StatusTagProps["status"]> = {
-        [OrdersGroupStatus.Entregue]: "Entregue",
-        [OrdersGroupStatus.Fechado]: "Fechado",
-        [OrdersGroupStatus.Recebido]: "Recebido",
-      };
-      const statusValue: OrdersGroupStatus = row.getValue("currentStatus");
-      const statusText = statusMap[statusValue];
+    {
+      accessorKey: "docUrl",
+      header: "Planilha de pedidos",
+      cell: ({ row }) => {
+        const sheetUrl = row.original.docUrl;
+        const orderGroupId = row.original.id;
+        return sheetUrl != "" ? (
+          <a href={sheetUrl} className="text-[#237D31] font-medium">
+            {sheetUrl}
+          </a>
+        ) : (
+          <button 
+            className="text-[#237D31] font-medium"
+            onClick={() => handleGenerateSheet && handleGenerateSheet(orderGroupId)}
+          >
+            Gerar planilha
+          </button>
+        )
+      },
+    },
+    {
+      accessorKey: "currentStatus",
+      header: "Status",
+      cell: ({ row }) => {
+        const statusMap: Record<OrdersGroupStatus, StatusTagProps["status"]> = {
+          [OrdersGroupStatus.Entregue]: "Entregue",
+          [OrdersGroupStatus.Fechado]: "Fechado",
+          [OrdersGroupStatus.Recebido]: "Recebido",
+        };
+        const statusValue: OrdersGroupStatus = row.getValue("currentStatus");
+        const statusText = statusMap[statusValue];
 
-      return <StatusTag status={statusText} text={statusText} />;
+        return <StatusTag status={statusText} text={statusText} />;
+      },
     },
-  },
-  {
-    accessorKey: "totalPrice",
-    header: "Total",
-    cell: ({ row }) => {
-      const total = parseFloat(row.getValue("totalPrice"));
+    {
+      accessorKey: "totalPrice",
+      header: "Total",
+      cell: ({ row }) => {
+        const total = parseFloat(row.getValue("totalPrice"));
 
-      return <div className="font-medium">{formatPrice(total)}</div>;
+        return <div className="font-medium">{formatPrice(total)}</div>;
+      },
     },
-  },
-  {
-    accessorKey: "orders",
-    header: "Itens",
-    cell: ({ row }) => {
-      const orders: Order[] = row.getValue("orders");
-      const ordersFoodsNames: string = orders
-        .map((order) => order.foods)
-        .map((foodsList) => formatFoodName(foodsList))
-        .join(", ");
-      return <span>{ordersFoodsNames}</span>;
+    {
+      accessorKey: "orders",
+      header: "Itens",
+      cell: ({ row }) => {
+        const orders: Order[] = row.getValue("orders");
+        const ordersFoodsNames: string = orders
+          .map((order) => order.foods)
+          .map((foodsList) => formatFoodName(foodsList))
+          .join(", ");
+        return <span>{ordersFoodsNames}</span>;
+      },
     },
-  },
-  {
-    accessorKey: "actions",
-    header: "Itens",
-    cell: ({ row }) => {
-      const handleViewDetails = () => setSelectedOrdersGroup(row.original);
+    {
+      accessorKey: "actions",
+      header: "Ações",
+      cell: ({ row }) => {
+        const handleViewDetails = () => setSelectedOrdersGroup(row.original);
 
-      return (
-        <button
-          className="bg-[#F0F4EA] text-[#237D31] p-1 rounded-[8px]"
-          onClick={handleViewDetails}
-        >
-          <Eye size={20} />
-        </button>
-      );
+        return (
+          <button
+            className="bg-[#F0F4EA] text-[#237D31] p-1 rounded-[8px]"
+            onClick={handleViewDetails}
+          >
+            <Eye size={20} />
+          </button>
+        );
+      },
     },
-  },
-];
+  ];
+}

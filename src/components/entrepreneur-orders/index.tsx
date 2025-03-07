@@ -12,8 +12,12 @@ import { ComponentTabs } from "../tabs";
 import { OrdersGroup } from "@/types/orders-group";
 import { ordersGroupColumns } from "../ui/orders-group-columns";
 import { Order } from "@/types/order";
-import { QueryObserverBaseResult, RefetchOptions } from "@tanstack/react-query";
+import { QueryObserverBaseResult, RefetchOptions, useMutation, useQuery } from "@tanstack/react-query";
 import { Table } from "@tanstack/react-table";
+import { toast } from "@/hooks/use-toast";
+import { generateSheet } from "@/actions/orders-group/generate-sheet";
+import { useAuth } from "@/hooks/useAuth";
+import { fetchOrdersGroup } from "@/actions/orders/fetch-orders-group";
 
 export const TABS_LIST = [
   {
@@ -68,6 +72,44 @@ export default function EntrepreneurOrders({
     setActiveTab(selectedTab || TABS_LIST[0]);
   };
 
+  const {
+    data: ordersGroupData,
+    refetch: refetchOrdersGroup,
+  } = useQuery({
+    queryKey: ["ordersGroup"],
+    queryFn: () => fetchOrdersGroup(),
+  });
+
+  const { user } = useAuth();
+    
+  const handleGenerateSheet = useMutation({
+    mutationKey: ["sheetData"],
+    mutationFn: async (orderGroupId: number) => {
+      if (user?.id) {
+        return generateSheet(orderGroupId);
+      } else {
+        throw new Error("ID de usuário desconhecido");
+      }
+    },
+    onSuccess: () => {
+      toast({
+        duration: 5000,
+        title: "Planilha gerada com sucesso",
+        description: "Clique na planilha para realizar o download",
+        variant: "default",
+      });
+      refetchOrdersGroup();
+    },
+    onError: (error) => {
+      toast({
+        duration: 5000,
+        title: "Erro ao gerar planilha",
+        description: error.message || "Erro desconhecido",
+        variant: "destructive",
+      });
+    },
+  });
+
   useEffect(() => {
     switch (activeTab.id) {
       case 0:
@@ -78,6 +120,11 @@ export default function EntrepreneurOrders({
         break;
     }
   }, [activeTab]);
+
+  const ordersGroupcolumnsData = ordersGroupColumns({
+    setSelectedOrdersGroup,
+    handleGenerateSheet: (orderGroupId: number) => handleGenerateSheet.mutate(orderGroupId)
+  })
 
   return (
     <div className="p-12">
@@ -186,7 +233,7 @@ export default function EntrepreneurOrders({
         ) : (
           <DataTable
             className="mt-4 w-full text-base"
-            columns={ordersGroupColumns({ setSelectedOrdersGroup })}
+            columns={ordersGroupcolumnsData}
             data={ordersGroup}
           />
         )}
