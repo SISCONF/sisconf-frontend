@@ -25,7 +25,7 @@ export function middleware(request: NextRequest) {
     return redirect(request, ROUTES.dashboard);
   }
 
-  if (isPublicRoute && accessToken && userCategory) {
+  if (pathname === ROUTES.dashboard && accessToken && userCategory) {
     return redirect(request, ROUTES.products);
   }
 
