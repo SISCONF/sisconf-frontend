@@ -41,7 +41,7 @@ export function LoginForm() {
         setUser(session.user);
         setIsAuthenticated(true);
 
-        await new Promise((resolve) => setTimeout(resolve, 5000));
+        await new Promise((resolve) => setTimeout(resolve, 500));
         router.push("/");
       }
     } catch (err: any) {
