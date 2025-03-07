@@ -8,6 +8,10 @@ import VeggiesHeader from "/public/assets/products-header-veggies.png";
 import StrawberriesBanner from "/public/assets/strawberries-banner.jpg";
 import CarrotsBanner from "/public/assets/carrots-banner.jpg";
 
+export const metadata = {
+  title: "Nossos Produtos",
+};
+
 export default function Products() {
   return (
     <div className="min-h-screen">

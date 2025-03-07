@@ -4,7 +4,7 @@ import PageTitle from "@/components/page-title";
 import { ResumeOrderCard } from "@/components/resume-order-card";
 import { ResumeOrderItemList } from "@/components/resume-order-item-list";
 import ResumeOrdersList from "@/components/resume-orders-list";
-import { OrderItem } from "@/types/order-item";
+import { OrderItem } from "@/types/order";
 import { OrdersGroup } from "@/types/orders-group";
 import { ArrowLeft } from "lucide-react";
 import { Dispatch, SetStateAction, useState } from "react";

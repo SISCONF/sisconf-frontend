@@ -2,15 +2,13 @@
 
 import { client, ErrorResponse } from "../_utils/fetcher";
 import { RequestMethods } from "../_utils/request-methods";
-import { User } from "@/types/user";
 
-export async function fetchCustomerMe(): Promise<User> {
+export async function generateSheet(
+  id: number
+): Promise<string | null> {
   try {
-    const response = await client(`/customers/me`, {
-      method: RequestMethods.GET,
-      options: {
-        auth: true,
-      },
+    const response = await client(`/orders-group/${id}/generate-sheet`, {
+      method: RequestMethods.POST,
     });
 
     return response;

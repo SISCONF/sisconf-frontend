@@ -1,8 +1,23 @@
-export type OrdersGroup = {
-    id: number
-    date: string
-    sheet: string
-    total: number
-    status: "Entregue" | "Recebido" | "Fechado"
-    items: string
+import { Order } from "./order";
+
+export enum OrdersGroupStatus {
+  Fechado = "PLACED",
+  Recebido = "RECEIVED",
+  Entregue = "DELIVERED",
 }
+
+export type OrdersGroup = {
+  id: number;
+  totalPrice: number;
+  orderDate: string;
+  currentStatus: OrdersGroupStatus;
+  itemQuantity: number;
+  docUrl: string;
+  orders: Order[];
+};
+
+export type OrdersGroupCreation = {
+  currentStatus: OrdersGroupStatus;
+  docUrl: "";
+  ordersIds: number[];
+};

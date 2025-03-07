@@ -18,6 +18,8 @@ import {
 
 import { cn } from "@/lib/utils";
 import { useState } from "react";
+import { QueryObserverBaseResult, RefetchOptions } from "@tanstack/react-query";
+import { OrdersGroup } from "@/types/orders-group";
 
 interface DataTableProps<TData, TValue>
   extends React.HTMLAttributes<HTMLDivElement> {
@@ -51,7 +53,7 @@ export function DataTable<TData, TValue>({
             <TableRow key={headerGroup.id}>
               {headerGroup.headers.map((header) => {
                 return (
-                  <TableHead 
+                  <TableHead
                     key={header.id}
                     className="text-left px-4 py-2 font-medium"
                   >

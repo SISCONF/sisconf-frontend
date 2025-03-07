@@ -7,9 +7,7 @@ import {
   AlertDialogFooter,
   AlertDialogHeader,
   AlertDialogTitle,
-  AlertDialogTrigger,
 } from "@/components/ui/alert-dialog";
-import { Button } from "@/components/ui/button";
 
 interface AlertDialogProps {
   open: boolean;
@@ -17,33 +15,32 @@ interface AlertDialogProps {
   title: string;
   description: string;
   actionButtonText: string;
-  action: () => void
+  action: () => void;
 }
 
-export function AlertDialogComponent({ 
-  open, 
-  setOpen, 
+export function AlertDialogComponent({
+  open,
+  setOpen,
   title,
   description,
   actionButtonText,
-  action 
+  action,
 }: AlertDialogProps) {
   return (
     <AlertDialog open={open} onOpenChange={setOpen}>
       <AlertDialogContent>
         <AlertDialogHeader>
-          <AlertDialogTitle>
-            {title}
-          </AlertDialogTitle>
-          <AlertDialogDescription>
-            {description}
-          </AlertDialogDescription>
+          <AlertDialogTitle>{title}</AlertDialogTitle>
+          <AlertDialogDescription>{description}</AlertDialogDescription>
         </AlertDialogHeader>
         <AlertDialogFooter>
           <AlertDialogCancel className="bg-[#A1A1A1] text-white">
             Cancelar
           </AlertDialogCancel>
-          <AlertDialogAction onClick={action} className="bg-[#237D31] text-white">
+          <AlertDialogAction
+            onClick={action}
+            className="bg-[#237D31] text-white"
+          >
             {actionButtonText}
           </AlertDialogAction>
         </AlertDialogFooter>
