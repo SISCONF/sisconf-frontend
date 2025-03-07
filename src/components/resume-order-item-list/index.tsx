@@ -53,15 +53,17 @@ export function ResumeOrderItemList({
 
         <span>{formatPrice(food.unitPrice)}</span>
 
-        {userType === "customer" && (
-          <>
-            <button onClick={() => onRemove(food.id)} className="">
-              <X className="absolute top-0 right-0" />
-            </button>
-          </>
-        )}
-      </div>
-      <hr className="bg-[#D9D9D9]" />
-    </>
-  );
+                { userType === "customer" && 
+                    (
+                        <>                            
+                            <button onClick={() => onRemove(food.id)} className="">
+                                <X className="absolute top-0 right-0 remove-product-button" />        
+                            </button>
+                        </>
+                    ) 
+                }
+            </div>
+            <hr className="bg-[#D9D9D9]" />
+        </>
+    );
 }

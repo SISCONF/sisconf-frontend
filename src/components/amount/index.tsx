@@ -31,12 +31,14 @@ export default function Amount({
   return (
     <div className="w-fit flex text-[#237D31] font-bold items-center gap-[0.5rem] bg-[#F0F4EA] py-[0.3125rem] px-[0.475rem] rounded-lg">
       <CirclePlusIcon
+        id="increase-product-amount-button"
         className="cursor-pointer"
         size={21}
         onClick={() => updateAmount(initialAmount + 1)}
       />
       <input
         type="text"
+        id="product-amount-indicator"
         min={1}
         className="focus:outline-none text-center bg-[#F0F4EA]"
         value={initialAmount}
@@ -52,6 +54,7 @@ export default function Amount({
         }}
       />
       <CircleMinusIcon
+        id="decrease-product-amount-button"
         size={21}
         onClick={() => decreaseable && updateAmount(initialAmount - 1)}
         className={
