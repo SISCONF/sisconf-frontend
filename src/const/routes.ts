@@ -3,7 +3,7 @@ export const ROUTES = {
   register: "/register",
   dashboard: "/dashboard",
   products: "/products",
-  profile: "/perfil",
+  profile: "/profile",
 };
 
 export const PROTECTED_ROUTES = [
